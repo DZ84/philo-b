@@ -13,11 +13,37 @@
 			padding: 0;
 		}
 
+		.post-listing {
+			width: 60%;
+			height: 40px;
+			background: white;
+			opacity: .8;
+
+			/* font-vertical-align: center; */
+			margin: 0 auto;
+			
+			border-width: 2px 2px 0 2px;
+			border-style: solid; 
+			border-color: black;
+		}
+
+		.post-listing > li > a > .title {
+			
+			width: 70%;
+			height: 100%;
+			background: orange;
+			
+			border-width: 2px 2px 2px 2px;
+			border-style: solid; 
+			border-color: red;
+		}	
+
+
 	</style>
 
 {% endblock css %}
 {% block header %}
-	Philo-b			
+	Philo-b
 {% endblock header %}
 {% block subheader %}
 
@@ -30,15 +56,21 @@
 {% block content %}
 
 	<ul>
-				
+
 		{% for blog in object_list %}
-			<li><a href="{{ blog.slug }}">{{ blog.posted|date:'d M Y' }} - {{ blog.short_title }}</li></a>
 
-			{% empty %}	
+		<div class="post-listing">
+			<li><a href="{{ blog.slug }}">
+					<span class="title"> {{ blog.short_title }}</span> - 
+					<span class="date">{{ blog.posted|date:'d M Y' }}</span>
+			</li></a>
 
-				no posts at the moment
-		
-			{% endfor %}
+		</div>
+		{% empty %}	
+
+			no posts at the moment
+
+		{% endfor %}
 	</ul>	
 
 {% endblock content %}
