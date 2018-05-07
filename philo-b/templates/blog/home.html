@@ -8,9 +8,12 @@
 		}
 
 		ul {
-			list-style-type: none;
 			margin: 0;
 			padding: 0;
+		}
+
+		li {
+			padding-left: 15px;
 		}
 
 		.post-listing {
@@ -22,7 +25,10 @@
 			/* font-vertical-align: center; */
 			margin: 0 auto;
 
-			/* this is for when the inner block actually overlap */	
+			/* this is for surity when the inner block
+			 * actually overlap you don't want it to
+			 * completely wreck the complete layout 
+			 */	
 			white-space: nowrap;
 			
 			border-width: 2px 2px 0 2px;
@@ -33,7 +39,9 @@
 		.content-container > div:last-of-type {
 			border-bottom-width: 2px;
 		}
-		.post-listing > a {
+
+		.post-listing.last {
+			border-bottom-width: 2px;
 		}
 
 		.post-listing > a > .title,  
@@ -48,10 +56,10 @@
 
 		}
 		.post-listing > a > .title { 
-			width: 65%;
+			width: 62%;
 
 			background: orange;
-			padding-left: 5%;
+			padding-left: 8%;
 			
 			text-align: left;
 		}	
@@ -78,22 +86,28 @@
 {% endblock subheader %}
 {% block content %}
 
+	<ul>
 		{% for blog in object_list %}
-
-		<div class="post-listing">
-			<a href="{{ blog.slug }}">
-				<div
-					class="title">{{ blog.short_title }}
-				</div><div
-					class="date">{{ blog.posted|date:'d M Y' }}
+					
+			{% if forloop.last %}
+				<div class="post-listing last">
+			{% else %}
+				<div class="post-listing">
+			{% endif %}
+					<a href="{{ blog.slug }}">
+						<div
+							class="title"><li>{{ blog.short_title }}</li>
+						</div><div
+							class="date">{{ blog.posted|date:'d M Y' }}
+						</div>
+					</a>
 				</div>
-			</a>
-		</div>
+
 		{% empty %}	
-
 			no posts at the moment
-
 		{% endfor %}
+
+	</ul>
 
 {% endblock content %}
 
