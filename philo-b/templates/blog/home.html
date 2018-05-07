@@ -14,30 +14,53 @@
 		}
 
 		.post-listing {
-			width: 60%;
-			height: 40px;
+			width: 70%;
+			height: 3em;
 			background: white;
 			opacity: .8;
 
 			/* font-vertical-align: center; */
 			margin: 0 auto;
+
+			/* this is for when the inner block actually overlap */	
+			white-space: nowrap;
 			
 			border-width: 2px 2px 0 2px;
 			border-style: solid; 
 			border-color: black;
 		}
 
-		.post-listing > li > a > .title {
-			
-			width: 70%;
+		.content-container > div:last-of-type {
+			border-bottom-width: 2px;
+		}
+		.post-listing > a {
+		}
+
+		.post-listing > a > .title,  
+		.post-listing > a > .date { 
+			display: inline-block;
 			height: 100%;
+			margin: 0;
+			padding: 0;
+			border-width: 0; 
+
+			line-height: 3em;
+
+		}
+		.post-listing > a > .title { 
+			width: 65%;
+
 			background: orange;
+			padding-left: 5%;
 			
-			border-width: 2px 2px 2px 2px;
-			border-style: solid; 
-			border-color: red;
+			text-align: left;
 		}	
 
+		.post-listing > a > .date {
+			width: 30%;
+	
+			background: grey;
+		}
 
 	</style>
 
@@ -55,23 +78,22 @@
 {% endblock subheader %}
 {% block content %}
 
-	<ul>
-
 		{% for blog in object_list %}
 
 		<div class="post-listing">
-			<li><a href="{{ blog.slug }}">
-					<span class="title"> {{ blog.short_title }}</span> - 
-					<span class="date">{{ blog.posted|date:'d M Y' }}</span>
-			</li></a>
-
+			<a href="{{ blog.slug }}">
+				<div
+					class="title">{{ blog.short_title }}
+				</div><div
+					class="date">{{ blog.posted|date:'d M Y' }}
+				</div>
+			</a>
 		</div>
 		{% empty %}	
 
 			no posts at the moment
 
 		{% endfor %}
-	</ul>	
 
 {% endblock content %}
 
