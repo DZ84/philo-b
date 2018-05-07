@@ -13,13 +13,13 @@
 		}
 
 		li {
-			padding-left: 15px;
+			padding-left: 5px;
 		}
 
 		.post-listing {
 			width: 70%;
 			height: 3em;
-			background: white;
+			background: transparent;
 			opacity: .8;
 
 			/* font-vertical-align: center; */
@@ -31,13 +31,15 @@
 			 */	
 			white-space: nowrap;
 			
-			border-width: 2px 2px 0 2px;
-			border-style: solid; 
-			border-color: black;
-		}
-
-		.content-container > div:last-of-type {
-			border-bottom-width: 2px;
+			/* I could ofcourse just delete the borders
+			 * and add a small space after every bar
+			 * Nicer way to do this: margins!!!!!!
+			 */
+			/* border-width: 2px 2px 0 2px;
+			/* border-style: solid; 
+			/* border-color: powderblue;
+			*/
+			border: 3px solid transparent;
 		}
 
 		.post-listing.last {
@@ -92,6 +94,12 @@
 		{% for blog in object_list %}
 					
 			{% if forloop.last %}
+
+				<!--this relies on the border bottom being 0
+					on every post-listing, so you want to adjust for
+					the last one, IF you choose another color than
+					the sites background color
+				-->
 				<div class="post-listing last">
 			{% else %}
 				<div class="post-listing">
