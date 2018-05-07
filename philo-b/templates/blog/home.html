@@ -68,6 +68,8 @@
 			width: 30%;
 	
 			background: grey;
+
+			text-color: red;
 		}
 
 	</style>
@@ -94,11 +96,12 @@
 			{% else %}
 				<div class="post-listing">
 			{% endif %}
+
 					<a href="{{ blog.slug }}">
 						<div
 							class="title"><li>{{ blog.short_title }}</li>
 						</div><div
-							class="date">{{ blog.posted|date:'d M Y' }}
+							class="date">{{ blog.posted|date:'M d, Y' }}
 						</div>
 					</a>
 				</div>
