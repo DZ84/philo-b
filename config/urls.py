@@ -1,12 +1,22 @@
 from django.conf import settings
 from django.conf.urls import include, url
+from django.urls import path
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
+from blog.views import Overview, Post
+
 urlpatterns = [
-    url(r"^$", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+
+    url(r"^$", 
+        Overview.as_view(), 
+        name="home"),
+    path('<slug:slug>/', 
+        Post.as_view(), 
+        name="post"),
+
     url(
         r"^about/$",
         TemplateView.as_view(template_name="pages/about.html"),
@@ -21,6 +31,7 @@ urlpatterns = [
     ),
     url(r"^accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

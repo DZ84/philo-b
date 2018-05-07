@@ -1,0 +1,46 @@
+{% extends "base.html" %}<!DOCTYPE html>
+{% block css %}
+
+	<style>
+
+		a {
+			text-decoration: none;
+		}
+
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+
+	</style>
+
+{% endblock css %}
+{% block header %}
+	Philo-b			
+{% endblock header %}
+{% block subheader %}
+
+    I would like to have some introductory text over here. 
+	And this text could be quite long, relatively speaking
+	ofcourse. I cennot even phanthom the true meaning of
+	a very long text.
+
+{% endblock subheader %}
+{% block content %}
+
+	<ul>
+				
+		{% for blog in object_list %}
+			<li><a href="{{ blog.slug }}">{{ blog.posted|date:'d M Y' }} - {{ blog.short_title }}</li></a>
+
+			{% empty %}	
+
+				no posts at the moment
+		
+			{% endfor %}
+	</ul>	
+
+{% endblock content %}
+
+
