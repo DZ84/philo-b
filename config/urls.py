@@ -13,7 +13,7 @@ urlpatterns = [
     url(r"^$", 
         Overview.as_view(), 
         name="home"),
-    path('<slug:slug>/', 
+    path('<slug:slug>,<int:id>/', 
         Post.as_view(), 
         name="post"),
 
@@ -61,3 +61,4 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [url(r"^__debug__/", include(debug_toolbar.urls))] + urlpatterns
+

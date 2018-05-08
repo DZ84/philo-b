@@ -16,4 +16,3 @@ class Post(DetailView):
     model = Blog
     template_name = 'blog/post.html'
 
-    
