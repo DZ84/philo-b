@@ -79,11 +79,11 @@
 		<div class="main-container">
 			{% block toptag %}	
 			{% endblock toptag %}	
+
 			<h1>
 				{% block header %}
 				{% endblock header %}
 			</h1>
-			
 			<h4>
 				{% block subheader %}
 				{% endblock subheader %}
@@ -92,11 +92,13 @@
 			<hr></hr>
 
 			<div class="content-container">
-
 				{% block content %}
 				{% endblock content %}
-
 			</div>	
+			<div class="comments-container">
+				{% block comments %}
+				{% endblock comments %}
+			</div>
 		</div>
 
 		<!-- what does this do exactly????????????????????-->
