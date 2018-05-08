@@ -2,8 +2,24 @@
 {% block css %}
 	<style>
 
+		.top-tag {
+			text-align: left;
+			margin-left: 5%;
+			font-weight: bold;
+		}
+		
+		.main-text-container {
+			margin: 0 auto;
+			width: 80%;
+		}
+
 	</style>
 {% endblock css %}
+{% block toptag %}	
+
+	<div class="top-tag">Philo-b</div>
+
+{% endblock toptag %}	
 {% block header %}
 
 	{{ object.title }}
@@ -15,9 +31,12 @@
 
 {% endblock subheader %}
 {% block content %}
+	
+	<div class="main-text-container">
 
-	{{ object.body }}
+		{{ object.body }}
+
+	</div>
 
 {% endblock content %}
-
 

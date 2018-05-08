@@ -87,8 +87,7 @@
 
     I would like to have some introductory text over here. 
 	And this text could be quite long, relatively speaking
-	ofcourse. I cennot even phanthom the true meaning of
-	a very long text.
+	ofcourse. 
 
 {% endblock subheader %}
 {% block content %}
@@ -108,11 +107,14 @@
 				<div class="post-listing">
 			{% endif %}
 
-					<a href="{{ blog.slug }},{{ blog.pk }}">
+					<a href="{{ blog.slug }},
+							 {{ blog.pk }}">
 						<div
-							class="title"><li>{{ blog.short_title }}</li>
+							class="title">
+								<li>{{ blog.short_title }}</li>
 						</div><div
-							class="date">{{ blog.posted|date:'M d, Y' }}
+							class="date">
+								{{ blog.posted|date:'M d, Y' }}
 						</div>
 					</a>
 				</div>
