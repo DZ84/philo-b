@@ -63,6 +63,9 @@
 				width: 80%;
 			}
 
+			.separator-header {
+			}
+
 		</style>
 
 		{% block css %}
@@ -89,12 +92,13 @@
 				{% endblock subheader %}
 			</h4>
 
-			<hr></hr>
+			<hr class="separator-header">
 
 			<div class="content-container">
 				{% block content %}
 				{% endblock content %}
 			</div>	
+
 			<div class="comments-container">
 				{% block comments %}
 				{% endblock comments %}
@@ -108,11 +112,10 @@
 		================================================== -->
 		<!-- Placed at the end of the document so the pages load faster -->
 		{% block javascript %}
-		  
+
 			<!-- Your stuff: Third-party javascript libraries go here -->
 
 			<!-- place project specific Javascript in this file -->
-		  
 
 		{% endblock javascript %}
 	</body>

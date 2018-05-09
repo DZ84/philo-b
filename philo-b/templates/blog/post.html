@@ -13,13 +13,16 @@
 			width: 80%;
 		}
 
+		.separator-comment {
+		}
+
 	</style>
 {% endblock css %}
 {% block toptag %}	
 
 	<div class="top-tag">Philo-b</div>
 
-{% endblock toptag %}	
+{% endblock toptag %}
 {% block header %}
 
 	{{ object.title }}
@@ -31,26 +34,29 @@
 
 {% endblock subheader %}
 {% block content %}
-	
+
 	<div class="main-text-container">
 
 		{{ object.body }}
+
 	</div>
 
 {% endblock content %}
 {% block comments %}
 
-	<hr>
-	{% for comment in post.comments.all %}
+	<hr class="separator-comment">
+	{% for comment in object.comments.all %}
 
 		<div class="comment">
 			<div class="date">{{ comment.created_date }}</div>
 			<strong>{{ comment.author }}</strong>
 			<p>{{ comment.text|linebreaks }}</p>
 		</div>
+
 	{% empty %}
 
 		<p>No comments here yet :(</p>
+
 	{% endfor %}
 
 {% endblock comments %}
