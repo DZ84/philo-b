@@ -63,7 +63,7 @@
 		.post-listing > a > .title { 
 			width: 62%;
 
-			background: orange;
+			background: #F8F8F8;
 			padding-left: 8%;
 			
 			text-align: left;
@@ -72,7 +72,7 @@
 		.post-listing > a > .date {
 			width: 30%;
 	
-			background: grey;
+			background: #B8B8B8;
 
 			text-color: red;
 		}
@@ -107,8 +107,7 @@
 				<div class="post-listing">
 			{% endif %}
 
-					<a href="{{ blog.slug }},
-							 {{ blog.pk }}">
+					<a href="{{ blog.slug }},{{ blog.pk }}">
 						<div
 							class="title">
 								<li>{{ blog.short_title }}</li>
