@@ -37,20 +37,21 @@
 
 	<div class="main-text-container">
 
-		{{ object.body }}
+		{{ post.body }}
 
 	</div>
 
 {% endblock content %}
 {% block comments %}
+<!-- he keeps using something called |safe, what's that? -->
 
 	<hr class="separator-comment">
-	{% for comment in object.comments.all %}
+	{% for comment in comments %}
 
-		<div class="comment">
-			<div class="date">{{ comment.created_date }}</div>
-			<strong>{{ comment.author }}</strong>
-			<p>{{ comment.text|linebreaks }}</p>
+		<div class="comments">
+			<div class="date">{{ comment.pub_date }}</div>
+			<strong>{{ comment.author_id }}</strong>
+			<p>{{ comment.content|linebreaks }}</p>
 		</div>
 
 	{% empty %}

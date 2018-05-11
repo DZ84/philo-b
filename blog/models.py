@@ -1,7 +1,11 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+# from config.settings.base import AUTH_USER_MODEL as auth_user 
+
+from django.urls import reverse
+
+from django.contrib.postgres.fields import ArrayField
 
 class Blog(models.Model):
     title = models.CharField(max_length=200, unique=True)
@@ -53,10 +57,11 @@ class Comment(models.Model):
     class Meta:
         db_table = "comments"
          
-    path = ArrayField(models.IntegerField())
-    blog_id = models.ForeignKey(Blog)
-    author_id = models.ForeignKey(User)
-    content = models.TextField('Comment')
+    path = ArrayField(models.IntegerField(), default=[])
+    blog_id = models.ForeignKey(Blog, on_delete=models.CASCADE, default=1)
+    # author_id = models.ForeignKey(auth_user, on_delete=models.CASCADE, default=1)
+    author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    content = models.TextField('Comment', default="oooooooooooooooooooooooook")
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)
 
     def __str__(self):

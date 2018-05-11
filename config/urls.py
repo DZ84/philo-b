@@ -6,22 +6,22 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
-from blog.views import Overview, Post
+from blog import views
 
 urlpatterns = [
 
     url(
         r"^$", 
-        Overview.as_view(), 
+        views.Overview.as_view(), 
         name="home"
     ),
     path(
-        '<slug:slug>,<int:id>/', 
-        Post.as_view(), 
+        '<slug:slug>,<int:post_id>/', 
+        views.Post.as_view(), 
         name="post"
     ),
     url(
-        r'^comment/(?P<post_id>[0-9]+)/$', 
+        r'^comment/(?P<id>[0-9]+)/$', 
         views.add_comment, 
         name='add_comment'
     ),
