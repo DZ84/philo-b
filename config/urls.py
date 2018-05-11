@@ -10,13 +10,21 @@ from blog.views import Overview, Post
 
 urlpatterns = [
 
-    url(r"^$", 
+    url(
+        r"^$", 
         Overview.as_view(), 
-        name="home"),
-    path('<slug:slug>,<int:id>/', 
+        name="home"
+    ),
+    path(
+        '<slug:slug>,<int:id>/', 
         Post.as_view(), 
-        name="post"),
-
+        name="post"
+    ),
+    url(
+        r'^comment/(?P<post_id>[0-9]+)/$', 
+        views.add_comment, 
+        name='add_comment'
+    ),
     url(
         r"^about/$",
         TemplateView.as_view(template_name="pages/about.html"),
@@ -29,7 +37,10 @@ urlpatterns = [
         r"^users/",
         include("philo-b.users.urls", namespace="users"),
     ),
-    url(r"^accounts/", include("allauth.urls")),
+    url(
+        r"^accounts/", 
+        include("allauth.urls"
+    )),
     # Your stuff: custom urls includes go here
 
 ] + static(

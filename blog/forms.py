@@ -1,9 +1,15 @@
-from django import forms 
+from django import forms
 
 from .models import Comment
 
-class CommentForm(forms.ModelForm):
+class Comment_Form(forms.Form):
+   
+    parent_comment = forms.IntegerField(
+        widget=forms.HiddenInput,
+        required=False
+    )
 
-    class Meta:
-        model = Comment
-        fields = ('author', 'text',)
+    comment_area = forms.CharField(
+        label="",
+        widget=forms.Textarea
+    )
