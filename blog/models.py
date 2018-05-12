@@ -1,8 +1,7 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
-# from config.settings.base import AUTH_USER_MODEL as auth_user 
-
+#from django.contrib.auth.models import User
+from config import settings
 from django.urls import reverse
 
 from django.contrib.postgres.fields import ArrayField
@@ -20,38 +19,6 @@ class Blog(models.Model):
     def get_absolute_url(self):
         return reverse('post', kwargs={'slug': self.slug})
 
-# my version:
-# class comments(models.Models):
-#     
-#     body = models.TextField()
-#     posted = models.DateTimeField(db_index=True, auto_now_add=True)
-#     edited = models.DateTimeField(db_index=True, auto_now_add=True) # needs to be adjusted
-#     # edited? think that is stored somewhere anyway?
-#     # but maybe there will be changes anyway that are
-#     # not related to the edit
-
-# # django girls' version:
-# class Comment(models.Model):
-#     """ TODO:
-#             - should know what cascade does..
-# 
-#     """
-#     post = models.ForeignKey('Blog', 
-#             related_name='comments', 
-#             on_delete=models.CASCADE,)
-#     author = models.CharField(max_length=200)
-#     text = models.TextField()
-#     created_date = models.DateTimeField(default=timezone.now)
-#     approved_comment = models.BooleanField(default=True)
-# 
-#     def approve(self):
-#         self.approved_comment = True
-#         self.save()
-# 
-#     def __str__(self):
-#         return self.text
-  
-   
 class Comment(models.Model):
     
     class Meta:
@@ -59,8 +26,8 @@ class Comment(models.Model):
          
     path = ArrayField(models.IntegerField(), default=[])
     blog_id = models.ForeignKey(Blog, on_delete=models.CASCADE, default=1)
-    # author_id = models.ForeignKey(auth_user, on_delete=models.CASCADE, default=1)
-    author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    # author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     content = models.TextField('Comment', default="oooooooooooooooooooooooook")
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)
 
