@@ -21,7 +21,7 @@ urlpatterns = [
         name="post"
     ),
     url(
-        r'^comment/(?P<id>[0-9]+)/$', 
+        r'^comment/(?P<post_id>[0-9]+)/$', 
         views.add_comment, 
         name='add_comment'
     ),

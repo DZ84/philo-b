@@ -17,7 +17,7 @@ class Blog(models.Model):
     # posted can be different from created
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'slug': self.slug})
+        return reverse('post', kwargs={ 'slug': self.slug, 'post_id': self.id })
 
 class Comment(models.Model):
     
