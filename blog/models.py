@@ -24,9 +24,9 @@ class Comment(models.Model):
     class Meta:
         db_table = "comments"
          
-    path = ArrayField(models.IntegerField(), default=[])
-    blog_id = models.ForeignKey(Blog, on_delete=models.CASCADE, default=1)
-    author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    path = ArrayField(models.IntegerField())
+    post_id = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     content = models.TextField('Comment', default="oooooooooooooooooooooooook")
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)

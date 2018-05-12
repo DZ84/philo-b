@@ -44,7 +44,7 @@ class Post(View):
 @login_required
 @require_http_methods(["POST"])
 def add_comment(request, post_id):
-     
+
     form = Comment_Form(request.POST)
     post = get_object_or_404(Blog, id=post_id)
  
