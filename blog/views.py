@@ -32,7 +32,7 @@ class Post(View):
         # Put in the context of all the comments that are relevant to the blog 
         # simultaneously sorting them along the way, the auto-increment ID, 
         # so the problems with the hierarchy should not have any comments yet
-        context['comments'] = post.comment_set.all().order_by('path') # 'comment_set.all()' is weird naming
+        context['comments'] = post.comment_set.all().order_by('path') 
         # context['next'] = blog.get_absolute_url()
 
         # We add form only if the user is authenticated
@@ -46,7 +46,7 @@ class Post(View):
 def add_comment(request, post_id):
      
     form = Comment_Form(request.POST)
-    post= get_object_or_404(Blog, id=post_id)
+    post = get_object_or_404(Blog, id=post_id)
  
     if form.is_valid():
         comment = Comment()
