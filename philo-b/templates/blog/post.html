@@ -127,13 +127,12 @@
 			<p>{{ comment.content|linebreaks }}</p>
 
 		{% if form %}
-			<!--a id="comment-{{ comment.id }}"></a-->
 
-			<div class="button-container" id="button-container-{{ comment.id }}">
+			<div class="button-container">
 				<a class="comment" 
 				onclick="return show_comments_form({{ comment.id }})">
 				<button class="reply">Write reply</button></a>
-				<button class="save disabled">Save</button>
+				<button class="save disabled" onclick="submit_form();">Save</button>
 			</div>
 
 		{% endif %}
@@ -151,7 +150,7 @@
 		<form id="comment_form" action="{% url 'add_comment' post.id %}" method="POST">
 			{% csrf_token %}
 			{{ form.as_p }}
-			<button type="submit" class="save">Save</button>
+			<!--button type="submit" class="save">Save</button-->
 		</form>
 
 		<a class="comment new" onclick="return show_comments_form('comment')">
@@ -183,16 +182,34 @@
 				comment_id = "comment-" + comment_id
 			}
 
+			// disable previous save button
+			// try catch needs to, but is now, because first one is not yet defined
+			try {
+				var previous_save_button = document.getElementById("save-enabled")	
+				previous_save_button.className = "save disabled"
+				previous_save_button.id = ""
+			} catch(e) {
+				console.log("yeah yeah")
+			}
+
 			var selected_comment = document.getElementById(comment_id)
-			debugger	
-			selected_comment
-				.insertBefore(
+			var new_form_position = selected_comment
+				.getElementsByClassName("button-container")[0]
+			var new_save_button = selected_comment	
+				.getElementsByClassName("save")[0]
+			
+			selected_comment.insertBefore(
 					document.getElementById("comment_form"),
-					selected_comment
-						.getElementsByClassName("button-container")[0]
+					new_form_position 
 			)
+			
+			new_save_button.className = "save"
+			new_save_button.id = "save-enabled"
 
-
+		}
+		
+		function submit_form() {
+			document.getElementById("comment_form").submit()
 		}
 
 	</script>
