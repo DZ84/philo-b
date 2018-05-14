@@ -45,19 +45,18 @@
 	<hr class="separator-comment">
 	{% for comment in comments %}
 
-		<div class="comments">
-			<div class="date">{{ comment.pub_date }}</div>
-			<strong>{{ comment.author_id }}</strong>
-			<p>{{ comment.content|linebreaks }}</p>
-			<a href="#comment-{{ comment.id }}">#</a>
-			<hr>
-			{% if form %}
+		<div class="date">{{ comment.pub_date }}</div>
+		<strong>{{ comment.author_id }}</strong>
+		<p>{{ comment.content|linebreaks }}</p>
+		<!--a href="#comment-{{ comment.id }}">#</a-->
+		<div id="comment-{{ comment.id }}"></div>
+		{% if form %}
 
-				<a class="button" 
-				   onclick="return show_comments_form({{ comment.id }})">reply comment?</a>
+			<a class="button" onclick="return show_comments_form({{ comment.id }})">
+				<button>check</button>
+			</a>
 
-			{% endif %}
-		</div>
+		{% endif %}
 		
 	{% empty %}
 
@@ -90,15 +89,32 @@
 {% block javascript %}
 
 	<script>
+
+		// function show_form(parentId, elementTag, elementId, html) {
+		// 	// Adds an element to the document
+		// 	var p = document.getElementById(parentId);
+		// 	var newElement = document.createElement(elementTag);
+		// 	newElement.setAttribute('id', elementId);
+		// 	newElement.innerHTML = html;
+		// 	p.appendChild(newElement);
+		// }
+
 		function show_comments_form(parent_comment_id) {
 			if (parent_comment_id == 'write_comment') {
-				$("#id_parent_comment").val('')
+				 document.getElementById("id_parent_comment").value = ''
 			}
 			else {
-				$("#id_parent_comment").val(parent_comment_id);
+				document.getElementById("id_parent_comment").value = parent_comment_id
+				parent_comment_id = "comment-" + parent_comment_id
 			}
-			$("#comment_form").insertAfter("#" + parent_comment_id);
+
+			document.getElementById("comments-container")
+				.insertBefore(
+						document.getElementById("comment_form"),
+						document.getElementById(parent_comment_id).nextSibling
+				)
 		}
+
 	</script>
 
 {% endblock javascript %}
