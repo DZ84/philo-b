@@ -8,17 +8,21 @@
 			margin-left: 5%;
 			font-weight: bold;
 		}
-		
 		.main-text-container {
 			margin: 0 auto;
-			width: 80%;
+			width: 100%;
 		}
 
 		.separator-commentsection {
 		}
+		
+		#comments-container {
+			width: 80%;
+			margin: 0 auto;
+		}
 
 		.comment-layout {
-			width: 80%;
+			width: 100%;
 			margin: 10px auto 0;
 			padding: 10px;
 			background: #b8b8b8;		
@@ -42,16 +46,31 @@
 		.comment-layout > p {
 			text-align: left;
 			margin: 0;
+			overflow: hidden;
 		}
 
-		a > button {
+		.button-container {
+			float: right;
+			height: auto;
+			width: auto;
+			padding: 0;
+			margin-top: 10px;
+			margin-right: -10px;
+			/* border-top: 50px solid #686868; */
+		}
+
+		.button-container .reply, 
+		.button-container .save {
 			background-color: #b8b8b8;
-			border: none;
-			margin-right: 0 !important;
+			border-width: 1px 0 1px 1px;
+			border-style: solid;
+			border-color: #e8e8e8;
 			padding: 13px 25px;
+			/* margin: -42px 0 0 7px; */
 
 			text-decoration: none;
 			display: inline-block;
+			float: left;
 			
 			/*	for text 
 				color: white; 
@@ -59,6 +78,10 @@
 			font-size: 16px;
 		}
 
+		.button-container .save {
+			/* margin-right: 7px; */
+			/* border-right: 1px solid #e8e8e8; */
+		}
 	</style>
 
 {% endblock css %}
@@ -90,21 +113,27 @@
 	<hr class="separator-commentsection">
 	{% for comment in comments %}
 
-		<div class="comment-layout">
+		<div class="comment-layout" id="comment-{{ comment.id }}">
 			<div class="user-info">
 				<strong>{{ comment.author_id }}</strong></div>
 			<div class="date">{{ comment.pub_date }}</div>
 			<hr class="separator-info">
 			<p>{{ comment.content|linebreaks }}</p>
-		</div>
 
 		{% if form %}
+			<!--a id="comment-{{ comment.id }}"></a-->
+
+			<div class="button-container">
 				<a class="comment" 
-				onclick="return show_comments_form({{ comment.id }})"
-				id="comment-{{ comment.id }}">
-				<button>Reply</button></a>
+				onclick="return show_comments_form({{ comment.id }})">
+				<button class="reply">Write reply</button></a>
+				<button class="save">Save</button>
+			</div>
 
 		{% endif %}
+
+		</div>
+		<div style="clear: both;"></div>
 
 	{% empty %}
 
