@@ -34,14 +34,15 @@
 
 {% endblock subheader %}
 {% block content %}
-
+<!-- maybe add some safe filters on the post and comments. 
+	 dunno why you would use the linebreaks option for the
+	 comments, safe seems a better option to me -->
 	<div class="main-text-container">
 		{{ post.body }}
 	</div>
 
 {% endblock content %}
 {% block comments %}
-<!-- he keeps using something called |safe, what's that? -->
 	<hr class="separator-comment">
 	{% for comment in comments %}
 
@@ -53,11 +54,11 @@
 		{% if form %}
 
 			<a class="button" onclick="return show_comments_form({{ comment.id }})">
-				<button>check</button>
+				<button>reply</button>
 			</a>
 
 		{% endif %}
-		
+		<hr>	
 	{% empty %}
 
 		<p>No comments here yet :(</p>
