@@ -82,6 +82,12 @@
 			/* margin-right: 7px; */
 			/* border-right: 1px solid #e8e8e8; */
 		}
+	
+		.disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
 	</style>
 
 {% endblock css %}
@@ -123,17 +129,17 @@
 		{% if form %}
 			<!--a id="comment-{{ comment.id }}"></a-->
 
-			<div class="button-container">
+			<div class="button-container" id="button-container-{{ comment.id }}">
 				<a class="comment" 
 				onclick="return show_comments_form({{ comment.id }})">
 				<button class="reply">Write reply</button></a>
-				<button class="save">Save</button>
+				<button class="save disabled">Save</button>
 			</div>
 
 		{% endif %}
 
 		</div>
-		<div style="clear: both;"></div>
+		<div style="clear:both;"></div>
 
 	{% empty %}
 
@@ -177,11 +183,16 @@
 				comment_id = "comment-" + comment_id
 			}
 
-			document.getElementById("comments-container")
+			var selected_comment = document.getElementById(comment_id)
+			debugger	
+			selected_comment
 				.insertBefore(
-						document.getElementById("comment_form"),
-						document.getElementById(comment_id).nextSibling
-				)
+					document.getElementById("comment_form"),
+					selected_comment
+						.getElementsByClassName("button-container")[0]
+			)
+
+
 		}
 
 	</script>
