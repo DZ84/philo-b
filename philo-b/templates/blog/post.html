@@ -44,6 +44,21 @@
 			margin: 0;
 		}
 
+		a > button {
+			background-color: #b8b8b8;
+			border: none;
+			margin-right: 0 !important;
+			padding: 13px 25px;
+
+			text-decoration: none;
+			display: inline-block;
+			
+			/*	for text 
+				color: white; 
+			 */
+			font-size: 16px;
+		}
+
 	</style>
 
 {% endblock css %}
@@ -75,7 +90,7 @@
 	<hr class="separator-commentsection">
 	{% for comment in comments %}
 
-		<div class="comment-layout" id="comment-{{ comment.id }}">
+		<div class="comment-layout">
 			<div class="user-info">
 				<strong>{{ comment.author_id }}</strong></div>
 			<div class="date">{{ comment.pub_date }}</div>
@@ -84,9 +99,10 @@
 		</div>
 
 		{% if form %}
-
-			<a class="button post reply" onclick="return show_comments_form({{ comment.id }})">
-				<button>Post a Reply</button></a>
+				<a class="comment" 
+				onclick="return show_comments_form({{ comment.id }})"
+				id="comment-{{ comment.id }}">
+				<button>Reply</button></a>
 
 		{% endif %}
 
@@ -103,8 +119,8 @@
 			<button type="submit" class="save">Save</button>
 		</form>
 
-		<a class="button post comment" onclick="return show_comments_form('comment')">
-			<button>Post a comment</button></a>
+		<a class="comment new" onclick="return show_comments_form('comment')">
+			<button>New comment</button></a>
 
 	{% else %}
 
