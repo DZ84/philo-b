@@ -99,6 +99,7 @@
 		}
 	
 		.comment-instructions {
+			width: 100%;
 			text-align: left;
 			font-weight: bold;
 			list-style-type: square;
@@ -152,7 +153,8 @@
 				<a class="comment" 
 				onclick="return show_comments_form({{ comment.id }})">
 				<button class="reply">Write reply</button></a>
-				<button class="save disabled" onclick="submit_form();">Save</button>
+				<!--button class="save disabled" onclick="submit_form();">Save</button-->
+				<button class="save disabled">Save</button>
 			</div>
 
 		{% endif %}
@@ -219,6 +221,7 @@
 				var previous_save_button = document.getElementById("save-enabled")	
 				previous_save_button.className = "save disabled"
 				previous_save_button.id = ""
+				previous_save_button.onclick = ""
 			} catch(e) {
 				console.log("yeah yeah")
 			}
@@ -233,11 +236,11 @@
 					document.getElementById("comment_form"),
 					new_form_position 
 			)
-			
+			new_save_button.onclick = submit_form			
 			new_save_button.className = "save"
 			new_save_button.id = "save-enabled"
 		}
-		
+
 		function submit_form() {
 			document.getElementById("comment_form").submit()
 		}
