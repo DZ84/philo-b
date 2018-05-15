@@ -55,6 +55,10 @@ def add_comment(request, post_id):
         # comment.author_id = auth_user # auth.get_user(request)
         comment.author_id = auth.get_user(request)
         comment.content = form.cleaned_data['comment_area']
+ 
+        determine_first()
+        determine_last()
+
         comment.save()
 
         # Django does not allow to see the comments on the ID, we do not save it,
@@ -67,7 +71,46 @@ def add_comment(request, post_id):
         except ObjectDoesNotExist:
             comment.path.append(comment.id)
 
-        comment.save()
+        determine_first()
+        determine_last()
 
+        comment.save()
     return redirect(post.get_absolute_url())
+
+def determine_first():
+    ordered_comments = Comment.objects.all().order_by('path')
+     
+    for index, comment in enumerate(ordered_comments[1:], 1):
+        spot = index-1
+        if (len(comment.path) <= len(ordered_comments[spot].path)): 
+            comment.is_first = True
+            continue 
+        
+        comment.is_first = False
+    ordered_comments[0].is_first = True
+
+def determine_last():
+    ordered_comments = Comment.objects.all().order_by('path')
+    
+    for index, comment in enumerate(ordered_comments[1:], 1):
+        spot = index-1
+        if (len(comment.path) > len(ordered_comments[spot].path)): 
+            ordered_comments[index-1].is_last = False
+            continue 
+
+        ordered_comments[index-1].is_last = True
+    ordered_comments[spot+1].is_last = True
+
+# def determine_last():
+# 
+#     ordered_comments = Comment.objects.all().order_by('path')
+#     
+#     for index, comment in enumerate(ordered_comments[-2:1]):
+#         if (len(comment.path) <= len(ordered_comments[index-1].path)): 
+# 
+#             ordered_comments[index-1].is_last = True 
+#             continue 
+# 
+#         ordered_comments[index-1].is_last = False
+#     ordered_comments[-1].is_last = True
 
