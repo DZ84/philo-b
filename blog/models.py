@@ -30,12 +30,30 @@ class Comment(models.Model):
     # author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     content = models.TextField('Comment', default="oooooooooooooooooooooooook")
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)
-    is_last = models.BooleanField(default=True)
-    is_first = models.BooleanField()
+    is_last = models.NullBooleanField()
+    is_first = models.NullBooleanField()
 
     def __str__(self):
         return self.content[0:200]
 
+    def set_last(self, value):
+
+        if (self.is_last == value):
+            return
+
+        self.is_last = value
+        self.save()
+        return 
+ 
+    def set_first(self, value):
+        
+        if (self.is_first == value):
+            return
+
+        self.is_first = value
+        self.save()
+        return 
+       
 #    def get_offset(self):
 #        level = len(self.path) - 1
 #        if level > 0:

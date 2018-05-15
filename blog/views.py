@@ -56,9 +56,6 @@ def add_comment(request, post_id):
         comment.author_id = auth.get_user(request)
         comment.content = form.cleaned_data['comment_area']
  
-        determine_first()
-        determine_last()
-
         comment.save()
 
         # Django does not allow to see the comments on the ID, we do not save it,
@@ -83,11 +80,11 @@ def determine_first():
     for index, comment in enumerate(ordered_comments[1:], 1):
         spot = index-1
         if (len(comment.path) <= len(ordered_comments[spot].path)): 
-            comment.is_first = True
+            comment.set_first(True)
             continue 
         
-        comment.is_first = False
-    ordered_comments[0].is_first = True
+        comment.set_first(False)
+    ordered_comments[0].set_first(True)
 
 def determine_last():
     ordered_comments = Comment.objects.all().order_by('path')
@@ -95,11 +92,11 @@ def determine_last():
     for index, comment in enumerate(ordered_comments[1:], 1):
         spot = index-1
         if (len(comment.path) > len(ordered_comments[spot].path)): 
-            ordered_comments[index-1].is_last = False
+            ordered_comments[index-1].set_last(False)
             continue 
 
-        ordered_comments[index-1].is_last = True
-    ordered_comments[spot+1].is_last = True
+        ordered_comments[index-1].set_last(True)
+    ordered_comments[spot+1].set_last(True)
 
 # def determine_last():
 # 

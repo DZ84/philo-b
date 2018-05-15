@@ -143,12 +143,13 @@
 		<div class="comment-layout" id="comment-{{ comment.id }}">
 			<div class="user-info">
 				<strong>{{ comment.author_id }}</strong></div>
+				<div><strong>{{ comment.path }}</strong></div>
 			<div class="date">{{ comment.pub_date }}</div>
 			<hr class="separator-info">
 			<p>{{ comment.content|linebreaks }}</p>
 
-		{% if form %}
-
+		{% if form and comment.is_last %}
+			
 			<div class="button-container">
 				<a class="comment" 
 				onclick="return show_comments_form({{ comment.id }})">
