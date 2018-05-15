@@ -28,6 +28,20 @@
 			background: #b8b8b8;		
 		}
 
+		.comment-layout.False {
+			/* play around with width and
+			   margin left and right
+			   to adjust the comment box
+			   look
+			   width: 80%;
+			*/
+			margin: 1px auto 0;
+			padding: 10px;
+			background: #b8b8b8;		
+		}
+
+
+
 		.comment-layout > .user-info,	
 		.comment-layout > .date {
 			text-align: left;	
@@ -139,8 +153,8 @@
 {% block comments %}
 	<hr class="separator-commentsection">
 	{% for comment in comments %}
-
-		<div class="comment-layout" id="comment-{{ comment.id }}">
+	
+		<div class="comment-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
 			<div class="user-info">
 				<strong>{{ comment.author_id }}</strong></div>
 				<div><strong>{{ comment.path }}</strong></div>
