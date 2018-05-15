@@ -97,6 +97,16 @@
 			max-height: 25em;
 			padding: 0;
 		}
+	
+		.comment-instructions {
+			text-align: left;
+			font-weight: bold;
+			list-style-type: square;
+		}
+
+		.comment-instructions ul {
+			list-style-type: square;
+		}
 
 	</style>
 
@@ -163,6 +173,15 @@
 				{{ form.as_p }}
 			</div>
 			<!--button type="submit" class="save">Save</button-->
+			<div class="comment-instructions">
+				<ul>
+					Instructions:<br/>
+					<li>layout is not fully maintained, for example: 
+					consecutive spaces are shown as one single space, 
+					as are new lines/enters/breaks.
+					<li>html code is read as plaintext.
+				</ul>
+			</div>
 		</form>
 
 		<a class="comment new" onclick="return show_comments_form('comment')">
