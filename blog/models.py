@@ -13,8 +13,6 @@ class Blog(models.Model):
     introduction = models.TextField(default='no introduction')
     body = models.TextField()
     posted = models.DateTimeField(db_index=True, auto_now_add=True)
-    # edited = models.DateTimeField(db_index=True, auto_now_add=True) # needs to be adjusted 
-    # posted can be different from created
 
     def get_absolute_url(self):
         return reverse('post', kwargs={ 'slug': self.slug, 'post_id': self.id })
@@ -58,19 +56,3 @@ class Comment(models.Model):
         self.save()
         return 
       
-#    def get_offset(self):
-#        level = len(self.path) - 1
-#        if level > 0:
-#            level = 1
-#            return level
-#
-#    def is_last(self):
-
-
-
-#     def get_col(self)
-#         level = len(self.path) - 1
-#         if level > 5:
-#             level = 5
-#         return 12 - level
-

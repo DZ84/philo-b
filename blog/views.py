@@ -10,7 +10,6 @@ from django.template.context_processors import csrf
  
 from blog.forms import Comment_Form 
 from blog.models import Blog, Comment
-# from config.settings.base import AUTH_USER_MODEL as auth_user 
 
 class Overview(ListView):
     
@@ -24,13 +23,6 @@ class Post(View):
      
     def get(self, request, *args, **kwargs):
         post = get_object_or_404(Blog, id=self.kwargs['post_id'])
-
-
-        determine_last(post)
-        cleanup_stuff(self)
-
-
-
         context = {}
         context.update(csrf(request))
         # user = auth_user # auth.get_user(request)
@@ -82,38 +74,10 @@ def add_comment(request, post_id):
 
     return redirect(post.get_absolute_url())
 
-# def determine_first():
-#     ordered_comments = Comment.objects.all().order_by('path')
-#      
-#     for index, comment in enumerate(ordered_comments[1:], 1):
-#         spot = index-1
-#         if (len(comment.path) <= len(ordered_comments[spot].path)): 
-#             comment.set_first(True)
-#             continue 
-#         
-#         comment.set_first(False)
-#     ordered_comments[0].set_first(True)
-
 def update_first_of_all():
     # just for updating all after changing the code
     for comment in Comment.objects.all():
         comment.det_set_first()
-    return
-
-def cleanup_stuff(self):
-
-    var = Comment.objects.all().filter(path=[27, 63])
-    
-    post = get_object_or_404(Blog, id=self.kwargs['post_id'])
-
-    postset = post.comment_set.all().order_by('path')
- 
-    for post in postset:
-        print("is_last: {}, path: {}".format(post.is_last, post.path))
-
-    import pdb
-    pdb.set_trace()
-    
     return
 
 def determine_last(post_object):
@@ -130,4 +94,20 @@ def determine_last(post_object):
 
         ordered_comments[index-1].set_last(True)
     ordered_comments[spot+1].set_last(True)
+
+# def cleanup_stuff(self):
+# 
+#     var = Comment.objects.all().filter(path=[27, 63])
+#     
+#     post = get_object_or_404(Blog, id=self.kwargs['post_id'])
+# 
+#     postset = post.comment_set.all().order_by('path')
+#  
+#     for post in postset:
+#         print("is_last: {}, path: {}".format(post.is_last, post.path))
+# 
+#     import pdb
+#     pdb.set_trace()
+#     
+#     return
 
