@@ -24,6 +24,13 @@ class Post(View):
      
     def get(self, request, *args, **kwargs):
         post = get_object_or_404(Blog, id=self.kwargs['post_id'])
+
+
+        determine_last(post)
+        cleanup_stuff(self)
+
+
+
         context = {}
         context.update(csrf(request))
         # user = auth_user # auth.get_user(request)
@@ -68,12 +75,11 @@ def add_comment(request, post_id):
         except ObjectDoesNotExist:
             comment.path.append(comment.id)
 
+        comment.save()
+
         comment.det_set_first()
         determine_last(post)
 
-        # update_first_of_all()
-
-        comment.save()
     return redirect(post.get_absolute_url())
 
 # def determine_first():
@@ -94,10 +100,17 @@ def update_first_of_all():
         comment.det_set_first()
     return
 
-def cleanup_stuff():
+def cleanup_stuff(self):
 
     var = Comment.objects.all().filter(path=[27, 63])
     
+    post = get_object_or_404(Blog, id=self.kwargs['post_id'])
+
+    postset = post.comment_set.all().order_by('path')
+ 
+    for post in postset:
+        print("is_last: {}, path: {}".format(post.is_last, post.path))
+
     import pdb
     pdb.set_trace()
     
