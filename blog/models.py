@@ -55,4 +55,4 @@ class Comment(models.Model):
         self.is_last = value
         self.save()
         return 
-      
+

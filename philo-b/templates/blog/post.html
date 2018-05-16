@@ -19,16 +19,17 @@
 		#comments-container {
 			width: 80%;
 			margin: 0 auto;
+			text-align: center;
 		}
 
-		.comment-layout {
+		.reply-layout {
 			width: 100%;
 			margin: 10px auto 0;
 			padding: 10px;
 			background: #b8b8b8;		
 		}
 
-		.comment-layout.False {
+		.reply-layout.False {
 			/* play around with width and
 			   margin left and right
 			   to adjust the comment box
@@ -40,12 +41,12 @@
 			background: #b8b8b8;		
 		}
 
-		.comment-layout > .user-info,	
-		.comment-layout > .date {
+		.reply-layout > .user-info,	
+		.reply-layout > .date {
 			text-align: left;	
 		}
 
-		.comment-layout > .separator-info {
+		.reply-layout > .separator-info {
 			margin: 0 0 10px;
 			width: auto;
 			border: none;
@@ -55,7 +56,7 @@
 			height: 1px;
 		}
 
-		.comment-layout > p {
+		.reply-layout > p {
 			text-align: left;
 			margin: 0;
 			overflow: hidden;
@@ -95,6 +96,28 @@
 			/* border-right: 1px solid #e8e8e8; */
 		}
 	
+		.comment-layout {
+			width: 100%;
+			height: auto;
+			margin: 0 auto;
+
+			text-align: center;
+			background: green;
+			border: 3px solid orange;
+		}
+
+		.comment-layout > .button-container {
+			float: none;
+			margin: 0 auto;
+		}
+		
+		.comment-layout > .button-container .reply,
+		.comment-layout > .button-container .save {
+			/* margin-left: 50%;
+			 * white-space: nowrap;
+			 */
+		}
+
 		.disabled {
 			opacity: 0.5;
 			cursor: not-allowed;
@@ -152,7 +175,7 @@
 	<hr class="separator-commentsection">
 	{% for comment in comments %}
 	
-		<div class="comment-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
+		<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
 			<div class="user-info">
 				<strong>{{ comment.author_id }}</strong></div>
 				<div><strong>{{ comment.path }}</strong></div>
@@ -165,7 +188,7 @@
 			<div class="button-container">
 				<a class="comment" 
 				onclick="return show_comments_form({{ comment.id }})">
-				<button class="reply">Write reply</button></a>
+					<button class="reply">Write reply</button></a>
 				<!--button class="save disabled" onclick="submit_form();">Save</button-->
 				<button class="save disabled">Save</button>
 			</div>
@@ -187,7 +210,6 @@
 			<div id="comment-area-wrapper">
 				{{ form.as_p }}
 			</div>
-			<!--button type="submit" class="save">Save</button-->
 			<div class="comment-instructions">
 				<ul>
 					Instructions:<br/>
@@ -198,9 +220,25 @@
 				</ul>
 			</div>
 		</form>
+		
+		<div class="comment-layout" id="comment-new">
+			<!--a class="comment new" 
+			   onclick="return show_comments_form('comment-new')">
+			   <button>New comment</button-->
+		
 
-		<a class="comment new" onclick="return show_comments_form('comment')">
-			<button>New comment</button></a>
+
+			<div class="button-container">
+				<a class="comment new" 
+				onclick="return show_comments_form('comment-new')">
+					<button class="reply">Write new comment</button></a>
+				<!--button class="save disabled" onclick="submit_form();">Save</button-->
+				<button class="save">Save</button>
+			</div>
+
+
+
+		</div>
 
 	{% else %}
 
@@ -221,7 +259,7 @@
 	<script>
 
 		function show_comments_form(comment_id) {
-			if (comment_id == 'comment') {
+			if (comment_id == 'comment-new') {
 				document.getElementById("id_parent_comment").value = ''
 			} else {
 				document.getElementById("id_parent_comment").value = comment_id
@@ -229,7 +267,7 @@
 			}
 
 			// disable previous save button
-			// try catch needs to, but is now, because first one is not yet defined
+			// try catch needs to be removed, but is now, because first (save button?) one is not yet defined
 			try {
 				var previous_save_button = document.getElementById("save-enabled")	
 				previous_save_button.className = "save disabled"
