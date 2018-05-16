@@ -68,26 +68,46 @@ def add_comment(request, post_id):
         except ObjectDoesNotExist:
             comment.path.append(comment.id)
 
-        determine_first()
-        determine_last()
+        comment.det_set_first()
+        determine_last(post)
+
+        # update_first_of_all()
 
         comment.save()
     return redirect(post.get_absolute_url())
 
-def determine_first():
-    ordered_comments = Comment.objects.all().order_by('path')
-     
-    for index, comment in enumerate(ordered_comments[1:], 1):
-        spot = index-1
-        if (len(comment.path) <= len(ordered_comments[spot].path)): 
-            comment.set_first(True)
-            continue 
-        
-        comment.set_first(False)
-    ordered_comments[0].set_first(True)
+# def determine_first():
+#     ordered_comments = Comment.objects.all().order_by('path')
+#      
+#     for index, comment in enumerate(ordered_comments[1:], 1):
+#         spot = index-1
+#         if (len(comment.path) <= len(ordered_comments[spot].path)): 
+#             comment.set_first(True)
+#             continue 
+#         
+#         comment.set_first(False)
+#     ordered_comments[0].set_first(True)
 
-def determine_last():
-    ordered_comments = Comment.objects.all().order_by('path')
+def update_first_of_all():
+    # just for updating all after changing the code
+    for comment in Comment.objects.all():
+        comment.det_set_first()
+    return
+
+def cleanup_stuff():
+
+    var = Comment.objects.all().filter(path=[27, 63])
+    
+    import pdb
+    pdb.set_trace()
+    
+    return
+
+def determine_last(post_object):
+    
+    ordered_comments = post_object.comment_set.all().order_by('path')
+
+    # ordered_comments = Comment.objects.all().order_by('path')
     
     for index, comment in enumerate(ordered_comments[1:], 1):
         spot = index-1
@@ -97,17 +117,4 @@ def determine_last():
 
         ordered_comments[index-1].set_last(True)
     ordered_comments[spot+1].set_last(True)
-
-# def determine_last():
-# 
-#     ordered_comments = Comment.objects.all().order_by('path')
-#     
-#     for index, comment in enumerate(ordered_comments[-2:1]):
-#         if (len(comment.path) <= len(ordered_comments[index-1].path)): 
-# 
-#             ordered_comments[index-1].is_last = True 
-#             continue 
-# 
-#         ordered_comments[index-1].is_last = False
-#     ordered_comments[-1].is_last = True
 
