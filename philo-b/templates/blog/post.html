@@ -24,7 +24,7 @@
 
 		.reply-layout {
 			width: 100%;
-			margin: 10px auto 0;
+			margin: 20px auto 0;
 			padding: 3px;
 			background: #b8b8b8;		
 		}
@@ -37,13 +37,19 @@
 			   width: 80%;
 			*/
 			margin: 1px auto 0;
-			padding: 10px;
 			background: #b8b8b8;		
 		}
 
+		.reply-layout > .post-info,
 		.reply-layout > .user-info,	
 		.reply-layout > .date {
 			text-align: left;	
+		}
+		.reply-layout > .post-info {
+			width: 100%;
+			margin: 0 -3px 0;
+			background: lightgreen;
+			padding: 0 3px;
 		}
 
 		.reply-layout > .separator-info {
@@ -59,6 +65,7 @@
 		.reply-layout > p {
 			text-align: left;
 			margin: 0;
+			padding: 7px 0 7px;
 			overflow: hidden;
 		}
 
@@ -67,7 +74,7 @@
 			height: auto;
 			width: auto;
 			padding: 0;
-			margin-top: 10px;
+			margin-top: 3px; /* this is dependent on the padding of the comment area */
 			margin-right: -3px;
 			/* border-top: 50px solid #686868; */
 		}
@@ -111,6 +118,7 @@
 
 		.comment-layout > .button-container {
 			width: 100%;
+			margin-top: 8px;
 			display: flex;
 			justify-content: center;
 		}
@@ -118,7 +126,8 @@
 		.comment-layout > .button-container > a > .reply,
 		.comment-layout > .button-container > a > .save {
 		}
-
+		
+		/* for savebuttons that are not relevant */
 		.disabled {
 			opacity: 0.5;
 			cursor: not-allowed;
@@ -128,6 +137,7 @@
 			padding-top: 4em;
 		}
 		
+		/* layout is a little different for new comments: */
 		#comment-new #form-area-wrapper {
 			padding: 0;
 			margin-top: -10px;
@@ -148,7 +158,9 @@
 
 		.form-userinfo {
 			text-align: left;
-			height: 3em;
+			height: 2em;
+			line-height: 2em;
+			margin-left: 5px;
 		}
 
 		.form-username {
@@ -211,10 +223,12 @@
 	{% for comment in comments %}
 	
 		<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
-			<div class="user-info">
-				<strong>{{ comment.author_id }}</strong></div>
-				<div><strong>{{ comment.path }}</strong></div>
-			<div class="date">{{ comment.pub_date }}</div>
+			<div class="post-info">
+				<div class="user-info">
+					<strong>{{ comment.author_id }}</strong></div>
+					<div style="text-align:center;"><strong>{{ comment.path }}</strong></div>
+				<div class="date">{{ comment.pub_date }}</div>
+			</div>
 			<hr class="separator-info">
 			<p>{{ comment.content|linebreaks }}</p>
 
@@ -241,11 +255,6 @@
 	{% if form %}
 		
 		<div class="comment-layout" id="comment-new">
-			<!--a class="comment new" 
-			   onclick="return show_comments_form('comment-new')">
-			   <button>New comment</button-->
-		
-
 
 			<form id="form_section" action="{% url 'add_comment' post.id %}" method="POST">
 				{% csrf_token %}
