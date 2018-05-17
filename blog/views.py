@@ -37,6 +37,7 @@ class Post(View):
         # We add form only if the user is authenticated
         if user.is_authenticated:
             context['form'] = self.comment_form
+            context['user'] = user # is this a safe move? think so, if django allows it so easily
 
         return render_to_response(template_name=self.template_name, context=context)
 

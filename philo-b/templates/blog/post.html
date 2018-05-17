@@ -124,6 +124,38 @@
 			cursor: not-allowed;
 		}
 
+		#form-area-wrapper {
+			padding-top: 4em;
+		}
+		
+		#comment-new #form-area-wrapper {
+			padding: 0;
+			margin-top: -10px;
+		}
+		
+		#comment-new .separator-form {
+			border: none;
+			background-color: none;
+			height: 0;
+		}
+
+		.separator-form {
+			width: 100%;
+			border: none;
+			background-color: #E8E8E8;
+			height: 1px;
+		}
+
+		.form-userinfo {
+			text-align: left;
+			height: 3em;
+		}
+
+		.form-username {
+			text-align: left;
+			font-weight: bold;
+		}
+
 		#id_comment_area {
 			width: 100%;
 			height: 12em;
@@ -136,14 +168,14 @@
 			border: 0;
 		}
 	
-		.comment-instructions {
+		.form-instructions {
 			width: 100%;
 			text-align: left;
 			font-weight: bold;
 			list-style-type: square;
 		}
 
-		.comment-instructions ul {
+		.form-instructions ul {
 			list-style-type: square;
 		}
 
@@ -215,12 +247,16 @@
 		
 
 
-			<form id="comment_form" action="{% url 'add_comment' post.id %}" method="POST">
+			<form id="form_section" action="{% url 'add_comment' post.id %}" method="POST">
 				{% csrf_token %}
-				<div id="comment-area-wrapper">
+				<div id="form-area-wrapper">
+					<hr class="separator-form">
+					<div class="form-userinfo">Write response with username 
+						<span class="form-username">{{ user.username }}</span>:
+					</div>
 					{{ form.as_p }}
 				</div>
-				<div class="comment-instructions">
+				<div class="form-instructions">
 					<ul>
 						Instructions:<br/>
 						<li>layout is not fully maintained, for example: 
@@ -238,8 +274,6 @@
 				<!--button class="save disabled" onclick="submit_form();">Save</button-->
 				<button class="save" id="save-enabled">Save</button>
 			</div>
-
-
 
 		</div>
 
@@ -287,7 +321,7 @@
 				.getElementsByClassName("save")[0]
 			
 			selected_comment.insertBefore(
-					document.getElementById("comment_form"),
+					document.getElementById("form_section"),
 					new_form_position 
 			)
 			new_save_button.onclick = submit_form			
@@ -296,7 +330,7 @@
 		}
 
 		function submit_form() {
-			document.getElementById("comment_form").submit()
+			document.getElementById("form_section").submit()
 		}
 
 	</script>
