@@ -25,7 +25,7 @@
 		.reply-layout {
 			width: 100%;
 			margin: 10px auto 0;
-			padding: 10px;
+			padding: 3px;
 			background: #b8b8b8;		
 		}
 
@@ -68,7 +68,7 @@
 			width: auto;
 			padding: 0;
 			margin-top: 10px;
-			margin-right: -10px;
+			margin-right: -3px;
 			/* border-top: 50px solid #686868; */
 		}
 
@@ -99,23 +99,24 @@
 		.comment-layout {
 			width: 100%;
 			height: auto;
-			margin: 0 auto;
 
-			text-align: center;
-			background: green;
-			border: 3px solid orange;
+			background: #b8b8b8;
+
+			/* this border seems to hold some stuff
+			   together on the top
+			   */
+			margin: 20px 0;
+			padding: 8px 3px;
 		}
 
 		.comment-layout > .button-container {
-			float: none;
-			margin: 0 auto;
+			width: 100%;
+			display: flex;
+			justify-content: center;
 		}
-		
-		.comment-layout > .button-container .reply,
-		.comment-layout > .button-container .save {
-			/* margin-left: 50%;
-			 * white-space: nowrap;
-			 */
+	
+		.comment-layout > .button-container > a > .reply,
+		.comment-layout > .button-container > a > .save {
 		}
 
 		.disabled {
@@ -130,7 +131,9 @@
 			min-width: 100%;
 			min-height: 5em;
 			max-height: 25em;
+			margin: 0;
 			padding: 0;
+			border: 0;
 		}
 	
 		.comment-instructions {
@@ -204,22 +207,6 @@
 
 	{% endfor %}
 	{% if form %}
-
-		<form id="comment_form" action="{% url 'add_comment' post.id %}" method="POST">
-			{% csrf_token %}
-			<div id="comment-area-wrapper">
-				{{ form.as_p }}
-			</div>
-			<div class="comment-instructions">
-				<ul>
-					Instructions:<br/>
-					<li>layout is not fully maintained, for example: 
-					consecutive spaces are shown as one single space, 
-					as are new lines/enters/breaks.
-					<li>html code is read as plaintext.
-				</ul>
-			</div>
-		</form>
 		
 		<div class="comment-layout" id="comment-new">
 			<!--a class="comment new" 
@@ -228,12 +215,28 @@
 		
 
 
+			<form id="comment_form" action="{% url 'add_comment' post.id %}" method="POST">
+				{% csrf_token %}
+				<div id="comment-area-wrapper">
+					{{ form.as_p }}
+				</div>
+				<div class="comment-instructions">
+					<ul>
+						Instructions:<br/>
+						<li>layout is not fully maintained, for example: 
+						consecutive spaces are shown as one single space, 
+						as are new lines/enters/breaks.
+						<li>html code is read as plaintext.
+					</ul>
+				</div>
+			</form>
+
 			<div class="button-container">
 				<a class="comment new" 
 				onclick="return show_comments_form('comment-new')">
 					<button class="reply">Write new comment</button></a>
 				<!--button class="save disabled" onclick="submit_form();">Save</button-->
-				<button class="save">Save</button>
+				<button class="save" id="save-enabled">Save</button>
 			</div>
 
 
