@@ -8,9 +8,15 @@ from .base import env
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
-DEBUG = True
+# DEBUG = True
+DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env("DJANGO_SECRET_KEY", default="ZUU51i8ll7WwvJa905Sy3Mwana6VDARZHvETmUZrSoCbQ9bOfVHZcvjfoZ9wGEYt")
+# SECRET_KEY = env("DJANGO_SECRET_KEY", default="ZUU51i8ll7WwvJa905Sy3Mwana6VDARZHvETmUZrSoCbQ9bOfVHZcvjfoZ9wGEYt")
+import os
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'ZUU51i8ll7WwvJa905Sy3Mwana6VDARZHvETmUZrSoCbQ9bOfVHZcvjfoZ9wGEYt')
+
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#test-runner
 TEST_RUNNER = "django.test.runner.DiscoverRunner"
 

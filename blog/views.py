@@ -20,11 +20,22 @@ class Post(View):
 
     template_name = 'blog/post.html'
     comment_form = Comment_Form 
-     
+
     def get(self, request, *args, **kwargs):
         post = get_object_or_404(Blog, id=self.kwargs['post_id'])
         context = {}
-        context.update(csrf(request))
+
+
+
+        # import os
+        # print("printing HOME:" + str(os.environ.get('HOME')))
+        # print("printing DJANGO_SECRET_KEY:" + str(os.environ.get('DJANGO_SECRET_KEY')))
+        # print("printing DJANGO_DEBUG:" + str(os.environ.get('DJANGO_DEBUG')))
+
+
+
+
+        # context.update(csrf(request))
         # user = auth_user # auth.get_user(request)
         user =  auth.get_user(request)
         context['post'] = post
