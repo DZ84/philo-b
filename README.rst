@@ -1,7 +1,7 @@
 philo-b
 =======
 
-blog for me popping off about daily thought inside a realm I call philosophy
+blog for me to pop off about daily thoughts that I consider to be inside the realm of philosophy
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
