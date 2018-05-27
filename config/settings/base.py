@@ -38,6 +38,8 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+                #TODO: these will have to be set with os.getenv("") functions
+                #      should also look at the secret key in local (again)
 DATABASES = {
     #'default': env.db('DATABASE_URL', default='postgres:///philo-b'),
     'default': {
@@ -46,12 +48,8 @@ DATABASES = {
         'USER': 'mysuperuser',  # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
         'PASSWORD': 'strong and secure', # needs to be changed after deployment
         'HOST': 'localhost',
-        'PORT': '',
+        'PORT': '5432',
     }
-
-    # first superuser:
-    # initial
-    # okokokok!
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 

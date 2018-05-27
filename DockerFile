@@ -1,0 +1,30 @@
+# from here: https://rehalcon.blogspot.mx/2018/03/dockerize-your-django-app-for-local.html	
+
+FROM python: 3.5.2-slim
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /philo-b
+ADD . /phile-b
+
+RUN apt-get update
+
+RUN pip install -r /requirements/base.txt
+RUN pip install -r /requirements/local.txt
+#RUN pip install -r /requirements/production.txt
+
+EXPOSE 8000
+ENV DB_NAME philob ENV USERNAME mysuperuser ENV HOSTNAME localhost ENV PORT 5432 # ENV TOKEN_FOR_MY_APP ............ #dont think I have this...?
+
+CMD ["/philo-b/manage.py", "runserver", "0.0.0.0:8000"]
+
+
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'philob',
+#        'USER': 'mysuperuser',  # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
+#        'PASSWORD': 'strong and secure', # needs to be changed after deployment
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }
+
+
+
