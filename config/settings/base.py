@@ -44,11 +44,13 @@ DATABASES = {
     #'default': env.db('DATABASE_URL', default='postgres:///philo-b'),
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'philob',
-        'USER': 'mysuperuser',  # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-        'PASSWORD': 'strong and secure', # needs to be changed after deployment
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': environ['DB_NAME'],
+        # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
+        'USER': environ['DB_USER'],  
+        # needs to be changed after deployment, well, before deployment actually
+        'PASSWORD': environ['DB_PASS'], 
+        'HOST': environ['DB_SERVICE'],
+        'PORT': environ['DB_PORT'],
     }
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
@@ -207,6 +209,7 @@ TEMPLATES = [
     },
 ]
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+# don't think I need this now
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # FIXTURES
