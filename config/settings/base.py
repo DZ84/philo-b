@@ -3,6 +3,7 @@ Base settings to build other settings files upon.
 """
 
 import environ
+import os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (philo-b/config/settings/base.py - 3 = philo-b/)
 APPS_DIR = ROOT_DIR.path('philo-b')
@@ -40,19 +41,40 @@ USE_TZ = True
 
                 #TODO: these will have to be set with os.getenv("") functions
                 #      should also look at the secret key in local (again)
+
+os.environ['DATABASE_URL'] = 'postgres:///philo-b'
 DATABASES = {
     #'default': env.db('DATABASE_URL', default='postgres:///philo-b'),
     'default': {
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': os.environ['DB_NAME'],
+        # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
+        # 'USER': os.environ['DB_USER'],  
+        # # needs to be changed after deployment, well, before deployment actually
+        # 'PASSWORD': os.environ['DB_PASS'], 
+        # 'HOST': os.environ['DB_SERVICE'],
+        # 'PORT': os.environ['DB_PORT'],
+
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': environ['DB_NAME'],
+        'NAME': 'philob',
         # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-        'USER': environ['DB_USER'],  
+        'USER': 'su3',  
         # needs to be changed after deployment, well, before deployment actually
-        'PASSWORD': environ['DB_PASS'], 
-        'HOST': environ['DB_SERVICE'],
-        'PORT': environ['DB_PORT'],
+        'PASSWORD': 'okokokok', 
+        'HOST': 'localhost',
+        'PORT': 5432,
+
     }
 }
+
+
+# SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY='+SBx<N+xf#)MBHQP?4=I3C:!PdD"95c3>_Ts)Z=x5kN}V,Bnxu'
+os.environ['DJANGO_SECRET_KEY'] = SECRET_KEY
+
+#    import pdb
+#    pdb.set_trace()
+
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # URLS
