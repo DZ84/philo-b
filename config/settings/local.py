@@ -5,8 +5,11 @@ from .base import env
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool('DJANGO_DEBUG', default=True)
+DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='ogrbE1ApJFfJEFQyDIXwrlE6lf84k4ATQHbmtlt4Jl92RxdUHdfxUP6ZiMMxcIpV')
+
+# !!! Why can I not disable this, it doesn't seem to be used anywhere...?
+SECRET_KEY = env('DJANGO_SECRET_KEY') #, default='ogrbE1ApJFfJEFQyDIXwrlE6lf84k4ATQHbmtlt4Jl92RxdUHdfxUP6ZiMMxcIpV')
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
     "localhost",

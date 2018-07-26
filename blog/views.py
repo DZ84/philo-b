@@ -1,12 +1,12 @@
 from django.views import View
 from django.views.generic.list import ListView
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render #, render_to_response
 from django.contrib import auth
 from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
-from django.template.context_processors import csrf
+# from django.template.context_processors import csrf
  
 from blog.forms import Comment_Form 
 from blog.models import Blog, Comment
@@ -33,9 +33,10 @@ class Post(View):
         # print("printing DJANGO_DEBUG:" + str(os.environ.get('DJANGO_DEBUG')))
 
 
-
+        # for csrf: template.context_processors.csrf or template.RequestContext?
 
         # context.update(csrf(request))
+        # context['update'] = (csrf(request))
         # user = auth_user # auth.get_user(request)
         user =  auth.get_user(request)
         context['post'] = post
@@ -50,7 +51,8 @@ class Post(View):
             context['form'] = self.comment_form
             context['user'] = user # is this a safe move? think so, if django allows it so easily
 
-        return render_to_response(template_name=self.template_name, context=context)
+        # return render_to_response(template_name=self.template_name, context=context)
+        return render(request, self.template_name, context)
 
 @login_required
 @require_http_methods(["POST"])

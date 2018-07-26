@@ -43,34 +43,33 @@ USE_TZ = True
                 #      should also look at the secret key in local (again)
 
 os.environ['DATABASE_URL'] = 'postgres:///philo-b'
+# os.environ['DATABASE_URL'] = 'postgres:///postgres'
 DATABASES = {
     #'default': env.db('DATABASE_URL', default='postgres:///philo-b'),
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': os.environ['DB_NAME'],
-        # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-        # 'USER': os.environ['DB_USER'],  
-        # # needs to be changed after deployment, well, before deployment actually
-        # 'PASSWORD': os.environ['DB_PASS'], 
-        # 'HOST': os.environ['DB_SERVICE'],
-        # 'PORT': os.environ['DB_PORT'],
-
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'philob',
-        # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-        'USER': 'su3',  
-        # needs to be changed after deployment, well, before deployment actually
-        'PASSWORD': 'okokokok', 
-        'HOST': 'localhost',
-        'PORT': 5432,
+
+        'NAME': os.environ['DB_NAME'],
+        # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
+        'USER': os.environ['DB_USER'],  
+        # # needs to be changed after deployment, well, before deployment actually
+        'PASSWORD': os.environ['DB_PASS'], 
+        'HOST': os.environ['DB_HOST'],
+        'PORT': os.environ['DB_PORT'],
+
+        # 'NAME': 'postgres',
+        # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
+        # 'USER': 'postgres',  
+        # # needs to be changed after deployment, well, before deployment actually
+        # 'PASSWORD': .........., 
+        # 'HOST': 'localhost',
+        # 'PORT': 5430,
 
     }
 }
 
 
-# SECRET_KEY = os.environ['SECRET_KEY']
-SECRET_KEY='+SBx<N+xf#)MBHQP?4=I3C:!PdD"95c3>_Ts)Z=x5kN}V,Bnxu'
-os.environ['DJANGO_SECRET_KEY'] = SECRET_KEY
+os.environ['DJANGO_SECRET_KEY'] = os.environ['SECRET_KEY']
 
 #    import pdb
 #    pdb.set_trace()
