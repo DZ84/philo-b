@@ -276,7 +276,7 @@ SOCIALACCOUNT_ADAPTER = 'philo-b.users.adapters.SocialAccountAdapter'
 # https://github.com/pennersr/django-allauth/issues/731
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
 # email host setup
 EMAIL_USE_TLS = True

@@ -21,7 +21,27 @@ class Comment(models.Model):
     
     class Meta:
         db_table = "comments"
-         
+    # plan: 
+    #   - post_id also shouldn't stay cascade. If you delete the post, the
+    #   comments may still be interesting
+    #       - so do what here?
+    #           - same trick as author_id
+    #   - author_id is easier: you can add author name and preserve that 
+    #   on_delete (with set?) and author_id can then be set to default on_delete
+    
+    # -! these solutions all seem very nice, but what if a name gets changed, will
+    # it be changed in the comment model also? seems so, if it listens for delete,
+    # why not for change?
+    # -ok, but that means the info in the other models is also set her, double,
+    # that means it uses too much, correct?
+
+    # question:
+    #   - does it has to be a number?
+
+    #   - can foreignkey be null?
+    #   
+    #   overwrite delete function for users, and set it so it will not be detected?
+
     path = ArrayField(models.IntegerField())
     post_id = models.ForeignKey(Blog, on_delete=models.CASCADE)
     author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE)
