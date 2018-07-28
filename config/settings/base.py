@@ -231,6 +231,7 @@ TEMPLATES = [
 ]
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 # don't think I need this now
+# I think I do, because it seems allauth uses it.
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # FIXTURES
@@ -272,5 +273,18 @@ ACCOUNT_ADAPTER = 'philo-b.users.adapters.AccountAdapter'
 SOCIALACCOUNT_ADAPTER = 'philo-b.users.adapters.SocialAccountAdapter'
 
 
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
+
+# email host setup
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'dzverifydz@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ['ACCOUNT_EMAIL_PASS']
+
+# 
+
 # Your stuff...
 # ------------------------------------------------------------------------------
+
