@@ -244,7 +244,8 @@ FIXTURE_DIRS = (
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+# EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # ADMIN
 # ------------------------------------------------------------------------------
@@ -272,6 +273,7 @@ ACCOUNT_ADAPTER = 'philo-b.users.adapters.AccountAdapter'
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = 'philo-b.users.adapters.SocialAccountAdapter'
 
+# https://github.com/pennersr/django-allauth/issues/731
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
@@ -281,7 +283,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'dzverifydz@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ['ACCOUNT_EMAIL_PASS']
+EMAIL_HOST_PASSWORD = os.environ['ACCOUNT_GMAIL_PASS']
 
 # 
 
