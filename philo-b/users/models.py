@@ -17,16 +17,23 @@ class User(AbstractUser):
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
 
-    def delete(self):
+    def delete(self, *args, **kwargs):
+        
+        print("Opened this delete function")
 
         if self.deleted == False:
             self.deleted = True
+            self.save()
+            print("changed and saved")
             return True
         elif self.deleted == True:
+            print("nothing changed") 
             return True
 
+        # this may need to be saved
+        print("something went wrong")
+        
         return False
-
 
 
 from django.db.models.signals import pre_delete 
@@ -34,9 +41,15 @@ from django.dispatch import receiver
 
 @receiver(pre_delete, sender=User)
 def delete_user(sender, instance, **kwargs):
+
+    print("received a signal")
     
+    print("called before: " + str(instance.deleted))
+
     if instance.delete():
         return
+
+    print("called after: " + str(instance.deleted))
 
     raise NotImplementedError() 
 

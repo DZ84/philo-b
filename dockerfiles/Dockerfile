@@ -9,8 +9,10 @@ ENV PYTHONUNBUFFERED 1
 # you add the whole application. I think this works in layers..?
 
 RUN mkdir /philo-b-docker
-COPY /requirements/base.txt /philo-b-docker/requirements/base.txt
-COPY /requirements/local.txt /philo-b-docker/requirements/local.txt
+# I suspect it would be better to set all the mentioned in these
+# requirement files, and mention them seperately in here.
+COPY ./requirements/base.txt /philo-b-docker/requirements/base.txt
+COPY ./requirements/local.txt /philo-b-docker/requirements/local.txt
 WORKDIR /philo-b-docker
 
 # is this something you want? isn't the whole idea of the docker
@@ -24,10 +26,19 @@ RUN pip install --upgrade pip==10.0.1
 RUN pip install -r /philo-b-docker/requirements/base.txt
 RUN pip install -r /philo-b-docker/requirements/local.txt
 
-ADD . /phile-b-docker/
+# TODO: fix typo
+# this does not seem to be necessary, because the folder is created
+# but without type is also created.
+# this one does not connect to the db, so may not even be used
+ADD . /philo-b-docker/
 
 
-EXPOSE 8000
+
+# I believe you can turn comment this one out also
+EXPOSE 8004
+
+
+
 # ENV DB_NAME philob 
 # ENV USERNAME mysuperuser 
 # ENV HOSTNAME localhost 
@@ -56,6 +67,10 @@ EXPOSE 8000
 # RUN ln -sf /bin/bash /bin/sh
 # RUN useradd -ms /bin/bash  vault
 
+
+
+
+# actually, I dont really know what this does.
 RUN useradd -d /home/ubuntu -ms /bin/bash -g root -G sudo -p ubuntu ubuntu
 USER ubuntu
 WORKDIR /home/ubuntu

@@ -43,6 +43,14 @@ class Comment(models.Model):
     #   overwrite delete function for users, and set it so it will not be detected?
 
     path = ArrayField(models.IntegerField())
+    # NOTE: this is how I understand the CASCADE option now:
+    # -do_nothing is not good, because new ones can be created, meaning a wrong link
+    # so that would give error
+    # -it is probably just a task that models.CASCADE performs
+    # -you can choose on_delete=is NULL or something like that, then that is
+    # the behavior. 
+    # -!! so basically, when either Blog or User is deleted, the CASCADE is called
+    # and the whole instance of Comment is grabbed and deleted.
     post_id = models.ForeignKey(Blog, on_delete=models.CASCADE)
     author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
@@ -55,7 +63,7 @@ class Comment(models.Model):
         return self.content[0:200]
  
     def det_set_first(self):
-        
+
         #import pdb
         #pdb.set_trace()
 
