@@ -25,13 +25,10 @@ class Post(View):
         post = get_object_or_404(Blog, id=self.kwargs['post_id'])
         context = {}
 
-
-
         # import os
         # print("printing HOME:" + str(os.environ.get('HOME')))
         # print("printing DJANGO_SECRET_KEY:" + str(os.environ.get('DJANGO_SECRET_KEY')))
         # print("printing DJANGO_DEBUG:" + str(os.environ.get('DJANGO_DEBUG')))
-
 
         # for csrf: template.context_processors.csrf or template.RequestContext?
 

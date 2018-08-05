@@ -105,6 +105,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'philo-b.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+    # 'philo-b.users.models.User',
     "blog"
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -277,6 +278,7 @@ SOCIALACCOUNT_ADAPTER = 'philo-b.users.adapters.SocialAccountAdapter'
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'users:update'
 
 # email host setup
 EMAIL_USE_TLS = True

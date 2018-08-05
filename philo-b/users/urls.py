@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
@@ -11,4 +12,17 @@ urlpatterns = [
         view=views.UserDetailView.as_view(),
         name="detail",
     ),
+    # url(
+    #     regex=r"^(?P<username>[\w.@+-]+)/$",
+    #     view=views.UserUpdateView.as_view(),
+    #     name="update",
+    # ),    
+    path(
+        '<slug:username>/', 
+        views.UserUpdateView.as_view(), 
+        name="update"
+    ),
+
+
 ]
+
