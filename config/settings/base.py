@@ -106,7 +106,7 @@ LOCAL_APPS = [
     'philo-b.users.apps.UsersConfig',
     # Your stuff: custom apps go here
     # 'philo-b.users.models.User',
-    "blog"
+    'blog'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -230,6 +230,7 @@ TEMPLATES = [
         },
     },
 ]
+
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 # don't think I need this now
 # I think I do, because it seems allauth uses it.
@@ -278,7 +279,26 @@ SOCIALACCOUNT_ADAPTER = 'philo-b.users.adapters.SocialAccountAdapter'
 
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = 'users:update'
+
+from django.urls import reverse_lazy
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('users:update')
+
+# from django.urls import reverse_lazy
+# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
+#                                                             'users:update', 
+#                                                             kwargs={
+#                                                                     'slug': 'self.request.user.username'
+#                                                             })
+
+# import pdb
+# pdb.set_trace()
+
+# from django.urls import reverse
+# uv = __import__('../../../philo-b')
+# from uv.users.views import UserRedirectView
+# APPS_DIR 
+# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse(UserRedirectView)
+
 
 # email host setup
 EMAIL_USE_TLS = True

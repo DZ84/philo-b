@@ -18,11 +18,19 @@ urlpatterns = [
     #     name="update",
     # ),    
     path(
-        '<slug:username>/', 
+        'email_confirmed',
+        # 'bladibla/',  # NOTE: how is a forward slah here giving an error..?
+        # 'email_confirmed/redirect/update', 
         views.UserUpdateView.as_view(), 
         name="update"
     ),
-
-
 ]
 
+# trailing slash in path gives the following error
+
+# Page not found (404)
+# Request Method: GET
+# Request URL:    http://0.0.0.0:8004/users/email_confirmed/
+# Raised by:  *app-name*.users.views.UserDetailView
+# 
+# No user found matching the query
