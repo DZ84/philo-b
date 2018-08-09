@@ -76,6 +76,16 @@ os.environ['DJANGO_SECRET_KEY'] = os.environ['SECRET_KEY']
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
 # URLS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf

@@ -1,5 +1,7 @@
 # from here: https://rehalcon.blogspot.mx/2018/03/dockerize-your-django-app-for-local.html	
 # apparently some of these commands will be overwritten by docker-compose
+#
+# NOTE: start from main django app folder
 
 FROM python:3.5.2-slim
 ENV PYTHONUNBUFFERED 1
@@ -9,8 +11,13 @@ ENV PYTHONUNBUFFERED 1
 # you add the whole application. I think this works in layers..?
 
 RUN mkdir /philo-b-docker
-# I suspect it would be better to set all the mentioned in these
-# requirement files, and mention them seperately in here.
+
+# I suspect it would be better to set all the installs mentioned in these
+# requirement files, and mention them seperately in these dockerfiles.
+
+# Weird: you can't go relatively up, you'll go outside the "building context",
+# and these paths are from the folder you start the build for image from.
+# Thus you'll need to start from main app folder.
 COPY ./requirements/base.txt /philo-b-docker/requirements/base.txt
 COPY ./requirements/local.txt /philo-b-docker/requirements/local.txt
 WORKDIR /philo-b-docker
@@ -22,7 +29,11 @@ WORKDIR /philo-b-docker
 # and I need this for the gcc, which has to do with pip?
 RUN apt-get update && apt-get install -y gcc
 
+
+
+
 RUN pip install --upgrade pip==10.0.1
+
 RUN pip install -r /philo-b-docker/requirements/base.txt
 RUN pip install -r /philo-b-docker/requirements/local.txt
 
