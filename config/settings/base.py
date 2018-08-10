@@ -49,27 +49,29 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': os.environ['DB_NAME'],
-        # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-        'USER': os.environ['DB_USER'],  
-        # # needs to be changed after deployment, well, before deployment actually
-        'PASSWORD': os.environ['DB_PASS'], 
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
+       #  'NAME': os.environ['DB_NAME'],
+       #  # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
+       #  'USER': os.environ['DB_USER'],  
+       #  # # needs to be changed after deployment, well, before deployment actually
+       #  'PASSWORD': os.environ['DB_PASS'], 
+       #  'HOST': os.environ['DB_HOST'],
+       #  'PORT': os.environ['DB_PORT'],
 
-        # 'NAME': 'postgres',
-        # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-        # 'USER': 'postgres',  
-        # # needs to be changed after deployment, well, before deployment actually
-        # 'PASSWORD': .........., 
-        # 'HOST': 'localhost',
-        # 'PORT': 5430,
+        'NAME': 'postgres',
+        # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
+        'USER': 'su3',  
+        # needs to be changed after deployment, well, before deployment actually
+        'PASSWORD': 'okokokok',
+        'HOST': 'localhost',
+        'PORT': 5432,
 
     }
 }
 
 
-os.environ['DJANGO_SECRET_KEY'] = os.environ['SECRET_KEY']
+# os.environ['DJANGO_SECRET_KEY'] = os.environ['SECRET_KEY']
+
+os.environ['DJANGO_SECRET_KEY'] = '3456789iuhgvvv64edcvhhi856rtf'
 
 #    import pdb
 #    pdb.set_trace()
@@ -305,8 +307,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'dzverifydz@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ['ACCOUNT_GMAIL_PASS']
-
+# EMAIL_HOST_PASSWORD = os.environ['ACCOUNT_GMAIL_PASS']
+EMAIL_HOST_PASSWORD = 'FGH#E06VB*UYF629YUHGCV$%^&*'
 # 
 
 # Your stuff...

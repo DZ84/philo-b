@@ -11,6 +11,9 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     slug_field = "username"
     slug_url_kwarg = "username"
 
+    def dispatch(self, request, *args, **kwargs):
+        print("we're at user DETAILview")
+        return super(UserDetailView, self).dispatch(request, *args, **kwargs)
 
 class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
@@ -25,10 +28,17 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     # we already imported User in the view code above, remember?
     model = User
 
+    def dispatch(self, request, *args, **kwargs):
+        print("we're at user UPDATEview")
+        return super(UserUpdateView, self).dispatch(request, *args, **kwargs)
+
     def get_object(self):
         # Only get the User record for the user making the request
         return User.objects.get(username=self.request.user.username)
 
+class Redir(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self):
+        return reverse('users:update')
 
 class UserListView(LoginRequiredMixin, ListView):
     model = User
