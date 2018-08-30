@@ -9,7 +9,7 @@ DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 
 # !!! Why can I not disable this, it doesn't seem to be used anywhere...?
-SECRET_KEY = env('DJANGO_SECRET_KEY') #, default='ogrbE1ApJFfJEFQyDIXwrlE6lf84k4ATQHbmtlt4Jl92RxdUHdfxUP6ZiMMxcIpV')
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='ogrbE1ApJFfJEFQyDIXwrlE6lf84k4ATQHbmtlt4Jl92RxdUHdfxUP6ZiMMxcIpV')
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = [
     # "localhost",

@@ -57,13 +57,13 @@ DATABASES = {
         'HOST': os.environ['DB_HOST'],
         'PORT': os.environ['DB_PORT'],
 
-        # 'NAME': 'postgres',
-        # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-        # 'USER': 'postgres',  
-        # # needs to be changed after deployment, well, before deployment actually
-        # 'PASSWORD': .........., 
-        # 'HOST': 'localhost',
-        # 'PORT': 5430,
+#         'NAME': 'philob',
+#         # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
+#         'USER': 'su3',  
+#         # needs to be changed after deployment, well, before deployment actually
+#         'PASSWORD': 'okokokok', 
+#         'HOST': 'localhost',
+#         'PORT': 5432,
 
     }
 }
@@ -71,20 +71,7 @@ DATABASES = {
 
 os.environ['DJANGO_SECRET_KEY'] = os.environ['SECRET_KEY']
 
-#    import pdb
-#    pdb.set_trace()
-
 DATABASES['default']['ATOMIC_REQUESTS'] = True
-
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
-    }
-}
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -202,7 +189,7 @@ STATICFILES_FINDERS = [
 # MEDIA
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(APPS_DIR('media'))
+MEDIA_ROOT = str(ROOT_DIR('mediafiles'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
 
@@ -293,23 +280,6 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 from django.urls import reverse_lazy
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('users:update')
 
-# from django.urls import reverse_lazy
-# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
-#                                                             'users:update', 
-#                                                             kwargs={
-#                                                                     'slug': 'self.request.user.username'
-#                                                             })
-
-# import pdb
-# pdb.set_trace()
-
-# from django.urls import reverse
-# uv = __import__('../../../philo-b')
-# from uv.users.views import UserRedirectView
-# APPS_DIR 
-# ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse(UserRedirectView)
-
-
 # email host setup
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -317,7 +287,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'dzverifydz@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ['ACCOUNT_GMAIL_PASS']
 
-# 
 
 # Your stuff...
 # ------------------------------------------------------------------------------
