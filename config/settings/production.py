@@ -16,11 +16,13 @@ print("got to production setting 1")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 # ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['dunno'])
 
+#
 ###########################################################
 ## !!! REMOVE THE FOLLOWING LINE WHEN DONE DEBUGGING !!! ##
 # ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = ['127.0.0.11', '127.0.0.1', '0.0.0.0', '192.168.99.100']
-ALLOWED_HOSTS = ["127.0.0.11", "127.0.0.1", "0.0.0.0", "192.168.99.100"]
+# ALLOWED_HOSTS = ["localhost", "0.0.0.0", "192.168.32.1"]
+ALLOWED_HOSTS = ["127.0.1.1", "0.0.0.0", "localhost"]
+ 
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -28,6 +30,8 @@ ALLOWED_HOSTS = ["127.0.0.11", "127.0.0.1", "0.0.0.0", "192.168.99.100"]
 # import pdb
 # pdb.set_trace()
 # 
+#
+#
 ## how it's set in the cookiecutter file. Not sure how it's supposed to
 ## work, but it conflicts with the docker env file setup.
 # DATABASES['default'] = env.db('DATABASE_URL')  # noqa F405
@@ -59,45 +63,17 @@ CACHES = {
 
 # SECURITY
 # ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
-SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
-# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
-SESSION_COOKIE_SECURE = True
-# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
-SESSION_COOKIE_HTTPONLY = True
-# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
-CSRF_COOKIE_SECURE = True
-# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
-CSRF_COOKIE_HTTPONLY = True
-# https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
-# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
-# TODO: set this to 60 seconds first and then to 518400 once you prove the former works
-SECURE_HSTS_SECONDS = 60
-# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-include-subdomains
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
-# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-preload
-SECURE_HSTS_PRELOAD = env.bool('DJANGO_SECURE_HSTS_PRELOAD', default=True)
-# https://docs.djangoproject.com/en/dev/ref/middleware/#x-content-type-options-nosniff
-SECURE_CONTENT_TYPE_NOSNIFF = env.bool('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
-# https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
-SECURE_BROWSER_XSS_FILTER = True
-# https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
-X_FRAME_OPTIONS = 'DENY'
-
-
-##########################
-### !! DEBUG, REMOVE !! ##
-# 
+# # https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
-# SECURE_SSL_REDIRECT = False
+# # SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+# SECURE_SSL_REDIRECT = True
 # # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
-# SESSION_COOKIE_SECURE = False
+# SESSION_COOKIE_SECURE = True
 # # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
 # SESSION_COOKIE_HTTPONLY = True
 # # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
-# CSRF_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = True
 # # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
 # CSRF_COOKIE_HTTPONLY = True
 # # https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
@@ -111,22 +87,45 @@ X_FRAME_OPTIONS = 'DENY'
 # # https://docs.djangoproject.com/en/dev/ref/middleware/#x-content-type-options-nosniff
 # SECURE_CONTENT_TYPE_NOSNIFF = env.bool('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
 # # https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
+# SECURE_BROWSER_XSS_FILTER = True
+# # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
+# X_FRAME_OPTIONS = 'DENY'
 
 
+#############################
+### !!! DEBUG, REMOVE !!! ###
+# 
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
+SECURE_SSL_REDIRECT = False
+# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
+SESSION_COOKIE_SECURE = False
+# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
+SESSION_COOKIE_HTTPONLY = False
+# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
+CSRF_COOKIE_SECURE = False
+# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
+CSRF_COOKIE_HTTPONLY = False
+# https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
+# TODO: set this to 60 seconds first and then to 518400 once you prove the former works
+SECURE_HSTS_SECONDS = 60
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-include-subdomains
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-preload
+SECURE_HSTS_PRELOAD = env.bool('DJANGO_SECURE_HSTS_PRELOAD', default=True)
+# https://docs.djangoproject.com/en/dev/ref/middleware/#x-content-type-options-nosniff
+SECURE_CONTENT_TYPE_NOSNIFF = env.bool('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
+
+# set is (default is 60), so the error won't show up in the server feed. 
+#       - TODO: don't know what a good setting would be in production though.
+#       - also it says an http request took too long to complete, I believe for
+#       ip's that aren't on the allowed list, why doesn't it handle does request
+#       without errors? also has a verbose option. But that doesn't give much
+#       extra information.
+COMPOSE_HTTP_TIMEOUT = 50000
 
 
-
-
-
-
-
-
-
-
-
-
-
-#
 # # STORAGES
 # # ------------------------------------------------------------------------------
 # # https://django-storages.readthedocs.io/en/latest/#installation
