@@ -1,0 +1,119 @@
+# docker-compose.prod.yml
+# made to look like docker-compose.yml
+
+version: '2'
+
+services:
+
+    pweb:
+        restart: always
+
+        build:
+            context: ../philo-b
+            dockerfile: dockerfiles/Dockerfile.production
+
+        # image needs to be specified, or it seems to go for default naming.
+        image: prod_web_2
+        container_name: pweb
+
+        depends_on:
+            - db
+
+        # - not needed icw with networks?
+        # - not needed icw sockets?
+        # ports:
+        #     - "8004"
+        expose:
+            - "8004"
+
+        volumes:
+            - ../philo-b:/philo-b-docker
+            - ../overhead:/overhead
+
+            # - ../philo-b/staticfiles:/volume_static
+            # - ../philo-b/mediafiles:/volume_media
+
+        env_file:
+            - ../administration/.env
+
+        environment:
+            PRODUCTION: 'true'
+
+        # labels:
+        #     com.example.service: "web"
+        #     com.example.description: "Use for the main web process"
+
+        # networks:
+        #     - nginx_network 
+
+        # - this is for trying to get pdb going
+        # - but turned of because tty causes the 
+        # "consider setting COMPOSE_HTTP_TIMEOUT" bug
+        # stdin_open: true
+        # tty: true
+
+        command: "/overhead/start.sh"
+
+    nginx:
+        restart: always
+        container_name: nginx_server
+        build:
+            context: ../nginx
+            dockerfile: Dockerfile
+
+        image: nginx_2
+
+        ports:
+            - "81:81"
+            - "444:444"
+        # - would be nice to put end with a slash in case of directories
+        # - is it possible to just select a file, and refer it to a directory?
+        # - use the :ro, as suggested in docker blog for nginx deployment 
+        volumes:
+            # - ../nginx/html:/usr/share/nginx/html
+
+            - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf
+            # - ../overhead/gunicorn/gunicorn.sock:/overhead/gunicorn/gunicorn.sock
+            - ../overhead/certs/nginx/letsencrypt/certs:/etc/letsencrypt
+            - ../overhead/certs/nginx/letsencrypt/certs-data:/data/letsencrypt
+
+
+            # this is wrong/not wrong because:
+            #   - nginx will never point at volume static, it is simply not in it's...
+            #       - however, this is not true, because I gave those locations
+            #       its code.
+            #   - So it might work.
+            #   - HOWEVER, why specify these volumes here, and in the web app, if you
+            #   can specify one specific volume, and use them for both apps, this way
+            #   you keep the size of the containers smaller.
+            #       - BUT, for the webapp you may not even need them if you use nginx
+            #       - OR, you may not need it here if you use whitenoise.
+            #       - FALSE: volumes are not placed in the containers, they just point.
+            #       So probably they won't increase the container size.
+            #           - seems to me the seperate volumes at the bottom are for....
+            #           don't know why you would use them.
+            #               - extra options..? can make them external for instance.
+            #                   - am I at risk of loosing data when I delete a container
+            #                   with volumes decrared in their compose files?
+            #               - maybe they will be recognised as the same, enabling some
+            #               benefits?
+            #           - SOLVED?: if you declared it at the bottom, you can redirect
+            #           folders in the existing flow of the container towards the
+            #           volume. Otherwise, you're creating a folder inside the container,
+            #           that will redirect towards the volume. Meaning, you will have
+            #           to let the code inside the container know that there is this new
+            #           place. But if you declare it, the container never has to know.
+            #               - BUT!!!: this would be weird, because it changes the meaning
+            #               of the syntax, depending on whether the volumes is declared
+            #               at the bottom.
+
+            # - ../philo-b/staticfiles:/volume_static
+            # - ../philo-b/mediafiles:/volume_media
+
+        # networks:
+            # - nginx_network 
+        
+# networks:
+#     nginx_network:
+#         driver: bridge
+

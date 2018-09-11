@@ -284,3 +284,11 @@ pip-selfcheck.json
 ### Project template
 
 philo-b/media/
+
+
+### personal project preferences
+administration/
+backup_dump/
+mediafiles/
+.env
+
