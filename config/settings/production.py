@@ -10,36 +10,23 @@ from .base import env
 SECRET_KEY = env('DJANGO_SECRET_KEY', default='ogrbE1ApJFfJEFQyDIXwrlE6lf84k4ATQHbmtlt4Jl92RxdUHdfxUP6ZiMMxcIpV')
 
 
-print("got to production setting 1")
-
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-# ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['dunno'])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['dunno'])
 
-#
+
 ###########################################################
 ## !!! REMOVE THE FOLLOWING LINE WHEN DONE DEBUGGING !!! ##
 # ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = ["localhost", "0.0.0.0", "192.168.32.1"]
-ALLOWED_HOSTS = ["127.0.1.1", "0.0.0.0", "localhost"]
- 
+# ALLOWED_HOSTS = ["127.0.1.1", "127.0.1.1", "0.0.0.0", "localhost"]
+# ALLOWED_HOSTS = ["localhost"] 
 
 # DATABASES
 # ------------------------------------------------------------------------------
 
-# import pdb
-# pdb.set_trace()
-# 
-#
-#
 ## how it's set in the cookiecutter file. Not sure how it's supposed to
 ## work, but it conflicts with the docker env file setup.
 # DATABASES['default'] = env.db('DATABASE_URL')  # noqa F405
-# 
-# 
-# 
-# import pdb
-# pdb.set_trace()
 
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True  # noqa F405

@@ -29,6 +29,9 @@ WORKDIR /philo-b-docker
 # changing to python-alpine may create new such problems
 RUN apt-get update && apt-get install -y gcc libpq-dev 
 
+# this is for debugging, should probably be removed for production
+RUN apt-get install -y vim net-tools 
+
 # is this something you want? isn't the whole idea of the docker
 # that you keep the env steady?
 # so maybe not the upgrade, but yes to the update

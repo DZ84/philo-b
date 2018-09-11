@@ -29,8 +29,9 @@ WORKDIR /philo-b-docker
 # and I need this for the gcc, which has to do with pip?
 RUN apt-get update && apt-get install -y gcc
 
-
-
+# this is for debugging. Is also present in production dockerfile. Should
+# probably be removed in actual production.
+RUN apt-get install -y vim net-tools 
 
 RUN pip install --upgrade pip==10.0.1
 
@@ -46,7 +47,7 @@ ADD . /philo-b-docker/
 
 
 # I believe you can turn comment this one out also
-EXPOSE 8004
+# EXPOSE 8004
 
 
 
