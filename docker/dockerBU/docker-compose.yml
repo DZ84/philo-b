@@ -1,0 +1,44 @@
+version: '2'
+
+services: 
+
+    # seems that moving the db could be logical for this.
+    # Dont know why it is set in 9.5/main...
+    # Actually, I have multiple db's, which one is which?
+    db:
+        restart: always
+        image: postgres
+
+        volumes:
+            # - pgdata:/var/lib/postgresql/data/data
+
+            # so what am I grabbing here?
+            # - pgdata:/var/lib/postgresql/9.5/main 
+            # - type: volume
+            #    source: /var/lib/postgresql/9.5/main
+            #    target: ./pgql/db
+            #- /var/lib/postgresql/9.5/main:/home/dennis/project/philo-b/pgql/db
+            - pg_philob:/var/lib/postgresql/data
+            # - ../overhead/db/.s.PGQL:/var/run/postgresql/.s.PGSQL.5432
+              #- /var/lib/postgresql/9.5/main:/var/lib/postgresql/9.5/main
+              #- /var/lib/postgresql/9.5/main
+            # - pg_db:/var/run/postgresql/9.5/main
+
+            # environment:
+            # envi- POSTGRES_DB=philob
+            # envi- POSTGRES_PASSWORD=okokokok
+            # envi- POSTGRES_USER=su3
+            # envi- PGDATA=/var/run/postgresql/9.5/main
+
+        ports:
+            # - "5430:5432"
+            - "5432"
+    
+        # expose:
+        # - "5432"
+
+volumes:
+    pg_philob: 
+        external: true
+        # - array, ...... string, : mapping
+
