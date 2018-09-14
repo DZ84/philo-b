@@ -1,0 +1,345 @@
+{% extends "base.html" %}<!DOCTYPE html>
+{% block css %}
+
+	<style>
+
+		.top-tag {
+			text-align: left;
+			margin-left: 5%;
+			font-weight: bold;
+		}
+		.main-text-container {
+			margin: 0 auto;
+			width: 100%;
+		}
+
+		.separator-commentsection {
+		}
+		
+		#comments-container {
+			width: 80%;
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.reply-layout {
+			width: 100%;
+			margin: 20px auto 0;
+			padding: 3px;
+			background: #b8b8b8;		
+		}
+
+		.reply-layout.False {
+			/* play around with width and
+			   margin left and right
+			   to adjust the comment box
+			   look
+			   width: 80%;
+			*/
+			margin: 1px auto 0;
+			background: #b8b8b8;		
+		}
+
+		.reply-layout > .post-info,
+		.reply-layout > .user-info,	
+		.reply-layout > .date {
+			text-align: left;	
+		}
+
+		.reply-layout > .post-info {
+		}
+
+		.reply-layout > .separator-info {
+			margin: 0 0 10px;
+			width: auto;
+			border: none;
+			background-color: #686868;
+			/* color: #E8E8E8; was also in the example, 
+			   but seems you can leave it out */
+			height: 1px;
+		}
+
+		.reply-layout > p {
+			text-align: left;
+			margin: 0;
+			padding: 7px 0 7px;
+			overflow: hidden;
+		}
+
+		.button-container {
+			float: right;
+			height: auto;
+			width: auto;
+			padding: 0;
+			margin-top: 3px; /* this is dependent on the padding of the comment area */
+			margin-right: -3px;
+			/* border-top: 50px solid #686868; */
+		}
+
+		.button-container .reply, 
+		.button-container .save {
+			background-color: #b8b8b8;
+			border-width: 1px 0 1px 1px;
+			border-style: solid;
+			border-color: #e8e8e8;
+			padding: 13px 25px;
+			/* margin: -42px 0 0 7px; */
+
+			text-decoration: none;
+			display: inline-block;
+			float: left;
+			
+			/*	for text 
+				color: white; 
+			 */
+			font-size: 16px;
+		}
+
+		.button-container .save {
+			/* margin-right: 7px; */
+			/* border-right: 1px solid #e8e8e8; */
+		}
+	
+		.comment-layout {
+			width: 100%;
+
+			background: #b8b8b8;
+
+			/* this border seems to hold some stuff
+			   together on the top
+			   */
+			margin: 50px 0;
+			padding: 0px 3px;
+		}
+
+		.comment-layout > .button-container {
+			width: 100%;
+			margin-top: 0;
+			display: flex;
+			justify-content: center;
+		}
+	
+		.comment-layout > .button-container > a > .reply,
+		.comment-layout > .button-container > a > .save {
+		}
+		
+		/* for savebuttons that are not relevant */
+		.disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		#form-area-wrapper {
+			padding-top: 1em;
+		}
+		
+		/* layout is a little different for new comments: */
+		#comment-new #form-area-wrapper {
+			padding: 0;
+			margin-top: -10px;
+		}
+		
+		#comment-new .separator-form {
+			border: none;
+			background-color: none;
+			height: 0;
+		}
+
+		.separator-form {
+			width: 100%;
+			border: none;
+			background-color: #E8E8E8;
+			height: 1px;
+		}
+
+		.form-userinfo {
+			text-align: left;
+			height: 3em;
+			line-height: 3.3em;
+			margin-left: 15px;
+		}
+
+		.form-username {
+			text-align: left;
+			font-weight: bold;
+		}
+
+		#id_comment_area {
+			width: 100%;
+			height: 12em;
+			max-width: 100%;
+			min-width: 100%;
+			min-height: 5em;
+			max-height: 25em;
+			margin: 0;
+			padding: 0;
+			border: 0;
+		}
+	
+		.form-instructions {
+			width: 100%;
+			text-align: left;
+			font-weight: bold;
+			list-style-type: square;
+			padding-bottom: 8px;
+		}
+
+		.form-instructions ul {
+			list-style-type: square;
+		}
+
+	</style>
+
+{% endblock css %}
+{% block toptag %}	
+
+	<div class="top-tag">Philo-b</div>
+
+{% endblock toptag %}
+{% block header %}
+
+	{{ object.title }}
+
+{% endblock header %}
+{% block subheader %}
+
+	{{ object.introduction }}
+
+{% endblock subheader %}
+{% block content %}
+<!-- maybe add some safe filters on the post and comments. 
+	 dunno why you would use the linebreaks option for the
+	 comments, safe seems a better option to me -->
+	<div class="main-text-container">
+		{{ post.body }}
+	</div>
+
+{% endblock content %}
+{% block comments %}
+	<hr class="separator-commentsection">
+	{% for comment in comments %}
+	
+		<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
+			<div class="post-info">
+				<div class="user-info">
+					<strong>{{ comment.author_id }}</strong></div>
+					<div style="text-align:center;"><strong>{{ comment.path }}</strong></div>
+				<div class="date">{{ comment.pub_date }}</div>
+			</div>
+			<hr class="separator-info">
+			<p>{{ comment.content|linebreaks }}</p>
+		
+		{% if form and comment.is_last %}
+			
+			<div class="button-container">
+				<a class="comment" 
+				onclick="return show_comments_form({{ comment.id }})">
+					<button class="reply">Write reply</button></a>
+				<!--button class="save disabled" onclick="submit_form();">Save</button-->
+				<button class="save disabled">Save</button>
+			</div>
+		
+		{% endif %}
+
+		</div>
+		<div style="clear:both;"></div>
+
+	{% empty %}
+
+		<p>No comments have been posted here</p>
+
+	{% endfor %}
+	{% if form %}
+		
+		<div class="comment-layout" id="comment-new">
+
+			<form id="form_section" action="{% url 'add_comment' post.id %}" method="POST">
+				{% csrf_token %}
+				<div id="form-area-wrapper">
+					<hr class="separator-form">
+					<div class="form-userinfo">Write response with username 
+						<span class="form-username">{{ user.username }}</span>:
+					</div>
+					{{ form.as_p }}
+				</div>
+				<div class="form-instructions">
+					<ul>
+						Instructions:<br/>
+						<li>layout is not fully maintained, for example: 
+						consecutive spaces are shown as one single space, 
+						as are new lines/enters/breaks.
+						<li>html code is read as plaintext.
+					</ul>
+				</div>
+			</form>
+
+			<div class="button-container">
+				<a class="comment new" 
+				onclick="return show_comments_form('comment-new')">
+					<button class="reply">Write new comment</button></a>
+				<!--button class="save disabled" onclick="submit_form();">Save</button-->
+				<button class="save" id="save-enabled">Save</button>
+			</div>
+
+		</div>
+
+	{% else %}
+
+		<div class="no-login">
+			<div class="no-login-heading">
+				<h3 class="no-login-title"></h3>
+			</div>
+			<div class="no-login-body">
+				You need to sign in to place comments.<br />
+			</div>
+		</div>
+
+	{% endif %}
+
+{% endblock comments %}
+{% block javascript %}
+
+	<script>
+
+		function show_comments_form(comment_id) {
+			if (comment_id == 'comment-new') {
+				document.getElementById("id_parent_comment").value = ''
+			} else {
+				document.getElementById("id_parent_comment").value = comment_id
+				comment_id = "comment-" + comment_id
+			}
+
+			// disable previous save button
+			// try catch needs to be removed, but is now, because first (save button?) one is not yet defined
+			try {
+				var previous_save_button = document.getElementById("save-enabled")	
+				previous_save_button.className = "save disabled"
+				previous_save_button.id = ""
+				previous_save_button.onclick = ""
+			} catch(e) {
+				console.log("yeah yeah")
+			}
+
+			var selected_comment = document.getElementById(comment_id)
+			var new_form_position = selected_comment
+				.getElementsByClassName("button-container")[0]
+			var new_save_button = selected_comment	
+				.getElementsByClassName("save")[0]
+			
+			selected_comment.insertBefore(
+					document.getElementById("form_section"),
+					new_form_position 
+			)
+			new_save_button.onclick = submit_form			
+			new_save_button.className = "save"
+			new_save_button.id = "save-enabled"
+		}
+
+		function submit_form() {
+			document.getElementById("form_section").submit()
+		}
+
+	</script>
+
+{% endblock javascript %}
+
