@@ -285,11 +285,10 @@ pip-selfcheck.json
 
 philo-b/media/
 
-### personal project
 
+### personal project preferences
 administration/
 backup_dump/
-test_volumes/
-
-
+mediafiles/
+.env
 
