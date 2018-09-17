@@ -24,7 +24,8 @@ services:
               #- /var/lib/postgresql/9.5/main
             # - pg_db:/var/run/postgresql/9.5/main
 
-            # environment:
+        #environment:
+            #POSTGRES_PASSWORD: "ROT1"
             # envi- POSTGRES_DB=philob
             # envi- POSTGRES_PASSWORD=okokokok
             # envi- POSTGRES_USER=su3

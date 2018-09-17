@@ -21,9 +21,7 @@ services:
 
         # - not needed icw with networks?
         # - not needed icw sockets?
-        # ports:
-        #     - "8004"
-        expose:
+        ports:
             - "8004"
 
         volumes:
@@ -65,7 +63,8 @@ services:
 
         ports:
             - "81:81"
-            - "444:444"
+        #    - "444:444"
+
         # - would be nice to put end with a slash in case of directories
         # - is it possible to just select a file, and refer it to a directory?
         # - use the :ro, as suggested in docker blog for nginx deployment 
@@ -74,8 +73,8 @@ services:
 
             - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf
             # - ../overhead/gunicorn/gunicorn.sock:/overhead/gunicorn/gunicorn.sock
-            - ../overhead/certs/nginx/letsencrypt/certs:/etc/letsencrypt
-            - ../overhead/certs/nginx/letsencrypt/certs-data:/data/letsencrypt
+            # - ../overhead/certs/nginx/letsencrypt/certs:/etc/letsencrypt
+            # - ../overhead/certs/nginx/letsencrypt/certs-data:/data/letsencrypt
 
 
             # this is wrong/not wrong because:

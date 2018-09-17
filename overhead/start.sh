@@ -37,7 +37,7 @@ function start_production() {
 	# gunicorn config.wsgi -w 4 -b 'unix:///overhead/gunicorn/gunicorn.sock' --log-file=- 
 	# --reload --preload 
 
-	# python3 manage.py runserver 0.0.0.0:8004
+	# python manage.py runserver 0.0.0.0:8004
 }
 
 if [ ${PRODUCTION} == "false" ]; then

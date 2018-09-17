@@ -112,7 +112,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
 MIGRATION_MODULES = {
-    'sites': 'philo-b.contrib.sites.migrations'
+#    'sites': 'philo-b.contrib.sites.migrations'
 }
 
 # AUTHENTICATION
