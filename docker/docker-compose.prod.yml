@@ -62,7 +62,7 @@ services:
         image: nginx_2
 
         ports:
-            - "81:81"
+            - "80:81"
         #    - "444:444"
 
         # - would be nice to put end with a slash in case of directories
