@@ -63,7 +63,7 @@ services:
 
         ports:
             - "80:81"
-        #    - "444:444"
+            - "443:444"
 
         # - would be nice to put end with a slash in case of directories
         # - is it possible to just select a file, and refer it to a directory?
