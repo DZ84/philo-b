@@ -72,6 +72,13 @@ services:
             # - ../nginx/html:/usr/share/nginx/html
 
             - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf
+
+            # are added in an attempt to get certbot to run.
+            - ../philo-b/.well-known:/var/www/philo-b/letsencrypt/wellknown
+
+
+	# TODO: not sure if I'll need this one:
+            - ../philo-b:/var/www/philo-b/static
             # - ../overhead/gunicorn/gunicorn.sock:/overhead/gunicorn/gunicorn.sock
             # - ../overhead/certs/nginx/letsencrypt/certs:/etc/letsencrypt
             # - ../overhead/certs/nginx/letsencrypt/certs-data:/data/letsencrypt
