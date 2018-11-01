@@ -1,10 +1,12 @@
 from django.db import models
 from django.utils import timezone
 #from django.contrib.auth.models import User
-from config import settings
+# from config import settings
 from django.urls import reverse
 
 from django.contrib.postgres.fields import ArrayField
+
+from django.conf import settings
 
 class Blog(models.Model):
     title = models.CharField(max_length=200, unique=True)
@@ -52,7 +54,8 @@ class Comment(models.Model):
     # -!! so basically, when either Blog or User is deleted, the CASCADE is called
     # and the whole instance of Comment is grabbed and deleted.
     post_id = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     content = models.TextField('Comment', default="oooooooooooooooooooooooook")
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)

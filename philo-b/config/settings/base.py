@@ -100,9 +100,14 @@ THIRD_PARTY_APPS = [
     'rest_framework',
 ]
 LOCAL_APPS = [
-    'philo-b.users.apps.UsersConfig',
+
+	# interesting that both of these lines seem to work
+    # 'philo-b.users.apps.UsersConfig',
+    'users.apps.UsersConfig',
+
     # Your stuff: custom apps go here
     # 'philo-b.users.models.User',
+
     'blog'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
