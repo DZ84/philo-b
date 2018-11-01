@@ -101,12 +101,18 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
 
-	# interesting that both of these lines seem to work
-    # 'philo-b.users.apps.UsersConfig',
-    'users.apps.UsersConfig',
+	# - interesting that both of these lines seem to work
+	# - or..... both of them don't seem to work.
+	# - I do think it should be the first one because it
+	# seems you need to specify from root.
+	# - in any case it doesn't seem to be the last one.
+
+    'philo-b.users.apps.UsersConfig',
+    # 'users.apps.UsersConfig',
+    # 'philo-b.users.models.User',
+
 
     # Your stuff: custom apps go here
-    # 'philo-b.users.models.User',
 
     'blog'
 ]

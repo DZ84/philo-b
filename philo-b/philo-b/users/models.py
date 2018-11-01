@@ -66,14 +66,14 @@ class SoftDeletionModel(models.Model):
 	class Meta:
 		abstract = True
 
-		def delete(self):
-			self.deleted_at = timezone.now()
-			self.email = "deleted_" + self.email + "!@/"
-			self.is_active = False
-			self.save()
+	def delete(self):
+		self.deleted_at = timezone.now()
+		self.email = "deleted_" + self.email + "!@/"
+		self.is_active = False
+		self.save()
 
-		def hard_delete(self):
-			super(SoftDeletionModel, self).delete()
+	def hard_delete(self):
+		super(SoftDeletionModel, self).delete()
 
 
 class User(SoftDeletionModel, AbstractUser):

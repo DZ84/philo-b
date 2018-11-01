@@ -30,7 +30,7 @@ function start_production() {
 	# gracefully stopped. Before, it took longer, which was the default max time
 	# before it was forcefully stopped.
 
-	# exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
+	exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
 
 	# --reload --preload 
 
