@@ -108,7 +108,9 @@ LOCAL_APPS = [
 	# - in any case it doesn't seem to be the last one.
 
     'philo-b.users.apps.UsersConfig',
+    # 'philo-b.philo-b.users.apps.UsersConfig',
     # 'users.apps.UsersConfig',
+	# 'Users',
     # 'philo-b.users.models.User',
 
 

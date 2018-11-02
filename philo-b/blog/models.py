@@ -57,7 +57,7 @@ class Comment(models.Model):
     # author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE)
     author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    content = models.TextField('Comment', default="oooooooooooooooooooooooook")
+    content = models.TextField('Comment', default='"This is my default message."') # I want to have quotes here.
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)
     is_last = models.NullBooleanField()
     is_first = models.NullBooleanField()

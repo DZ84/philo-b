@@ -40,6 +40,7 @@ class SoftDeletionManager(BaseUserManager):
 		user.is_superuser = False
 
 		user.save(using=self.db)
+		# user.save()
 		return user
 
 	def create_superuser(self, username, email, password):
@@ -50,6 +51,7 @@ class SoftDeletionManager(BaseUserManager):
 		user.is_superuser = True
 
 		user.save(using=self.db)
+		# user.save()
 		return user
 
 	def get_by_natural_key(self, username_):
@@ -57,7 +59,7 @@ class SoftDeletionManager(BaseUserManager):
 		return self.get(username=username_)
 
 
-class SoftDeletionModel(models.Model):
+class User(AbstractUser):
 	deleted_at = models.DateTimeField(blank=True, null=True)
 
 	objects = SoftDeletionManager()
@@ -73,28 +75,58 @@ class SoftDeletionModel(models.Model):
 		self.save()
 
 	def hard_delete(self):
-		super(SoftDeletionModel, self).delete()
-
-
-class User(SoftDeletionModel, AbstractUser):
-
-    # First Name and Last Name do not cover name patterns
-    # around the globe.
-    # name = models.CharField(_("Name of User"), blank=True, max_length=255)
-
-    # username = models.Charfield(unique=True)
-
-    # I assume email does not have to be set to unique, since I 
-    # couldn't use the same one twice.
-    # email = models.EmailField(unique=True)
-    
-	deleted = models.BooleanField(default=False)
+		super(User, self).delete()
 
 	def __str__(self):
 		return self.username
 
 	def get_absolute_url(self):
 		return reverse("users:detail", kwargs={"username": self.username})
+
+
+
+# class SoftDeletionModel(models.Model):
+# 	deleted_at = models.DateTimeField(blank=True, null=True)
+# 
+# 	objects = SoftDeletionManager()
+# 	all_objects = SoftDeletionManager(alive_only=False)
+# 
+# 	class Meta:
+# 		abstract = True
+# 
+# 	def delete(self):
+# 		self.deleted_at = timezone.now()
+# 		self.email = "deleted_" + self.email + "!@/"
+# 		self.is_active = False
+# 		self.save()
+# 
+# 	def hard_delete(self):
+# 		super(SoftDeletionModel, self).delete()
+# 
+ 
+
+# class User(SoftDeletionModel, AbstractUser):
+# 
+#     # First Name and Last Name do not cover name patterns
+#     # around the globe.
+#     # name = models.CharField(_("Name of User"), blank=True, max_length=255)
+# 
+#     # username = models.Charfield(unique=True)
+# 
+#     # I assume email does not have to be set to unique, since I 
+#     # couldn't use the same one twice.
+#     # email = models.EmailField(unique=True)
+#     
+# 	deleted = models.BooleanField(default=False)
+# 
+# 	# this seems already done in the softDeletionModel class
+# 	# objects = SoftDeletionModel()  
+# 
+# 	def __str__(self):
+# 		return self.username
+# 
+# 	def get_absolute_url(self):
+# 		return reverse("users:detail", kwargs={"username": self.username})
 
 
         #return reverse(name='post', kwargs={
