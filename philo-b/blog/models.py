@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.utils import timezone
 #from django.contrib.auth.models import User
 # from config import settings
@@ -6,7 +7,6 @@ from django.urls import reverse
 
 from django.contrib.postgres.fields import ArrayField
 
-from django.conf import settings
 
 class Blog(models.Model):
     title = models.CharField(max_length=200, unique=True)
@@ -20,7 +20,7 @@ class Blog(models.Model):
         return reverse('post', kwargs={ 'slug': self.slug, 'post_id': self.id })
 
 class Comment(models.Model):
-    
+
     class Meta:
         db_table = "comments"
     # plan: 
