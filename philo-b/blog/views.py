@@ -37,6 +37,7 @@ class Post(View):
         # user = auth_user # auth.get_user(request)
         user =  auth.get_user(request)
         context['post'] = post
+
         # Put in the context of all the comments that are relevant to the blog 
         # simultaneously sorting them along the way, the auto-increment ID, 
         # so the problems with the hierarchy should not have any comments yet
@@ -85,6 +86,7 @@ def add_comment(request, post_id):
 
     return redirect(post.get_absolute_url())
 
+# TODO: where is this called?
 def update_first_of_all():
     # just for updating all after changing the code
     for comment in Comment.objects.all():
@@ -96,7 +98,7 @@ def determine_last(post_object):
     ordered_comments = post_object.comment_set.all().order_by('path')
 
     # ordered_comments = Comment.objects.all().order_by('path')
-    
+
     for index, comment in enumerate(ordered_comments[1:], 1):
         spot = index-1
         if (len(comment.path) > len(ordered_comments[spot].path)): 

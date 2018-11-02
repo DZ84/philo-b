@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-#from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 # from config import settings
 from django.urls import reverse
 
@@ -57,7 +57,7 @@ class Comment(models.Model):
     # author_id = models.ForeignKey(settings.base.AUTH_USER_MODEL, on_delete=models.CASCADE)
     author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # author_id = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    content = models.TextField('Comment', default='"This is my default message."') # I want to have quotes here.
+    content = models.TextField('Comment', default='"This is my default message."') 
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)
     is_last = models.NullBooleanField()
     is_first = models.NullBooleanField()

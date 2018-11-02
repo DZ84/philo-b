@@ -218,7 +218,7 @@
 {% block comments %}
 	<hr class="separator-commentsection">
 	{% for comment in comments %}
-	
+
 		<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
 			<div class="post-info">
 				<div class="user-info">
@@ -311,7 +311,7 @@
 
 			// disable previous save button
 			// try catch needs to be removed, but is now, because first (save button?) one is not yet defined
-			try {
+			try 
 				var previous_save_button = document.getElementById("save-enabled")	
 				previous_save_button.className = "save disabled"
 				previous_save_button.id = ""
