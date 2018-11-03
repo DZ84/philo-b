@@ -47,8 +47,8 @@ services:
         # - this is for trying to get pdb going
         # - but turned of because tty causes the 
         # "consider setting COMPOSE_HTTP_TIMEOUT" bug
-        # stdin_open: true
-        # tty: true
+        stdin_open: true
+        tty: true
 
         command: "/overhead/start.sh"
 

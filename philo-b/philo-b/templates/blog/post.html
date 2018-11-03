@@ -264,7 +264,7 @@
 				</div>
 				<div class="form-instructions">
 					<ul>
-						Instructions:<br/>
+						Practical information:<br/>
 						<li>layout is not fully maintained, for example: 
 						consecutive spaces are shown as one single space, 
 						as are new lines/enters/breaks.
@@ -303,6 +303,7 @@
 
 		function show_comments_form(comment_id) {
 			if (comment_id == 'comment-new') {
+				// where am I using this?
 				document.getElementById("id_parent_comment").value = ''
 			} else {
 				document.getElementById("id_parent_comment").value = comment_id
@@ -311,7 +312,7 @@
 
 			// disable previous save button
 			// try catch needs to be removed, but is now, because first (save button?) one is not yet defined
-			try 
+			try {
 				var previous_save_button = document.getElementById("save-enabled")	
 				previous_save_button.className = "save disabled"
 				previous_save_button.id = ""

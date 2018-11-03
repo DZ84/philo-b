@@ -29,9 +29,17 @@ function start_production() {
 	# be executed. This changes the shutting down process, enabling it to be
 	# gracefully stopped. Before, it took longer, which was the default max time
 	# before it was forcefully stopped.
+	
+	#exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
 
-	exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
+	
+	# when workers are silent for a certain period, they restart. -t specifies
+	# the length of this period. Enabling you to use pdb in the meantime.
+	exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- -t 90000
 
+	
+	
+	# not ment for production, reload is suppose to reload workers when code changes
 	# --reload --preload 
 
 
