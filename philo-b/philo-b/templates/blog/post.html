@@ -26,8 +26,10 @@
 		is were SASS would become very handy */
 		.reply-layout {
 			width: 85%;
-			margin: 1px 10.5% 0 4.5%;
-			padding: 3px;
+			margin: 1px auto 0;
+			padding-top: 7px; /* this should be arranged ing the user/post info section maybe */
+			padding-bottom: 3px;
+			/* margin: 1px 10.5% 0 4.5%; */
 			background: #b8b8b8;		
 		}
 
@@ -39,8 +41,9 @@
 			   width: 80%;
 			*/
 			width: 70%;
-			margin: 1px 10.5% 0 19.5%;
-			background: #b8aaaa;		
+			margin-right: 7.5%; /* related to the width difference comment/reply */
+			/* margin: 1px 10.5% 0 19.5%; */
+			/* background: #b8aaaa;		 */
 		}
 
 
@@ -87,7 +90,7 @@
 			width: auto;
 			padding: 0;
 			margin-top: 3px; /* this is dependent on the padding of the comment area */
-			margin-right: -3px;
+			/* margin-right: -3px; */
 			margin-bottom: 15px;
 			/* border-top: 50px solid #686868; */
 		}
@@ -242,7 +245,7 @@
 				<div class="post-info">
 					<div class="user-info">
 						<strong>{{ comment.author_id }}</strong></div>
-						<div style="text-align:center;"><strong>{{ comment.path }}</strong></div>
+						<!--div style="text-align:center;"><strong>{{ comment.path }}</strong></div-->
 					<div class="date">{{ comment.pub_date }}</div>
 				</div>
 				<hr class="separator-info">
