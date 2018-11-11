@@ -52,6 +52,7 @@ class Post(View):
 		# return render_to_response(template_name=self.template_name, context=context)
 		return render(request, self.template_name, context)
 
+
 @login_required
 @require_http_methods(["POST"])
 def add_comment(request, post_id):
@@ -74,31 +75,9 @@ def add_comment(request, post_id):
 		# Although PostgreSQL has the tools in its arsenal, but it is not going to
 		# work with raw SQL queries, so form the path after the first save
 		# And resave a comment
-		# try:
-		#     comment.path.extend(Comment.objects.get(id=form.cleaned_data['parent_comment']).path)
-		#     comment.path.append(comment.id)
-		# except ObjectDoesNotExist:
-		#     comment.path.append(comment.id)
 
 
-
-		print(form.cleaned_data['parent_comment'])
-
-
-
-	#	import pdb
-	#	pdb.set_trace()
-		# what's in the request and form. what does parent comment give?
-		# and how to get path
-
-		# needs an 'if parent_comment 'solution
-		# try:
-		# 	comment_prev = Comment.objects.get(id=form.cleaned_data['parent_comment'])
-		# 	comment.path.extend(comment_prev.path)
-		# except ObjectDoesNotExist:
-		# 	comment_prev = False
-
-
+		# print(form.cleaned_data['parent_comment'])
 
 
 		# get id of comment to which is replied. If comment is
@@ -128,27 +107,27 @@ def add_comment(request, post_id):
 
 		return redirect(post.get_absolute_url())
 
-# TODO: where is this called?
-def update_first_of_all():
-	# just for updating all after changing the code
-	for comment in Comment.objects.all():
-		comment.det_set_first()
-		return
-
-def determine_last(post_object):
-
-	ordered_comments = post_object.comment_set.all().order_by('path')
-
-	# ordered_comments = Comment.objects.all().order_by('path')
-
-	for index, comment in enumerate(ordered_comments[1:], 1):
-		spot = index-1
-		if (len(comment.path) > len(ordered_comments[spot].path)): 
-			ordered_comments[index-1].set_last(False)
-			continue 
-
-		ordered_comments[index-1].set_last(True)
-	ordered_comments[spot+1].set_last(True)
+# # TODO: where is this called?
+# def update_first_of_all():
+# 	# just for updating all after changing the code
+# 	for comment in Comment.objects.all():
+# 		comment.det_set_first()
+# 		return
+# 
+# def determine_last(post_object):
+# 
+# 	ordered_comments = post_object.comment_set.all().order_by('path')
+# 
+# 	# ordered_comments = Comment.objects.all().order_by('path')
+# 
+# 	for index, comment in enumerate(ordered_comments[1:], 1):
+# 		spot = index-1
+# 		if (len(comment.path) > len(ordered_comments[spot].path)): 
+# 			ordered_comments[index-1].set_last(False)
+# 			continue 
+# 
+# 		ordered_comments[index-1].set_last(True)
+# 	ordered_comments[spot+1].set_last(True)
 
 # def cleanup_stuff(self):
 # 

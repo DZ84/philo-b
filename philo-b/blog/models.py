@@ -65,25 +65,26 @@ class Comment(models.Model):
     def __str__(self):
         return self.content[0:200]
  
-    def det_set_first(self):
-
-        #import pdb
-        #pdb.set_trace()
-
-        if (len(self.path)==1):
-            self.is_first = True 
-        else:
-            self.is_first = False 
-
-        self.save()
-        return 
- 
-    def set_last(self, value):
-
-        if (self.is_last == value):
-            return
-
-        self.is_last = value
-        self.save()
-        return 
-
+# 	# TODO: is this still used?
+#     def det_set_first(self):
+# 
+#         #import pdb
+#         #pdb.set_trace()
+# 
+#         if (len(self.path)==1):
+#             self.is_first = True 
+#         else:
+#             self.is_first = False 
+# 
+#         self.save()
+#         return 
+#  
+#     def set_last(self, value):
+# 
+#         if (self.is_last == value):
+#             return
+# 
+#         self.is_last = value
+#         self.save()
+#         return 
+# 
