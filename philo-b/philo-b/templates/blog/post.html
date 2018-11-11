@@ -24,7 +24,7 @@
 
 		.reply-layout {
 			width: 100%;
-			margin: 20px auto 0;
+			margin: 1px auto 0;
 			padding: 3px;
 			background: #b8b8b8;		
 		}
@@ -36,8 +36,8 @@
 			   look
 			   width: 80%;
 			*/
-			margin: 1px auto 0;
-			background: #b8b8b8;		
+
+			background: #b8aaaa;		
 		}
 
 		.reply-layout > .post-info,
@@ -217,20 +217,21 @@
 {% endblock content %}
 {% block comments %}
 	<hr class="separator-commentsection">
+
 	{% for comment in comments %}
 
-		<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
-			<div class="post-info">
-				<div class="user-info">
-					<strong>{{ comment.author_id }}</strong></div>
-					<div style="text-align:center;"><strong>{{ comment.path }}</strong></div>
-				<div class="date">{{ comment.pub_date }}</div>
-			</div>
-			<hr class="separator-info">
-			<p>{{ comment.content|linebreaks }}</p>
-		
+			<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
+				<div class="post-info">
+					<div class="user-info">
+						<strong>{{ comment.author_id }}</strong></div>
+						<div style="text-align:center;"><strong>{{ comment.path }}</strong></div>
+					<div class="date">{{ comment.pub_date }}</div>
+				</div>
+				<hr class="separator-info">
+				<p>{{ comment.content|linebreaks }}</p>
+
 		{% if form and comment.is_last %}
-			
+	
 			<div class="button-container">
 				<a class="comment" 
 				onclick="return show_comments_form({{ comment.id }})">
@@ -238,7 +239,7 @@
 				<!--button class="save disabled" onclick="submit_form();">Save</button-->
 				<button class="save disabled">Save</button>
 			</div>
-		
+	
 		{% endif %}
 
 		</div>

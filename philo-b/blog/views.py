@@ -76,13 +76,14 @@ def add_comment(request, post_id):
 		# work with raw SQL queries, so form the path after the first save
 		# And resave a comment
 
-
 		# print(form.cleaned_data['parent_comment'])
-
 
 		# get id of comment to which is replied. If comment is
 		# not a reply then parent_id=None
 		parent_id = form.cleaned_data['parent_comment']
+
+		# import pdb
+		# pdb.set_trace()
 
 		# if parent comment is present its path is needed and
 		# its status as last comment in the thread needs to be
@@ -92,13 +93,13 @@ def add_comment(request, post_id):
 			# you could try and except this, but it is already
 			# covered by checking for None.
 			comment_prev = Comment.objects.get(id=parent_id)
-			comment_prev.last = False	
+			comment_prev.is_last = False	
 			comment_prev.save()
 
 			comment.path.extend(comment_prev.path)
 		else:
-			comment_prev = None
-			comment.first = True	
+			#	comment_prev = None
+			comment.is_first = True	
 
 		# attach the own id to finish the
 		# path of the new comment
