@@ -22,9 +22,11 @@
 			text-align: center;
 		}
 
+		/* these margins are related. I suspect this
+		is were SASS would become very handy */
 		.reply-layout {
-			width: 100%;
-			margin: 1px auto 0;
+			width: 85%;
+			margin: 1px 10.5% 0 4.5%;
 			padding: 3px;
 			background: #b8b8b8;		
 		}
@@ -36,9 +38,22 @@
 			   look
 			   width: 80%;
 			*/
-
+			width: 70%;
+			margin: 1px 10.5% 0 19.5%;
 			background: #b8aaaa;		
 		}
+
+
+		/*
+		.comment.False.line-connector {
+			width: 5%;
+			height: 50%;
+			margin: 0 0 auto auto;
+			border: 2 2 5 5 green;
+			background; orange;
+		}
+		*/
+
 
 		.reply-layout > .post-info,
 		.reply-layout > .user-info,	
@@ -73,6 +88,7 @@
 			padding: 0;
 			margin-top: 3px; /* this is dependent on the padding of the comment area */
 			margin-right: -3px;
+			margin-bottom: 15px;
 			/* border-top: 50px solid #686868; */
 		}
 
@@ -219,6 +235,8 @@
 	<hr class="separator-commentsection">
 
 	{% for comment in comments %}
+
+		<!--<span class="comment {{ comment.is_first }} line-connector"></span> -->
 
 			<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
 				<div class="post-info">
