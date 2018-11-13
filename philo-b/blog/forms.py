@@ -2,11 +2,12 @@ from django import forms
 
 from .models import Comment
 
-class Comment_Form(forms.Form):
+class CommentForm(forms.Form):
    
     parent_comment = forms.IntegerField(
         widget=forms.HiddenInput,
-        required=False
+        required=False,
+		initial=None
     )
 
     comment_area = forms.CharField(

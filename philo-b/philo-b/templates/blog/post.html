@@ -251,13 +251,12 @@
 				<hr class="separator-info">
 				<p>{{ comment.content|linebreaks }}</p>
 
-		{% if form and comment.is_last %}
+		{% if comment_form and comment.is_last %}
 	
 			<div class="button-container">
 				<a class="comment" 
-				onclick="return show_comments_form({{ comment.id }})">
+				onclick="return create_reply_form({{ comment.id }})">
 					<button class="reply">Write reply</button></a>
-				<!--button class="save disabled" onclick="submit_form();">Save</button-->
 				<button class="save disabled">Save</button>
 			</div>
 	
@@ -271,18 +270,18 @@
 		<p>No comments have been posted here</p>
 
 	{% endfor %}
-	{% if form %}
+	{% if comment_form %}
 		
 		<div class="comment-layout" id="comment-new">
 
-			<form id="form_section" action="{% url 'add_comment' post.id %}" method="POST">
+			<form id="comment_section" action="{% url 'add_comment' post.id %}" method="POST">
 				{% csrf_token %}
 				<div id="form-area-wrapper">
 					<hr class="separator-form">
 					<div class="form-userinfo">Write response with username 
 						<span class="form-username">{{ user.username }}</span>:
 					</div>
-					{{ form.as_p }}
+					{{ comment_form.as_p }}
 				</div>
 				<div class="form-instructions">
 					<ul>
@@ -296,11 +295,12 @@
 			</form>
 
 			<div class="button-container">
-				<a class="comment new" 
+				<!--a class="comment new" 
 				onclick="return show_comments_form('comment-new')">
-					<button class="reply">Write new comment</button></a>
-				<!--button class="save disabled" onclick="submit_form();">Save</button-->
-				<button class="save disabled" id="save-enabled">Save</button>
+					<button class="reply">Write new comment</button></a-->
+				<button class="save" id="save-enabled"
+					onclick="return submit_form()"
+				>Save</button>
 			</div>
 
 		</div>
@@ -322,6 +322,60 @@
 {% block javascript %}
 
 	<script>
+		function create_reply_form(comment_id) {
+			// it seems what needs to happen is you insert a 
+			// form, it will have id="id_parent_comment" by default,
+			// which you don't want, so maybe create it with
+			// the correct comment id immidiately?
+
+			- create form
+
+			// TODO: set to true
+			new_reply = document.getElementById("form_section").cloneNode(True)
+			
+
+			- give correct id_parent_comment
+			// to prevent duplicate id's I need to rename the id's of 
+			// probably both the text area and hidden input. maybe just
+			// remove id of text area? Or appent with parentcomment id.
+
+			new_textarea = new_reply.querySelectorAll("textarea")[0]
+			new_input = new_reply.querySelectorAll("input")[0]
+
+			new_textarea.id = "comment_area_" + comment_id  
+			new_input.id = "parent_comment_" + comment_id
+			new_input.value = comment_id	
+
+			- insertform
+
+			---> //comment_id is different for different sections			
+			var selected_comment = document.getElementById(comment_id)
+			var new_form_position = selected_comment
+				.getElementsByClassName("button-container")[0]
+
+
+
+			new_reply.insertBefore(
+					document.getElementById("form_section"),
+					new_form_position 
+			)
+
+
+			- remove create button
+
+		
+			- insert reply button
+
+			
+
+
+
+
+
+			document.getElementById("id_parent_comment").value = comment_id
+			comment_id = "comment-" + comment_id
+
+		}
 
 		function show_comments_form(comment_id) {
 			if (comment_id == 'comment-new') {
@@ -350,7 +404,7 @@
 				.getElementsByClassName("save")[0]
 			
 			selected_comment.insertBefore(
-					document.getElementById("form_section"),
+					document.getElementById("comment_section"),
 					new_form_position 
 			)
 			new_save_button.onclick = submit_form			
@@ -359,7 +413,7 @@
 		}
 
 		function submit_form() {
-			document.getElementById("form_section").submit()
+			document.getElementById("comment_section").submit()
 		}
 
 	</script>

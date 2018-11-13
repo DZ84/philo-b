@@ -8,7 +8,7 @@ from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
 # from django.template.context_processors import csrf
 
-from blog.forms import Comment_Form 
+from blog.forms import CommentForm 
 from blog.models import Blog, Comment
 
 class Overview(ListView):
@@ -19,7 +19,16 @@ class Overview(ListView):
 class Post(View):
 
 	template_name = 'blog/post.html'
-	comment_form = Comment_Form 
+
+
+
+	# TODO: remove this weird in between step of renaming forms?
+	# or does it create an easier adjustment if/when those are due?
+	# - same for add comment
+	comment_form = CommentForm 
+	# reply_form = ReplyForm
+
+
 
 	def get(self, request, *args, **kwargs):
 		post = get_object_or_404(Blog, id=self.kwargs['post_id'])
@@ -46,7 +55,7 @@ class Post(View):
 
 	# We add form only if the user is authenticated
 		if user.is_authenticated:
-			context['form'] = self.comment_form
+			context['comment_form'] = self.comment_form
 			context['user'] = user # is this a safe move? think so, if django allows it so easily
 
 		# return render_to_response(template_name=self.template_name, context=context)
@@ -57,7 +66,7 @@ class Post(View):
 @require_http_methods(["POST"])
 def add_comment(request, post_id):
 
-	form = Comment_Form(request.POST)
+	form = CommentForm(request.POST)
 	post = get_object_or_404(Blog, id=post_id)
 
 	# TODO: what if form is not valid?
@@ -67,6 +76,7 @@ def add_comment(request, post_id):
 		comment.post_id = post 
 		# comment.author_id = auth_user # auth.get_user(request)
 		comment.author_id = auth.get_user(request)
+		# TODO: if a form is empty I expect this is where it goes wrong.
 		comment.content = form.cleaned_data['comment_area']
 
 		comment.save()
