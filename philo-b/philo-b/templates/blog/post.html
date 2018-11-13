@@ -259,7 +259,7 @@
 					<button class="reply">Write reply</button></a>
 				<button class="save disabled">Save</button>
 			</div>
-	
+
 		{% endif %}
 
 		</div>
@@ -271,7 +271,7 @@
 
 	{% endfor %}
 	{% if comment_form %}
-		
+
 		<div class="comment-layout" id="comment-new">
 
 			<form id="comment-default" action="{% url 'add_comment' post.id %}" method="POST">
@@ -323,21 +323,13 @@
 
 	<script>
 		function create_reply_form(parent_nr) {
-			// it seems what needs to happen is you insert a 
-			// form, it will have id="id_parent_comment" by default,
-			// which you don't want, so maybe create it with
-			// the correct comment id immidiately?
 
-			//- create form
-
-			// TODO: set to true
+			//- create form by cloning
 			new_comment = document.getElementById("comment-default").cloneNode(true)
-			new_comment.id = "reply-to-" + parent_nr
 
-			//- give correct id_parent_comment
-			// to prevent duplicate id's I need to rename the id's of 
-			// probably both the text area and hidden input. maybe just
-			// remove id of text area? Or appent with parentcomment id.
+
+			//- give correct id_parent_comment to prevent duplicates
+			new_comment.id = "reply-to-" + parent_nr
 
 			new_textarea = new_comment.querySelectorAll("textarea")[0]
 			new_textarea.id = "text-area-" + parent_nr
@@ -348,12 +340,9 @@
 
 
 			//- insertform
-
-			//---> //comment_id is different for different sections			
 			var parent_element = document.getElementById("comment-" + parent_nr)
 			var new_comment_position = parent_element
 				.getElementsByClassName("button-container")[0]
-
 
 			parent_element.insertBefore(
 				new_comment,
@@ -361,60 +350,32 @@
 			)
 
 
-			// - remove create button
+			// set csrf token inside new form
+			var new_token_input = document.createElement("input")
+			new_token_input.name = "csrfmiddlewaretoken"
+			new_token_input.type = "hidden"
+			new_token_input.value = get_cookie_info("csrftoken")
+
+			// parent_element.appendChild(new_token_input)
+
+			parent_element.insertBefore(new_token_input, parent_element.firstChild)
+
+			//- remove create button
 			
 
 
 		
 			// - insert reply button
-
 			var new_save_button = parent_element
-		 		.getElementsByClassName("save disabled")[0]
-
-		 	// new_save_button.onclick = submit_reply_form(parent_nr)			
+		 		.getElementsByClassName("save")[0]
 
 			new_save_button.addEventListener('click', function() {
 				submit_reply_form(parent_nr)
 			})
 
 		 	new_save_button.className = "save"
-		 
+
 		}
-
-		// function show_comments_form(comment_id) {
-		// 	if (comment_id == 'comment-new') {
-		// 		// where am I using this?
-		// 		document.getElementById("id_parent_comment").value = ''
-		// 	} else {
-		// 		document.getElementById("id_parent_comment").value = comment_id
-		// 		comment_id = "comment-" + comment_id
-		// 	}
-
-		// 	// disable previous save button
-		// 	// try catch needs to be removed, but is now, because first (save button?) one is not yet defined
-		// 	try {
-		// 		var previous_save_button = document.getElementById("save-enabled")	
-		// 		previous_save_button.className = "save disabled"
-		// 		previous_save_button.id = ""
-		// 		previous_save_button.onclick = ""
-		// 	} catch(e) {
-		// 		console.log("yeah yeah")
-		// 	}
-
-		// 	var selected_comment = document.getElementById(comment_id)
-		// 	var new_form_position = selected_comment
-		// 		.getElementsByClassName("button-container")[0]
-		// 	var new_save_button = selected_comment	
-		// 		.getElementsByClassName("save")[0]
-		// 	
-		// 	selected_comment.insertBefore(
-		// 			document.getElementById("comment-default"),
-		// 			new_form_position 
-		// 	)
-		// 	new_save_button.onclick = submit_form			
-		// 	new_save_button.className = "save"
-		// 	new_save_button.id = "save-enabled"
-		// }
 
 		function submit_reply_form(parent_nr) {
 			document.getElementById("reply-to-" + parent_nr).submit()
@@ -423,6 +384,22 @@
 		function submit_comment_form() {
 			document.getElementById("comment-default").submit()
 		}
+
+		function get_cookie_info (name) {
+			var cookieValue = null
+			if (document.cookie && document.cookie !== '') {
+				var cookies = document.cookie.split(';')
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = cookies[i].trim()
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+							cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+							break
+					}
+				}
+			}
+			return cookieValue
+		}
+
 
 	</script>
 
