@@ -183,7 +183,7 @@
 			font-weight: bold;
 		}
 
-		#id_comment_area {
+		#id_text_area {
 			width: 100%;
 			height: 12em;
 			max-width: 100%;
@@ -322,19 +322,19 @@
 {% block javascript %}
 
 	<script>
-		function create_reply_form(comment_id) {
+		function create_reply_form(comment_nr) {
 			// it seems what needs to happen is you insert a 
 			// form, it will have id="id_parent_comment" by default,
 			// which you don't want, so maybe create it with
 			// the correct comment id immidiately?
 
-			- create form
+			//- create form
 
 			// TODO: set to true
-			new_reply = document.getElementById("form_section").cloneNode(True)
+			new_reply = document.getElementById("comment_section").cloneNode(True)
 			
 
-			- give correct id_parent_comment
+			//- give correct id_parent_comment
 			// to prevent duplicate id's I need to rename the id's of 
 			// probably both the text area and hidden input. maybe just
 			// remove id of text area? Or appent with parentcomment id.
@@ -342,75 +342,71 @@
 			new_textarea = new_reply.querySelectorAll("textarea")[0]
 			new_input = new_reply.querySelectorAll("input")[0]
 
-			new_textarea.id = "comment_area_" + comment_id  
-			new_input.id = "parent_comment_" + comment_id
-			new_input.value = comment_id	
+			new_textarea.id = "text_area_" + comment_nr
+			new_input.id = "parent_comment_" + comment_nr
+			new_input.value = comment_nr	
 
-			- insertform
 
-			---> //comment_id is different for different sections			
-			var selected_comment = document.getElementById(comment_id)
-			var new_form_position = selected_comment
+			//- insertform
+
+			//---> //comment_id is different for different sections			
+			var selected_comment = document.getElementById("comment-" + comment_nr)
+			var new_reply_position = selected_comment
 				.getElementsByClassName("button-container")[0]
 
 
-
-			new_reply.insertBefore(
-					document.getElementById("form_section"),
-					new_form_position 
+			selected_comment.insertBefore(
+					new_reply,
+					new_reply_position 
 			)
 
 
-			- remove create button
+			// - remove create button
+			
+
 
 		
-			- insert reply button
+			// - insert reply button
 
 			
 
 
-
-
-
-			document.getElementById("id_parent_comment").value = comment_id
-			comment_id = "comment-" + comment_id
-
 		}
 
-		function show_comments_form(comment_id) {
-			if (comment_id == 'comment-new') {
-				// where am I using this?
-				document.getElementById("id_parent_comment").value = ''
-			} else {
-				document.getElementById("id_parent_comment").value = comment_id
-				comment_id = "comment-" + comment_id
-			}
+		// function show_comments_form(comment_id) {
+		// 	if (comment_id == 'comment-new') {
+		// 		// where am I using this?
+		// 		document.getElementById("id_parent_comment").value = ''
+		// 	} else {
+		// 		document.getElementById("id_parent_comment").value = comment_id
+		// 		comment_id = "comment-" + comment_id
+		// 	}
 
-			// disable previous save button
-			// try catch needs to be removed, but is now, because first (save button?) one is not yet defined
-			try {
-				var previous_save_button = document.getElementById("save-enabled")	
-				previous_save_button.className = "save disabled"
-				previous_save_button.id = ""
-				previous_save_button.onclick = ""
-			} catch(e) {
-				console.log("yeah yeah")
-			}
+		// 	// disable previous save button
+		// 	// try catch needs to be removed, but is now, because first (save button?) one is not yet defined
+		// 	try {
+		// 		var previous_save_button = document.getElementById("save-enabled")	
+		// 		previous_save_button.className = "save disabled"
+		// 		previous_save_button.id = ""
+		// 		previous_save_button.onclick = ""
+		// 	} catch(e) {
+		// 		console.log("yeah yeah")
+		// 	}
 
-			var selected_comment = document.getElementById(comment_id)
-			var new_form_position = selected_comment
-				.getElementsByClassName("button-container")[0]
-			var new_save_button = selected_comment	
-				.getElementsByClassName("save")[0]
-			
-			selected_comment.insertBefore(
-					document.getElementById("comment_section"),
-					new_form_position 
-			)
-			new_save_button.onclick = submit_form			
-			new_save_button.className = "save"
-			new_save_button.id = "save-enabled"
-		}
+		// 	var selected_comment = document.getElementById(comment_id)
+		// 	var new_form_position = selected_comment
+		// 		.getElementsByClassName("button-container")[0]
+		// 	var new_save_button = selected_comment	
+		// 		.getElementsByClassName("save")[0]
+		// 	
+		// 	selected_comment.insertBefore(
+		// 			document.getElementById("comment_section"),
+		// 			new_form_position 
+		// 	)
+		// 	new_save_button.onclick = submit_form			
+		// 	new_save_button.className = "save"
+		// 	new_save_button.id = "save-enabled"
+		// }
 
 		function submit_form() {
 			document.getElementById("comment_section").submit()

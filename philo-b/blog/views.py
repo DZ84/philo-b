@@ -77,7 +77,7 @@ def add_comment(request, post_id):
 		# comment.author_id = auth_user # auth.get_user(request)
 		comment.author_id = auth.get_user(request)
 		# TODO: if a form is empty I expect this is where it goes wrong.
-		comment.content = form.cleaned_data['comment_area']
+		comment.content = form.cleaned_data['text_area']
 
 		comment.save()
 

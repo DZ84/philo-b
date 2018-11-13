@@ -10,7 +10,7 @@ class CommentForm(forms.Form):
 		initial=None
     )
 
-    comment_area = forms.CharField(
+    text_area = forms.CharField(
         label="",
         widget=forms.Textarea
     )
