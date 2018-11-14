@@ -245,7 +245,7 @@
 				<div class="post-info">
 					<div class="user-info">
 						<strong>{{ comment.author_id }}</strong></div>
-						<!--div style="text-align:center;"><strong>{{ comment.path }}</strong></div-->
+						<div style="text-align:center;"><strong>{{ comment.path }}</strong></div>
 					<div class="date">{{ comment.pub_date }}</div>
 				</div>
 				<hr class="separator-info">
@@ -333,10 +333,16 @@
 
 			new_textarea = new_comment.querySelectorAll("textarea")[0]
 			new_textarea.id = "text-area-" + parent_nr
+			new_textarea.value = "" 
+			
+			new_input_all = new_comment.querySelectorAll("input")
+			
+			new_input_csrf = new_input_all[0]
+			new_input_csrf.value = document.getElementsByName('csrfmiddlewaretoken')[0].value
 
-			new_input = new_comment.querySelectorAll("input")[0]
-			new_input.id = "parent-comment-" + parent_nr
-			new_input.value = parent_nr	
+			new_input_info = new_input_all[1]
+			new_input_info.id = "parent-comment-" + parent_nr
+			new_input_info.value = parent_nr	
 
 
 			//- insertform
@@ -350,21 +356,25 @@
 			)
 
 
-			// set csrf token inside new form
-			var new_token_input = document.createElement("input")
-			new_token_input.name = "csrfmiddlewaretoken"
-			new_token_input.type = "hidden"
-			new_token_input.value = get_cookie_info("csrftoken")
+			// // set csrf token inside new form
+			// var new_token_input = document.createElement("input")
+			// new_token_input.name = "csrfmiddlewaretoken"
+			// new_token_input.type = "hidden"
+			// new_token_input.value = get_cookie_info("csrftoken")
 
-			// parent_element.appendChild(new_token_input)
+			// // parent_element.appendChild(new_token_input)
 
-			parent_element.insertBefore(new_token_input, parent_element.firstChild)
+			// new_comment.insertBefore(new_token_input, new_comment.firstChild)
+
+			console.log("default form cookie: " + document.getElementsByName('csrfmiddlewaretoken')[0].value)
+			console.log("new____ form cookie: " + new_input_csrf.value)
+
 
 			//- remove create button
-			
 
 
-		
+
+
 			// - insert reply button
 			var new_save_button = parent_element
 		 		.getElementsByClassName("save")[0]
@@ -391,12 +401,14 @@
 				var cookies = document.cookie.split(';')
 				for (var i = 0; i < cookies.length; i++) {
 					var cookie = cookies[i].trim()
+					console.log(cookie)
 					if (cookie.substring(0, name.length + 1) == (name + '=')) {
 							cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
 							break
 					}
 				}
 			}
+			console.log("get_cookie_function: " + cookieValue)
 			return cookieValue
 		}
 
