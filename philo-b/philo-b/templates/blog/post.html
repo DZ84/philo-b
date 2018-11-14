@@ -328,7 +328,7 @@
 			new_comment = document.getElementById("comment-default").cloneNode(true)
 
 
-			//- give correct id_parent_comment to prevent duplicates
+			//- give correct id_parent_comment to prevent duplicate id's
 			new_comment.id = "reply-to-" + parent_nr
 
 			new_textarea = new_comment.querySelectorAll("textarea")[0]
@@ -337,9 +337,11 @@
 			
 			new_input_all = new_comment.querySelectorAll("input")
 			
+			// csrf token value is not copied with the cloning
 			new_input_csrf = new_input_all[0]
 			new_input_csrf.value = document.getElementsByName('csrfmiddlewaretoken')[0].value
 
+			// adjust the value as it will be used by django upon submission
 			new_input_info = new_input_all[1]
 			new_input_info.id = "parent-comment-" + parent_nr
 			new_input_info.value = parent_nr	
@@ -354,17 +356,6 @@
 				new_comment,
 				new_comment_position 
 			)
-
-
-			// // set csrf token inside new form
-			// var new_token_input = document.createElement("input")
-			// new_token_input.name = "csrfmiddlewaretoken"
-			// new_token_input.type = "hidden"
-			// new_token_input.value = get_cookie_info("csrftoken")
-
-			// // parent_element.appendChild(new_token_input)
-
-			// new_comment.insertBefore(new_token_input, new_comment.firstChild)
 
 			console.log("default form cookie: " + document.getElementsByName('csrfmiddlewaretoken')[0].value)
 			console.log("new____ form cookie: " + new_input_csrf.value)
@@ -394,24 +385,6 @@
 		function submit_comment_form() {
 			document.getElementById("comment-default").submit()
 		}
-
-		function get_cookie_info (name) {
-			var cookieValue = null
-			if (document.cookie && document.cookie !== '') {
-				var cookies = document.cookie.split(';')
-				for (var i = 0; i < cookies.length; i++) {
-					var cookie = cookies[i].trim()
-					console.log(cookie)
-					if (cookie.substring(0, name.length + 1) == (name + '=')) {
-							cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
-							break
-					}
-				}
-			}
-			console.log("get_cookie_function: " + cookieValue)
-			return cookieValue
-		}
-
 
 	</script>
 
