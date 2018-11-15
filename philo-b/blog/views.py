@@ -20,26 +20,14 @@ class Post(View):
 
 	template_name = 'blog/post.html'
 
-
-
 	# TODO: remove this weird in between step of renaming forms?
 	# or does it create an easier adjustment if/when those are due?
 	# - same for add comment
 	comment_form = CommentForm 
-	# reply_form = ReplyForm
-
-
 
 	def get(self, request, *args, **kwargs):
 		post = get_object_or_404(Blog, id=self.kwargs['post_id'])
 		context = {}
-
-		# import os
-		# print("printing HOME:" + str(os.environ.get('HOME')))
-		# print("printing DJANGO_SECRET_KEY:" + str(os.environ.get('DJANGO_SECRET_KEY')))
-		# print("printing DJANGO_DEBUG:" + str(os.environ.get('DJANGO_DEBUG')))
-
-		# for csrf: template.context_processors.csrf or template.RequestContext?
 
 		# context.update(csrf(request))
 		# context['update'] = (csrf(request))
@@ -90,7 +78,7 @@ def add_comment(request, post_id):
 
 		# get id of comment to which is replied. If comment is
 		# not a reply then parent_id=None
-		parent_id = form.cleaned_data['parent_comment']
+		parent_id = form.cleaned_data['parent_comment_id']
 
 		# import pdb
 		# pdb.set_trace()

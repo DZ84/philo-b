@@ -4,8 +4,8 @@ from .models import Comment
 
 class CommentForm(forms.Form):
    
-    parent_comment = forms.IntegerField(
-        widget=forms.HiddenInput,
+    parent_comment_id = forms.IntegerField(
+        widget=forms.HiddenInput(),
         required=False,
 		initial=None
     )
