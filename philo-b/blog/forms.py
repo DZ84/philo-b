@@ -12,5 +12,9 @@ class CommentForm(forms.Form):
 
     text_area = forms.CharField(
         label="",
-        widget=forms.Textarea
+        widget=forms.Textarea(attrs={
+			"class": "text_area"
+			}
+		)
+
     )

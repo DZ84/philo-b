@@ -183,7 +183,7 @@
 			font-weight: bold;
 		}
 
-		#id_text_area {
+		.text_area {
 			width: 100%;
 			height: 12em;
 			max-width: 100%;
@@ -327,8 +327,6 @@
 			var new_subcomment_buttons = parent_element
 				.getElementsByClassName("button-container")[0]
 
-			// console.log("default form cookie: " + document.getElementsByName('csrfmiddlewaretoken')[0].value)
-			// console.log("new____ form cookie: " + new_input_csrf.value)
 			parent_element.insertBefore(
 				new_subcomment,
 				new_subcomment_buttons
@@ -381,7 +379,6 @@
 			new_subcomment_buttons
 				.appendChild(new_submit_button)
 		}
-
 
 		function submit_subcomment_form(parent_nr) {
 			document.getElementById("reply-to-" + parent_nr).submit()
