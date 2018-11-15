@@ -96,7 +96,7 @@
 		}
 
 		.button-container .reply, 
-		.button-container .save {
+		.button-container .submit {
 			background-color: #b8b8b8;
 			border-width: 1px 0 1px 1px;
 			border-style: solid;
@@ -114,7 +114,7 @@
 			font-size: 16px;
 		}
 
-		.button-container .save {
+		.button-container .submit {
 			/* margin-right: 7px; */
 			/* border-right: 1px solid #e8e8e8; */
 		}
@@ -139,7 +139,7 @@
 		}
 	
 		.comment-layout > .button-container > a > .reply,
-		.comment-layout > .button-container > a > .save {
+		.comment-layout > .button-container > a > .submit {
 		}
 		
 		/* for savebuttons that are not relevant */
@@ -258,7 +258,6 @@
 				<a class="comment" 
 				onclick="return create_subcomment_form({{ comment.id }})">
 					<button class="reply">reply</button></a>
-				<!--button class="save disabled">submit</button-->
 			</div>
 
 		{% endif %}
@@ -296,12 +295,9 @@
 			</form>
 
 			<div class="button-container">
-				<!--a class="comment new" 
-				onclick="return show_comments_form('comment-new')">
-					<button class="reply">Write new comment</button></a-->
-				<button class="save" id="save-enabled"
+				<button class="submit" 
 					onclick="return submit_comment_form()"
-				>submit</button>
+					>submit</button>
 			</div>
 
 		</div>
@@ -325,64 +321,67 @@
 	<script>
 		function create_subcomment_form(parent_nr) {
 
-			//- create form by cloning
+			var new_subcomment = create_new_subcomment(parent_nr)
+
+			var parent_element = document.getElementById("comment-" + parent_nr)
+			var new_subcomment_buttons = parent_element
+				.getElementsByClassName("button-container")[0]
+
+			// console.log("default form cookie: " + document.getElementsByName('csrfmiddlewaretoken')[0].value)
+			// console.log("new____ form cookie: " + new_input_csrf.value)
+			parent_element.insertBefore(
+				new_subcomment,
+				new_subcomment_buttons
+			)
+
+			delete_create_buttons(new_subcomment_buttons, parent_nr)
+		}
+
+		function create_new_subcomment(parent_nr) {
+			// -create form by cloning
+			// -give correct id_parent_comment to prevent duplicate id's
+			// -clear textarea from cloned form
+			// -csrf token value is not copied with the cloning
+			// -adjust info value as it will be used upon submission
+
 			new_subcomment = document.getElementById("comment-default").cloneNode(true)
-
-
-			//- give correct id_parent_comment to prevent duplicate id's
 			new_subcomment.id = "reply-to-" + parent_nr
 
 			new_textarea = new_subcomment.querySelectorAll("textarea")[0]
 			new_textarea.id = "text-area-" + parent_nr
 			new_textarea.value = "" 
-			
+
 			new_input_all = new_subcomment.querySelectorAll("input")
-			
-			// csrf token value is not copied with the cloning
+
 			new_input_csrf = new_input_all[0]
 			new_input_csrf.value = document.getElementsByName('csrfmiddlewaretoken')[0].value
 
-			// adjust the value as it will be used by django upon submission
 			new_input_info = new_input_all[1]
 			new_input_info.id = "parent-comment-" + parent_nr
 			new_input_info.value = parent_nr	
 
+			return new_subcomment
+		}
 
-			//- insertform
-			var parent_element = document.getElementById("comment-" + parent_nr)
-			var new_subcomment_position = parent_element
-				.getElementsByClassName("button-container")[0]
+		function delete_create_buttons(new_subcomment_buttons, parent_nr) {
+			// -remove reply button
+			// -configure submit button
+			// -insert submit button
 
-			parent_element.insertBefore(
-				new_subcomment,
-				new_subcomment_position 
-			)
+			new_subcomment_buttons.getElementsByClassName('reply')[0].remove()
 
-			// console.log("default form cookie: " + document.getElementsByName('csrfmiddlewaretoken')[0].value)
-			// console.log("new____ form cookie: " + new_input_csrf.value)
+			var new_submit_button = document.createElement('BUTTON')
 
-
-			//- remove create button
-			new_subcomment_position.getElementsByClassName('reply')[0].remove()
-
-			//- insert reply button
-			var new_save_button = document.createElement('BUTTON')
-
-			//var new_save_button = parent_element
-		 	//	.getElementsByClassName("save")[0]
-
-			new_save_button.addEventListener('click', function() {
+			new_submit_button.addEventListener('click', function() {
 				submit_subcomment_form(parent_nr)
 			})
+		 	new_submit_button.className = "submit"
+			new_submit_button.innerHTML = "submit"
 
-
-		 	new_save_button.className = "save"
-			new_save_button.innerHTML = "submit"
-
-			new_subcomment_position
-				.appendChild(new_save_button)
-
+			new_subcomment_buttons
+				.appendChild(new_submit_button)
 		}
+
 
 		function submit_subcomment_form(parent_nr) {
 			document.getElementById("reply-to-" + parent_nr).submit()
