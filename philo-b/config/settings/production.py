@@ -12,15 +12,6 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['dunno'])
-print("ALLOWED HOSTS --------------------------------------------------------------------------------------")
-print(*ALLOWED_HOSTS, sep = ", ")
-
-###########################################################
-## !!! REMOVE THE FOLLOWING LINE WHEN DONE DEBUGGING !!! ##
-# ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = ["localhost", "0.0.0.0", "192.168.32.1"]
-# ALLOWED_HOSTS = ["127.0.1.1", "127.0.1.1", "0.0.0.0", "localhost"]
-# ALLOWED_HOSTS = ["localhost"] 
 
 # DATABASES
 # ------------------------------------------------------------------------------
@@ -117,6 +108,7 @@ X_FRAME_OPTIONS = 'DENY'
 #       ip's that aren't on the allowed list, why doesn't it handle does request
 #       without errors? also has a verbose option. But that doesn't give much
 #       extra information.
+#		- not sure this ever did anything.
 COMPOSE_HTTP_TIMEOUT = 50000
 
 
@@ -178,7 +170,8 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[philo-b]')
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-# ADMIN_URL = env('DJANGO_ADMIN_URL')
+ADMIN_URL = env.url('DJANGO_ADMIN_URL')
+
 
 # Anymail (Mailgun)
 # ------------------------------------------------------------------------------

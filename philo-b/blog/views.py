@@ -49,6 +49,11 @@ class Post(View):
 		# return render_to_response(template_name=self.template_name, context=context)
 		return render(request, self.template_name, context)
 
+from django.urls import reverse
+def testje(request):
+	print('doing testje')
+	#return reverse('admini')
+	return reverse('admin:index')
 
 @login_required
 @require_http_methods(["POST"])

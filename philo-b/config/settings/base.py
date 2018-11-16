@@ -69,7 +69,7 @@ DATABASES = {
 }
 
 
-os.environ['DJANGO_SECRET_KEY'] = os.environ['SECRET_KEY']
+# os.environ['DJANGO_SECRET_KEY'] = os.environ['SECRET_KEY']
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
