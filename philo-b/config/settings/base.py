@@ -3,7 +3,6 @@ Base settings to build other settings files upon.
 """
 
 import environ
-import os
 
 ROOT_DIR = environ.Path(__file__) - 3  # (philo-b/config/settings/base.py - 3 = philo-b/)
 APPS_DIR = ROOT_DIR.path('philo-b')
@@ -42,34 +41,19 @@ USE_TZ = True
                 #TODO: these will have to be set with os.getenv("") functions
                 #      should also look at the secret key in local (again)
 
-os.environ['DATABASE_URL'] = 'postgres:///philo-b'
-# os.environ['DATABASE_URL'] = 'postgres:///postgres'
 DATABASES = {
-    #'default': env.db('DATABASE_URL', default='postgres:///philo-b'),
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': os.environ['DB_NAME'],
+        'NAME': env('DB_NAME'),
         # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-        'USER': os.environ['DB_USER'],  
+        'USER': env('DB_USER'),  
         # # needs to be changed after deployment, well, before deployment actually
-        'PASSWORD': os.environ['DB_PASS'], 
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
-
-#         'NAME': 'philob',
-#         # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
-#         'USER': 'su3',  
-#         # needs to be changed after deployment, well, before deployment actually
-#         'PASSWORD': 'okokokok', 
-#         'HOST': 'localhost',
-#         'PORT': 5432,
-
+        'PASSWORD': env('DB_PASS'), 
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
     }
 }
 
-
-# os.environ['DJANGO_SECRET_KEY'] = os.environ['SECRET_KEY']
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
@@ -262,8 +246,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-# ADMIN_URL = r'^adminerato/'
-
+# set in production file, adjust when want to go back to dev.
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
@@ -300,7 +283,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'dzverifydz@gmail.com'
-EMAIL_HOST_PASSWORD = os.environ['ACCOUNT_GMAIL_PASS']
+EMAIL_HOST_PASSWORD = env('ACCOUNT_GMAIL_PASS')
 
 
 # Your stuff...

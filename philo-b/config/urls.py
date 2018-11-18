@@ -32,14 +32,10 @@ urlpatterns = [
     ),
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, admin.site.urls),
-    # User management
 
-    url(
-        r"^testje/", 
-		views.testje
-    ),
+    # User management
 	url(
-        r"^users/",
+       r"^users/",
         include("philo-b.users.urls", namespace="users"),
     ),
     url(

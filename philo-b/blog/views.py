@@ -50,25 +50,6 @@ class Post(View):
 		return render(request, self.template_name, context)
 
 
-from django.urls import reverse
-from django.http import HttpResponseRedirect as hrr
-
-
-from django.shortcuts import redirect
-
-def testje(request):
-	print('doing testje')
-	# return reverse('about')
-	# return hrr(reverse('about'))
-	#return hrr(reverse('admin:index', current_app='blog'))
-	# return reverse('admin:index', app_name='blog')
-	# return hrr(reverse('admin:login', kwargs={}))
-	# return hrr(reverse('adminerato:login', kwargs={}))
-	# return hrr(reverse('admin:login'))
-	return redirect('admin:login')
-
-
-
 @login_required
 @require_http_methods(["POST"])
 def add_comment(request, post_id):
