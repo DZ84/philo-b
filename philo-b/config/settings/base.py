@@ -262,7 +262,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-ADMIN_URL = r'^admin/'
+# ADMIN_URL = r'^adminerato/'
+
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
     ("""DeZet""", 'denniszethof@gmail.com'),

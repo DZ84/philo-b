@@ -170,8 +170,12 @@ EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[philo-b]')
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-ADMIN_URL = env.url('DJANGO_ADMIN_URL')
+ADMIN_URL = env('DJANGO_ADMIN_URL')
+# ADMIN_URL = env.url('DJANGO_ADMIN_URL').path.strip('\"')
+# ADMIN_URL = ADMIN_URL.strip('\"')
 
+# import pdb
+# pdb.set_trace()
 
 # Anymail (Mailgun)
 # ------------------------------------------------------------------------------
