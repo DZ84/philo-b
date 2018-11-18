@@ -8,6 +8,7 @@
 			margin-left: 5%;
 			font-weight: bold;
 		}
+
 		.main-text-container {
 			margin: 0 auto;
 			width: 100%;
@@ -237,6 +238,12 @@
 {% block comments %}
 	<hr class="separator-commentsection">
 
+	{% if not comment_form %}
+
+		<br>Sign in to reply or comment.<br><br><br>
+
+	{% endif %}
+
 	{% for comment in comments %}
 
 		<!--<span class="comment {{ comment.is_first }} line-connector"></span> -->
@@ -264,6 +271,12 @@
 
 		</div>
 		<div style="clear:both;"></div>
+
+		{% if not comment_formm and comment.is_last %}
+
+			<br><br>
+
+		{% endif %}
 
 	{% empty %}
 
@@ -309,7 +322,7 @@
 				<h3 class="no-login-title"></h3>
 			</div>
 			<div class="no-login-body">
-				You need to sign in to place comments.<br />
+				Sign in to reply or comment.<br><br>
 			</div>
 		</div>
 
