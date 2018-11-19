@@ -1,83 +1,10 @@
-{% extends "base.html" %}<!DOCTYPE html>
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+
 {% block css %}
 
-	<style>
-
-		a {
-			text-decoration: none;
-			color: #686868;;
-		}
-
-
-		ul {
-			margin: 0;
-			padding: 0;
-		}
-
-		li {
-			padding-left: 5px;
-			/* overflow: hidden; 
-			 * text-overflow: ellipsis;
-			 */
-		}
-
-		.post-listing {
-			width: 70%;
-			height: 3em;
-			background: transparent;
-			opacity: .8;
-
-			/* font-vertical-align: center; */
-			margin: 0 auto;
-
-			/* this is for surity when the inner block
-			 * actually overlap you don't want it to
-			 * completely wreck the complete layout 
-			 */	
-			white-space: nowrap;
-			
-			/* I could ofcourse just delete the borders
-			 * and add a small space after every bar
-			 * Nicer way to do this: margins!!!!!!
-			 */
-			/* border-width: 2px 2px 0 2px;
-			/* border-style: solid; 
-			/* border-color: powderblue;
-			*/
-			border: 3px solid transparent;
-		}
-
-		.post-listing.last {
-			border-bottom-width: 2px;
-		}
-
-		.post-listing > a > .title,  
-		.post-listing > a > .date { 
-			display: inline-block;
-			height: 100%;
-			margin: 0;
-			padding: 0;
-			border-width: 0; 
-
-			line-height: 3em;
-
-		}
-		.post-listing > a > .title { 
-			width: 62%;
-
-			background: white;
-			padding-left: 8%;
-			text-align: left;
-		}	
-
-		.post-listing > a > .date {
-			width: 30%;
-	
-			background: #b8b8b8;
-
-		}
-
-	</style>
+	<link rel="stylesheet" href="{% static 'css/blog/home.css' %}" type="text/css" media="screen">
 
 {% endblock css %}
 {% block header %}
