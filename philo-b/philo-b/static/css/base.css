@@ -58,3 +58,9 @@ hr {
 	text-align: right;
 	margin: 0 15% 0 0;
 }
+
+/*.login-status > a { */
+.login-links {
+	text-decoration: underline;
+	color: black;
+}
