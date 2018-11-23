@@ -36,7 +36,7 @@
 
 	{% if not comment_form %}
 
-		<br>Sign in to reply or comment.<br><br><br>
+		<a href="{% url 'account_login' %}?next={{ request.path }}">Sign in</a> to reply or comment.<br><br>
 
 	{% endif %}
 
@@ -113,13 +113,15 @@
 
 	{% else %}
 
+	<hr class="separator-commentsection">
+	<br>
 		<div class="no-login">
 			<div class="no-login-heading">
 				<h3 class="no-login-title"></h3>
 			</div>
 			<div class="no-login-body">
-				Sign in to reply or comment.<br><br>
-			</div>
+				<a href="{% url 'account_login' %}?next={{ request.path }}">Sign in</a> to reply or comment.</div>
+				<br><br>
 		</div>
 
 	{% endif %}

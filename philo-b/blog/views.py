@@ -16,6 +16,18 @@ class Overview(ListView):
 	model = Blog
 	template_name = 'blog/home.html'
 
+	def render_to_response(self, context, **response_kwargs):
+		user = auth.get_user(self.request)
+
+		# import pdb
+		# pdb.set_trace()
+
+		if user.is_authenticated:
+			context['user'] = user
+
+		return super().render_to_response(context, **response_kwargs)
+
+
 class Post(View):
 
 	template_name = 'blog/post.html'

@@ -38,16 +38,11 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-                #TODO: these will have to be set with os.getenv("") functions
-                #      should also look at the secret key in local (again)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env('DB_NAME'),
-        # # this is not a django superuser, but a db user, if I'm not mistaken ofcourse.
         'USER': env('DB_USER'),  
-        # # needs to be changed after deployment, well, before deployment actually
         'PASSWORD': env('DB_PASS'), 
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),

@@ -35,12 +35,12 @@ urlpatterns = [
 
     # User management
 	url(
-       r"^users/",
-        include("philo-b.users.urls", namespace="users"),
+		r"^users/",
+		include("philo-b.users.urls", namespace="users"),
     ),
     url(
         r"^accounts/", 
-        include("allauth.urls")
+        include("allauth.urls"), 
     ),
 
     # Your stuff: custom urls includes go here
