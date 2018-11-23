@@ -25,9 +25,10 @@
 	<body>
 		<div class="main-container">
 
-			<div class="login_status">
+			<div class="login-status">
 				{% if user.is_authenticated %}
-					Logged in as <b>{{ user.username }}</b> - <a href="{% url 'account_logout' %}?next={{ request.path }}">logout</a><br>
+					Logged in as <b>{{ user.username }}</b> - 
+					<a href="{% url 'account_logout' %}?next={{ request.path }}">logout</a><br>
 				{% else %}
 					<a href="{% url 'account_login' %}?next={{ request.path }}">login</a><br>
 				{% endif %}
