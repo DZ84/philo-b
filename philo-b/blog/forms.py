@@ -18,3 +18,13 @@ class CommentForm(forms.Form):
 		)
 
     )
+
+
+# from django.core.exceptions import ValidationError
+# 
+# def validate_not_empty(value):
+# 	import re
+# 	if not (re.match('\w+', value)):
+		
+
+
