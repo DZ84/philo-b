@@ -2,6 +2,12 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block javascript %}
+
+	<script src="{% static 'js/blog/post.js' %}"></script>
+
+{% endblock javascript %}
+
 {% block css %}
 
 	<link rel="stylesheet" href="{% static 'css/blog/post.css' %}" type="text/css" media="screen">
@@ -57,6 +63,23 @@
 
 		{% if comment_form and comment.is_last %}
 
+			<!--
+			{% if errors %}
+				{% for error in errors %} 
+					{% if error.id == comment.id %}
+
+						<ul>
+							<li>{{ error.message }}</li>
+						</ul>
+
+						span class="submit-attempt"></span>
+							create_subcomment_form({{ comment.id }}, false)
+
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+			-->
+
 			<div class="button-container">
 				<a class="comment" 
 				onclick="return create_subcomment_form({{ comment.id }})">
@@ -68,7 +91,7 @@
 		</div>
 		<div style="clear:both;"></div>
 
-		{% if not comment_formm and comment.is_last %}
+		{% if not comment_form and comment.is_last %}
 
 			<br><br>
 
@@ -85,11 +108,13 @@
 
 			<form id="comment-default" action="{% url 'add_comment' post.id %}" method="POST">
 				{% csrf_token %}
-				<div id="form-area-wrapper">
+				<!!!!!!!!-- this has an id, seems dodgy -->
+				<div id="form-area-wrapper"> 
 					<hr class="separator-form">
 					<div class="form-userinfo">Write response with username 
 						<span class="form-username">{{ user.username }}</span>:
 					</div>
+					<div class="text-error"></div>
 					{{ comment_form.as_p }}
 				</div>
 				<div class="form-instructions">
@@ -105,8 +130,7 @@
 
 			<div class="button-container">
 				<button class="submit" 
-					onclick="return submit_comment_form()"
-					>submit</button>
+					onclick="return submit_comment_form()">submit</button>
 			</div>
 
 		</div>
@@ -126,10 +150,14 @@
 
 	{% endif %}
 
+	{% if errors %}
+		{% for error in errors %} 
+
+			<script>create_subcomment_form({{ error.id }});</script>
+
+		{% endfor %}
+	{% endif %}
+
+
 {% endblock comments %}
-{% block javascript %}
-
-	<script src="{% static 'js/blog/post.js' %}"></script>
-
-{% endblock javascript %}
 

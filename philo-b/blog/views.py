@@ -2,11 +2,10 @@ from django.views import View
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404, redirect, render #, render_to_response
 from django.contrib import auth
-from django.http import Http404
+from django.http import Http404, HttpResponse 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
-# from django.template.context_processors import csrf
 
 from blog.forms import CommentForm 
 from blog.models import Blog, Comment
@@ -38,25 +37,22 @@ class Post(View):
 	comment_form = CommentForm 
 
 	def get(self, request, *args, **kwargs):
-		post = get_object_or_404(Blog, id=self.kwargs['post_id'])
 		context = {}
 
-		# context.update(csrf(request))
-		# context['update'] = (csrf(request))
-		# user = auth_user # auth.get_user(request)
+		post = get_object_or_404(Blog, id=self.kwargs['post_id'])
 		user =  auth.get_user(request)
+		
 		context['post'] = post
-
-	# Put in the context of all the comments that are relevant to the blog 
-	# simultaneously sorting them along the way, the auto-increment ID, 
-	# so the problems with the hierarchy should not have any comments yet
 		context['comments'] = post.comment_set.all().order_by('path') 
-	# context['next'] = blog.get_absolute_url()
 
-	# We add form only if the user is authenticated
 		if user.is_authenticated:
 			context['comment_form'] = self.comment_form
 			context['user'] = user # is this a safe move? think so, if django allows it so easily
+			
+			try:
+				context['errors'] = request.session['errors']
+			except KeyError:
+				pass
 
 		# return render_to_response(template_name=self.template_name, context=context)
 		return render(request, self.template_name, context)
@@ -69,7 +65,6 @@ def add_comment(request, post_id):
 	form = CommentForm(request.POST)
 	post = get_object_or_404(Blog, id=post_id)
 
-	# TODO: what if form is not valid?
 	if form.is_valid():
 		comment = Comment()
 		comment.path = []
@@ -110,4 +105,22 @@ def add_comment(request, post_id):
 
 		return redirect(post.get_absolute_url())
 
-	return 
+	try:
+		parent_id = form.cleaned_data['parent_comment_id']
+	except KeyError:
+		return HttpResponse(status=500)	
+
+	errors = []
+	messages = []
+
+	for key, value in form.errors.items():
+		messages.extend(value)
+
+	errors.append({'id': parent_id, 
+				   'messages': messages,
+				 })
+
+	request.session['errors'] = errors
+
+	return redirect(post.get_absolute_url())
+

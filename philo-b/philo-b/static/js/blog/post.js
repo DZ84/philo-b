@@ -45,6 +45,7 @@ function delete_create_buttons(new_subcomment_buttons, parent_nr) {
 	// -configure submit button
 	// -insert submit button
 
+	// doesn't seem to give problems when it doesn't exist
 	new_subcomment_buttons.getElementsByClassName('reply')[0].remove()
 
 	var new_submit_button = document.createElement('BUTTON')

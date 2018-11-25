@@ -19,6 +19,7 @@ class Blog(models.Model):
     def get_absolute_url(self):
         return reverse('post', kwargs={ 'slug': self.slug, 'post_id': self.id })
 
+
 class Comment(models.Model):
 
     class Meta:
