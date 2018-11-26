@@ -53,6 +53,7 @@ class Post(View):
 				context['errors'] = request.session['errors']
 				context['errors_json'] = request.session['errors_json']
 			except KeyError:
+				# debug
 				raise Exception('problems')
 				pass
 
