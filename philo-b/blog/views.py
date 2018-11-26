@@ -51,7 +51,9 @@ class Post(View):
 			
 			try:
 				context['errors'] = request.session['errors']
+				context['errors_json'] = request.session['errors_json']
 			except KeyError:
+				raise Exception('problems')
 				pass
 
 		# return render_to_response(template_name=self.template_name, context=context)
@@ -121,6 +123,18 @@ def add_comment(request, post_id):
 				 })
 
 	request.session['errors'] = errors
+	
+
+	####################
+	import json
+	from django.core.serializers.json import DjangoJSONEncoder
+	
+	errors_json = json.dumps(errors, cls=DjangoJSONEncoder)
+
+
+
+
+	request.session['errors_json'] = errors_json
 
 	return redirect(post.get_absolute_url())
 

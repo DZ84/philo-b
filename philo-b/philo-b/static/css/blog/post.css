@@ -200,6 +200,11 @@ is were SASS would become very handy */
 	list-style-type: square;
 }
 
+.submit-errors {
+	color: red;
+	text-align: left;
+}
+
 /*
 .sign-in-reminder {
 	color: black;

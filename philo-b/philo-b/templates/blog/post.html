@@ -38,6 +38,7 @@
 
 {% endblock content %}
 {% block comments %}
+
 	<hr class="separator-commentsection">
 
 	{% if not comment_form %}
@@ -114,7 +115,7 @@
 					<div class="form-userinfo">Write response with username 
 						<span class="form-username">{{ user.username }}</span>:
 					</div>
-					<div class="text-error"></div>
+					<ul class="submit-errors" id="submit-errors-default"></ul>
 					{{ comment_form.as_p }}
 				</div>
 				<div class="form-instructions">
@@ -149,14 +150,17 @@
 		</div>
 
 	{% endif %}
+	
+	<div>errors_json: {{ errors_json }}</div>
+	<div>errors.0: {{ errors.0 }}</div>
 
-	{% if errors %}
-		{% for error in errors %} 
-
-			<script>create_subcomment_form({{ error.id }});</script>
-
-		{% endfor %}
-	{% endif %}
+	<script>
+		function get_errors_json() {
+			var ej = JSON.parse('{{ errors_json|safe }}');
+			return ej
+		}
+		set_previous_submits(get_errors_json());
+	</script>
 
 
 {% endblock comments %}

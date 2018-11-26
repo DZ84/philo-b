@@ -1,3 +1,38 @@
+// function set_submit_states(saved_textareas) {
+// 
+// 	for(var i = 0; i < saved_textareas.length; i++) {
+// 		parent_nr = saved_textareas[i].id
+// 		saved_text = saved_textareas[i].text
+// 
+// 		create_subcomment_form(parent_nr) 
+// 
+// 		text_area = document.getElementById("text-area-" + parent_nr)
+// 		text_area.value = saved_text
+// 		
+// 	}
+// 
+// }
+
+
+function set_previous_submits(ej) {
+
+	for(var i = 0; i < ej.length; i++) {
+		parent_nr = ej[i].id
+		error_messages = ej[i].messages
+
+		create_subcomment_form(parent_nr) 
+
+		error_ul = document.getElementById("submit-errors-" + parent_nr)
+
+		for(var m = 0; m < error_messages.length; m++) {
+			var error_li = document.createElement('LI')
+			error_li.innerHTML = error_messages[m]
+
+			error_ul.appendChild(error_li)
+		}
+	}
+}
+
 function create_subcomment_form(parent_nr) {
 
 	var new_subcomment = create_new_subcomment(parent_nr)
@@ -12,6 +47,9 @@ function create_subcomment_form(parent_nr) {
 	)
 
 	delete_create_buttons(new_subcomment_buttons, parent_nr)
+
+
+	// return new_subcomment
 }
 
 function create_new_subcomment(parent_nr) {
@@ -37,6 +75,9 @@ function create_new_subcomment(parent_nr) {
 	new_input_info.id = "parent-comment-" + parent_nr
 	new_input_info.value = parent_nr	
 
+	new_error_info = new_subcomment.querySelectorAll("ul")[0]
+	new_error_info.id = "submit-errors-" + parent_nr
+
 	return new_subcomment
 }
 
@@ -45,7 +86,6 @@ function delete_create_buttons(new_subcomment_buttons, parent_nr) {
 	// -configure submit button
 	// -insert submit button
 
-	// doesn't seem to give problems when it doesn't exist
 	new_subcomment_buttons.getElementsByClassName('reply')[0].remove()
 
 	var new_submit_button = document.createElement('BUTTON')
@@ -56,8 +96,7 @@ function delete_create_buttons(new_subcomment_buttons, parent_nr) {
 	new_submit_button.className = "submit"
 	new_submit_button.innerHTML = "submit"
 
-	new_subcomment_buttons
-		.appendChild(new_submit_button)
+	new_subcomment_buttons.appendChild(new_submit_button)
 }
 
 function submit_subcomment_form(parent_nr) {
