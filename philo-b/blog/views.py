@@ -52,6 +52,7 @@ class Post(View):
 			try:
 				context['errors'] = request.session['errors']
 				context['errors_json'] = request.session['errors_json']
+				context['other_texts_json'] = request.session['other_texts_json']
 			except KeyError:
 				# debug
 				raise Exception('problems')
@@ -108,6 +109,9 @@ def add_comment(request, post_id):
 
 		return redirect(post.get_absolute_url())
 
+	
+	# it's gonna be passed, used, and possibly executed, it
+	# better be cleaned.
 	try:
 		parent_id = form.cleaned_data['parent_comment_id']
 	except KeyError:
@@ -131,11 +135,10 @@ def add_comment(request, post_id):
 	from django.core.serializers.json import DjangoJSONEncoder
 	
 	errors_json = json.dumps(errors, cls=DjangoJSONEncoder)
-
-
-
+	other_texts_json = json.dumps(form.cleaned_data['other_texts'], cls=DjangoJSONEncoder)
 
 	request.session['errors_json'] = errors_json
+	request.session['other_texts_json'] = other_texts_json
 
 	return redirect(post.get_absolute_url())
 

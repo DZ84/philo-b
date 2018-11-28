@@ -159,6 +159,12 @@
 			var ej = JSON.parse('{{ errors_json|safe }}');
 			return ej
 		}
+		function get_other_texts_json() {
+			var ej = JSON.parse('{{ other_texts_json|safe }}');
+			debugger
+			return ej
+		}
+		get_other_texts_json()
 		set_previous_submits(get_errors_json());
 	</script>
 

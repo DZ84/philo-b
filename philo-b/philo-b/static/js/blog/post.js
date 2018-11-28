@@ -14,7 +14,7 @@ function create_subcomment_form(parent_nr) {
 	delete_create_buttons(new_subcomment_buttons, parent_nr)
 
 
-	// return new_subcomment
+	return new_subcomment
 }
 
 function create_new_subcomment(parent_nr) {
@@ -70,9 +70,11 @@ function delete_create_buttons(new_subcomment_buttons, parent_nr) {
 function submit_subcomment_form(parent_nr) {
 	var to_submit = document.getElementById("reply-to-" + parent_nr)
 
-	var new_input_other_texts = getElementById.querySelectorAll("other-texts-" + parent_nr)
+	//var new_input_other_texts = getElementById.querySelectorAll("other-texts-" + parent_nr)
+	var new_input_other_texts = document.getElementById("other-texts-" + parent_nr)
+	new_input_other_texts.value = collect_textareas(parent_nr) 
 	debugger
-	collect_textareas()
+	
 	submit()
 }
 
@@ -81,16 +83,21 @@ function submit_comment_form() {
 	document.getElementById("comment-default").submit()
 }
 
-function collect_textareas() {
+function collect_textareas(exclude_submit) {
 	var text_collection = []
 	var all_textareas = document.querySelectorAll("textarea")
 
 	for(var t = 0; t < all_textareas.length; t++) {
 		var textarea = all_textareas[t]
-		
+
 		if(textarea.value != "") {
 			var id = textarea.id
 			id = id.replace("text-area-", "")
+
+			if(id == exclude_submit) {
+				continue
+			}	
+	
 			text_collection.push([id, textarea.value])	
 		}
 	}
