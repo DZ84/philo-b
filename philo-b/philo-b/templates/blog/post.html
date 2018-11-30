@@ -156,16 +156,16 @@
 
 	<script>
 		function get_errors_json() {
+			// no short notations in both functions.
 			var ej = JSON.parse('{{ errors_json|safe }}');
 			return ej
 		}
 		function get_other_texts_json() {
-			var ej = JSON.parse('{{ other_texts_json|safe }}');
-			debugger
-			return ej
+			var otj = JSON.parse('{{ other_texts_json|safe }}');
+			return otj
 		}
-		get_other_texts_json()
-		set_previous_submits(get_errors_json());
+		set_submit_states(get_other_texts_json());
+		set_previous_submits(get_errors_json()); //set errors
 	</script>
 
 

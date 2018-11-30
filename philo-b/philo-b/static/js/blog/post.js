@@ -73,9 +73,9 @@ function submit_subcomment_form(parent_nr) {
 	//var new_input_other_texts = getElementById.querySelectorAll("other-texts-" + parent_nr)
 	var new_input_other_texts = document.getElementById("other-texts-" + parent_nr)
 	new_input_other_texts.value = collect_textareas(parent_nr) 
-	debugger
 	
-	submit()
+	// might not first need to fetch to_submit
+	to_submit.submit()
 }
 
 function submit_comment_form() {
@@ -97,7 +97,7 @@ function collect_textareas(exclude_submit) {
 			if(id == exclude_submit) {
 				continue
 			}	
-	
+
 			text_collection.push([id, textarea.value])	
 		}
 	}
@@ -105,20 +105,18 @@ function collect_textareas(exclude_submit) {
 	return text_collection
 }
 
-// function set_submit_states(saved_textareas) {
-// 
-// 	for(var i = 0; i < saved_textareas.length; i++) {
-// 		parent_nr = saved_textareas[i].id
-// 		saved_text = saved_textareas[i].text
-// 
-// 		create_subcomment_form(parent_nr) 
-// 
-// 		text_area = document.getElementById("text-area-" + parent_nr)
-// 		text_area.value = saved_text
-// 		
-// 	}
-// 
-// }
+function set_submit_states(saved_textareas) {
+
+	for(var i = 0; i < saved_textareas.length; i++) {
+		parent_nr = saved_textareas[i].id
+		saved_text = saved_textareas[i].text
+
+		create_subcomment_form(parent_nr) 
+
+		text_area = document.getElementById("text-area-" + parent_nr)
+		text_area.value = saved_text
+	}
+}
 
 function set_previous_submits(ej) {
 
@@ -126,7 +124,7 @@ function set_previous_submits(ej) {
 		parent_nr = ej[i].id
 		error_messages = ej[i].messages
 
-		create_subcomment_form(parent_nr) 
+		// create_subcomment_form(parent_nr) 
 
 		error_ul = document.getElementById("submit-errors-" + parent_nr)
 

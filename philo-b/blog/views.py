@@ -48,16 +48,35 @@ class Post(View):
 		if user.is_authenticated:
 			context['comment_form'] = self.comment_form
 			context['user'] = user # is this a safe move? think so, if django allows it so easily
-			
+
 			try:
-				context['errors'] = request.session['errors']
 				context['errors_json'] = request.session['errors_json']
-				context['other_texts_json'] = request.session['other_texts_json']
+
+				# import pdb
+				# pdb.set_trace()
+
 			except KeyError:
-				# debug
-				raise Exception('problems')
+				# import pdb
+				# pdb.set_trace()
 				pass
 
+			try:
+				context['other_texts_json'] = request.session['other_texts_json']
+
+				# import pdb
+				# pdb.set_trace()
+
+			except KeyError:
+				# import pdb
+				# pdb.set_trace()
+				pass
+
+	
+			# print('it is not there')
+
+			# import pdb
+			# pdb.set_trace()
+	
 		# return render_to_response(template_name=self.template_name, context=context)
 		return render(request, self.template_name, context)
 
@@ -127,7 +146,7 @@ def add_comment(request, post_id):
 				   'messages': messages,
 				 })
 
-	request.session['errors'] = errors
+	# request.session['errors'] = errors
 	
 
 	####################
@@ -139,6 +158,9 @@ def add_comment(request, post_id):
 
 	request.session['errors_json'] = errors_json
 	request.session['other_texts_json'] = other_texts_json
+
+	import pdb
+	#  pdb.set_trace()
 
 	return redirect(post.get_absolute_url())
 
