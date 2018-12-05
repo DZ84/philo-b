@@ -146,8 +146,6 @@ def add_comment(request, post_id):
 				   'messages': messages,
 				 })
 
-	# request.session['errors'] = errors
-	
 
 	####################
 	import json
