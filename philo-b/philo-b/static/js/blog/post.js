@@ -13,7 +13,6 @@ function create_subcomment_form(parent_nr) {
 
 	delete_create_buttons(new_subcomment_buttons, parent_nr)
 
-
 	return new_subcomment
 }
 
@@ -68,72 +67,10 @@ function delete_create_buttons(new_subcomment_buttons, parent_nr) {
 }
 
 function submit_subcomment_form(parent_nr) {
-	var to_submit = document.getElementById("reply-to-" + parent_nr)
-
-	//var new_input_other_texts = getElementById.querySelectorAll("other-texts-" + parent_nr)
-	var new_input_other_texts = document.getElementById("other-texts-" + parent_nr)
-	new_input_other_texts.value = collect_textareas(parent_nr) 
-	
-	// might not first need to fetch to_submit
-	to_submit.submit()
+	document.getElementById("reply-to-" + parent_nr).submit()
 }
 
 function submit_comment_form() {
-	collect_textareas()
 	document.getElementById("comment-default").submit()
-}
-
-function collect_textareas(exclude_submit) {
-	var text_collection = []
-	var all_textareas = document.querySelectorAll("textarea")
-
-	for(var t = 0; t < all_textareas.length; t++) {
-		var textarea = all_textareas[t]
-
-		if(textarea.value != "") {
-			var id = textarea.id
-			id = id.replace("text-area-", "")
-
-			if(id == exclude_submit) {
-				continue
-			}	
-
-			text_collection.push([id, textarea.value])	
-		}
-	}
-
-	return text_collection
-}
-
-function set_submit_states(saved_textareas) {
-
-	for(var i = 0; i < saved_textareas.length; i++) {
-		parent_nr = saved_textareas[i].id
-		saved_text = saved_textareas[i].text
-
-		create_subcomment_form(parent_nr) 
-
-		text_area = document.getElementById("text-area-" + parent_nr)
-		text_area.value = saved_text
-	}
-}
-
-function set_previous_submits(ej) {
-
-	for(var i = 0; i < ej.length; i++) {
-		parent_nr = ej[i].id
-		error_messages = ej[i].messages
-
-		// create_subcomment_form(parent_nr) 
-
-		error_ul = document.getElementById("submit-errors-" + parent_nr)
-
-		for(var m = 0; m < error_messages.length; m++) {
-			var error_li = document.createElement('LI')
-			error_li.innerHTML = error_messages[m]
-
-			error_ul.appendChild(error_li)
-		}
-	}
 }
 

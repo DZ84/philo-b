@@ -60,18 +60,6 @@ class Post(View):
 				# pdb.set_trace()
 				pass
 
-			try:
-				context['other_texts_json'] = request.session['other_texts_json']
-
-				# import pdb
-				# pdb.set_trace()
-
-			except KeyError:
-				# import pdb
-				# pdb.set_trace()
-				pass
-
-	
 			# print('it is not there')
 
 			# import pdb
@@ -155,7 +143,7 @@ def add_comment(request, post_id):
 	other_texts_json = json.dumps(form.cleaned_data['other_texts'], cls=DjangoJSONEncoder)
 
 	request.session['errors_json'] = errors_json
-	request.session['other_texts_json'] = other_texts_json
+	# request.session['other_texts_json'] = other_texts_json
 
 	import pdb
 	#  pdb.set_trace()
