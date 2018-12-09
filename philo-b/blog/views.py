@@ -7,6 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
 
+
+#!!
+from django.core.serializers.json import DjangoJSONEncoder
+import json
+	
 from blog.forms import CommentForm 
 from blog.models import Blog, Comment
 
@@ -136,9 +141,7 @@ def add_comment(request, post_id):
 
 
 	####################
-	import json
-	from django.core.serializers.json import DjangoJSONEncoder
-	
+
 	errors_json = json.dumps(errors, cls=DjangoJSONEncoder)
 	other_texts_json = json.dumps(form.cleaned_data['other_texts'], cls=DjangoJSONEncoder)
 
@@ -149,4 +152,28 @@ def add_comment(request, post_id):
 	#  pdb.set_trace()
 
 	return redirect(post.get_absolute_url())
+
+
+@login_required
+@require_http_methods(["POST"])
+def okok(request, post_id, slug):
+
+	print("okok fired")
+	# info = request.POST.get('test')
+	# print("okok fired")
+	# if info=="tester":	
+	# 	return "okok"
+	# else:
+	# 	return "less ok"
+
+	data = {'reward': 'okok'}
+
+
+	return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+
+
+
+
 

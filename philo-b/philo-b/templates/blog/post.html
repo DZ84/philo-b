@@ -166,7 +166,17 @@
 		}
 		set_submit_states(get_other_texts_json());
 		set_previous_submits(get_errors_json()); //set errors
-	</script-->
+		-->
+
+	<script>
+
+		function get_ajax() {
+			// no short notations in both functions.
+			var ej = JSON.parse('{{ errors_json|safe }}');
+			return ej
+		}
+
+	</script>
 
 
 {% endblock comments %}

@@ -58,7 +58,9 @@ function delete_create_buttons(new_subcomment_buttons, parent_nr) {
 	var new_submit_button = document.createElement('BUTTON')
 
 	new_submit_button.addEventListener('click', function() {
-		submit_subcomment_form(parent_nr)
+		// submit_subcomment_form(parent_nr)
+		
+
 	})
 	new_submit_button.className = "submit"
 	new_submit_button.innerHTML = "submit"
@@ -71,6 +73,25 @@ function submit_subcomment_form(parent_nr) {
 }
 
 function submit_comment_form() {
-	document.getElementById("comment-default").submit()
+	//document.getElementById("comment-default").submit()
+	test_ajax()
+}
+
+function test_ajax() {
+	var xhttp = new XMLHttpRequest()
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			// document.getElementById("demo").innerHTML = this.responseText;
+			var result = get_ajax()
+
+			console.log(document.getElementsByName(result.reward)[0].value)
+		}
+	}
+	
+
+	// let's hardcode the url first
+	xhttp.open("POST", "okok/", true)
+	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
+	xhttp.send("testtt=tester")
 }
 
