@@ -46,7 +46,7 @@ class Post(View):
 
 		post = get_object_or_404(Blog, id=self.kwargs['post_id'])
 		user =  auth.get_user(request)
-		
+
 		context['post'] = post
 		context['comments'] = post.comment_set.all().order_by('path') 
 
@@ -159,21 +159,17 @@ def add_comment(request, post_id):
 def okok(request, post_id, slug):
 
 	print("okok fired")
-	# info = request.POST.get('test')
-	# print("okok fired")
-	# if info=="tester":	
-	# 	return "okok"
-	# else:
-	# 	return "less ok"
+	infom = request.POST.get('testtt', -1)
 
-	data = {'reward': 'okok'}
+	import pdb
+	pdb.set_trace()
+
+	if infom=="tester":	
+		data = {'reward': 'okokok'}
+	else:
+		data = {'reward': 'not ok'}
+
 
 
 	return HttpResponse(json.dumps(data), content_type='application/json')
-
-
-
-
-
-
 

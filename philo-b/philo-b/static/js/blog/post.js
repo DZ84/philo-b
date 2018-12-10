@@ -81,17 +81,21 @@ function test_ajax() {
 	var xhttp = new XMLHttpRequest()
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-			// document.getElementById("demo").innerHTML = this.responseText;
-			var result = get_ajax()
 
-			console.log(document.getElementsByName(result.reward)[0].value)
+			console.log(xhttp.responseText)
+
 		}
 	}
 	
 
 	// let's hardcode the url first
+	// var jp = get_url_ajax()
+	// debugger
+
 	xhttp.open("POST", "okok/", true)
 	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
+	xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
 	xhttp.send("testtt=tester")
 }
 
