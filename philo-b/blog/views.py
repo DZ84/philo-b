@@ -88,7 +88,7 @@ def add_comment(request, post_id):
 		comment.author_id = auth.get_user(request)
 		comment.content = form.cleaned_data['text_area']
 
-		# from the/a site:
+		# from the site:
 		# Django does not allow to see the comments on the ID, we do not save it,
 		# Although PostgreSQL has the tools in its arsenal, but it is not going to
 		# work with raw SQL queries, so form the path after the first save
@@ -109,7 +109,6 @@ def add_comment(request, post_id):
 			comment_prev = Comment.objects.get(id=parent_id)
 			comment_prev.is_last = False	
 			comment_prev.save()
-
 			comment.path.extend(comment_prev.path)
 		else:
 			comment.is_first = True	
@@ -119,11 +118,23 @@ def add_comment(request, post_id):
 		comment.path.append(comment.id)
 		comment.save()
 
-		return redirect(post.get_absolute_url())
+		from django.core import serializers
+		comment_serialized = serializers.serialize('json', [comment, ])
 
-	
-	# it's gonna be passed, used, and possibly executed, it
+		text_info =	{'success': True,
+					 'id': parent_id, 
+					 'text_object': comment_serialized,
+					}
+		text_info_json = json.dumps(text_info, cls=DjangoJSONEncoder)
+
+		print(text_info_json)
+
+		return HttpResponse(json.dumps(text_info_json), content_type='application/json')
+
+
+	# - it's gonna be passed, used, and possibly executed, it
 	# better be cleaned.
+	# - and if it can't pass this check, better shut it down
 	try:
 		parent_id = form.cleaned_data['parent_comment_id']
 	except KeyError:
@@ -135,31 +146,30 @@ def add_comment(request, post_id):
 	for key, value in form.errors.items():
 		messages.extend(value)
 
-	errors.append({'id': parent_id, 
+	errors.append({'success': False,
+				   'id': parent_id, 
 				   'messages': messages,
 				 })
-
 
 	####################
 
 	errors_json = json.dumps(errors, cls=DjangoJSONEncoder)
-	other_texts_json = json.dumps(form.cleaned_data['other_texts'], cls=DjangoJSONEncoder)
-
-	request.session['errors_json'] = errors_json
-	# request.session['other_texts_json'] = other_texts_json
 
 	import pdb
 	#  pdb.set_trace()
 
-	return redirect(post.get_absolute_url())
+	return HttpResponse(json.dumps(errors_json), content_type='application/json')
 
 
 @login_required
 @require_http_methods(["POST"])
-def okok(request, post_id, slug):
+def okok(request):
 
 	print("okok fired")
-	infom = request.POST.get('testtt', -1)
+	infom = request.POST.get('text_area', -1)
+
+	form = CommentForm(request.POST)
+	print(form)
 
 	import pdb
 	pdb.set_trace()
@@ -168,8 +178,6 @@ def okok(request, post_id, slug):
 		data = {'reward': 'okokok'}
 	else:
 		data = {'reward': 'not ok'}
-
-
 
 	return HttpResponse(json.dumps(data), content_type='application/json')
 

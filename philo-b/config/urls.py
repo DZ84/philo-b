@@ -26,7 +26,7 @@ urlpatterns = [
         name='add_comment'
     ),
     path(
-        '<slug:slug>,<int:post_id>/okok/', 
+        'okok/', 
         views.okok, 
         name='okok'
     ),

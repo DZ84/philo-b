@@ -11,11 +11,11 @@ class CommentForm(forms.Form):
 		initial=None
 	)
 
-	other_texts = forms.CharField(
-		widget=forms.HiddenInput(),
-		required=False,
-		initial=None
-	)
+	# other_texts = forms.CharField(
+	# 	widget=forms.HiddenInput(),
+	# 	required=False,
+	# 	initial=None
+	# )
 
 	text_area = forms.CharField(
 		# min_length = 10,

@@ -15,9 +15,6 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 		<![endif]-->
 
-		{% block javascript %}
-		{% endblock javascript %}
-
 		<link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css" media="screen">	
 
 		{% block css %}
@@ -65,5 +62,9 @@
 		<!-- what does this do exactly????????????????????-->
 		{% block modal %}{% endblock modal %}
 	</body>
+
+	{% block javascript %}
+	{% endblock javascript %}
+
 </html>
  

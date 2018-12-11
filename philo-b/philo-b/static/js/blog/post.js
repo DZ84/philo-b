@@ -37,7 +37,7 @@ function create_new_subcomment(parent_nr) {
 
 	var new_input_info = new_input_all[1]
 	new_input_info.id = "parent-comment-" + parent_nr
-	new_input_info.value = parent_nr	
+	new_input_info.value = parent_nr
 
 	var new_input_other_texts = new_input_all[2]
 	new_input_other_texts.id = "other-texts-" + parent_nr
@@ -58,9 +58,7 @@ function delete_create_buttons(new_subcomment_buttons, parent_nr) {
 	var new_submit_button = document.createElement('BUTTON')
 
 	new_submit_button.addEventListener('click', function() {
-		// submit_subcomment_form(parent_nr)
-		
-
+		submit_subcomment_form(parent_nr)
 	})
 	new_submit_button.className = "submit"
 	new_submit_button.innerHTML = "submit"
@@ -73,29 +71,77 @@ function submit_subcomment_form(parent_nr) {
 }
 
 function submit_comment_form() {
-	//document.getElementById("comment-default").submit()
-	test_ajax()
+	
+	document.getElementById("comment-default").submit()
+
+	// form_section = document.getElementById("comment-default")
+
+	// // e.preventDefault()
+	// form_data = standardize_form(form_section)	
+
+	// sent_ajax(form_data)
+
+
 }
+
+function standardize_form(form_section) {
+	text_area = form_section.querySelectorAll('textarea')[0]
+	parent_comment_id = form_section.querySelectorAll("input")[1]
+
+	// debugger
+
+	form_data = new FormData()	
+	form_data.append(text_area.name, text_area, text_area.name)
+	form_data.append(parent_comment_id.name, parent_comment_id, parent_comment_id.name)
+
+	return form_data
+}
+
+function sent_ajax(form_data, url) {
+	var xhttp = new XMLHttpRequest()
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			console.log(xhttp.responseText)
+			debugger
+		}
+	}
+	// debugger
+	xhttp.open('POST', url, true)
+	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
+	xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded')
+	xhttp.send(form_data)
+}
+
+
 
 function test_ajax() {
 	var xhttp = new XMLHttpRequest()
 	xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
-
 			console.log(xhttp.responseText)
-
 		}
 	}
-	
 
-	// let's hardcode the url first
-	// var jp = get_url_ajax()
-	// debugger
-
-	xhttp.open("POST", "okok/", true)
+	xhttp.open('POST', get_url_ajax(), true)
 	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
-	xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-
-	xhttp.send("testtt=tester")
+	xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+	xhttp.send('testtt=tester')
 }
+
+// pure js implementation of code that should run 
+// once the dom (not page) is loaded.
+(function() {
+	form_section = document.getElementById("comment-default")
+	console.log('started')
+
+	// prevent submitting as usual of the form
+	form_section.addEventListener('submit', function(event) {
+
+		console.log('submitted started')
+
+		event.preventDefault()
+		form_data = standardize_form(this)	
+		sent_ajax(form_data, this.action)
+	})
+})()
 
