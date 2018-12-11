@@ -1,3 +1,5 @@
+import json
+
 from django.views import View
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404, redirect, render #, render_to_response
@@ -6,11 +8,8 @@ from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
-
-
-#!!
+from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
-import json
 	
 from blog.forms import CommentForm 
 from blog.models import Blog, Comment
@@ -118,16 +117,13 @@ def add_comment(request, post_id):
 		comment.path.append(comment.id)
 		comment.save()
 
-		from django.core import serializers
 		comment_serialized = serializers.serialize('json', [comment, ])
-
 		text_info =	{'success': True,
 					 'id': parent_id, 
-					 'text_object': comment_serialized,
-					}
+					 'text_object': comment_serialized,}
 		text_info_json = json.dumps(text_info, cls=DjangoJSONEncoder)
 
-		print(text_info_json)
+		# print(text_info_json)
 
 		return HttpResponse(json.dumps(text_info_json), content_type='application/json')
 
@@ -150,8 +146,6 @@ def add_comment(request, post_id):
 				   'id': parent_id, 
 				   'messages': messages,
 				 })
-
-	####################
 
 	errors_json = json.dumps(errors, cls=DjangoJSONEncoder)
 

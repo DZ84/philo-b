@@ -71,24 +71,12 @@ function submit_subcomment_form(parent_nr) {
 }
 
 function submit_comment_form() {
-	
 	document.getElementById("comment-default").submit()
-
-	// form_section = document.getElementById("comment-default")
-
-	// // e.preventDefault()
-	// form_data = standardize_form(form_section)	
-
-	// sent_ajax(form_data)
-
-
 }
 
 function standardize_form(form_section) {
 	text_area = form_section.querySelectorAll('textarea')[0]
 	parent_comment_id = form_section.querySelectorAll("input")[1]
-
-	// debugger
 
 	form_data = new FormData()	
 	form_data.append(text_area.name, text_area, text_area.name)
@@ -113,33 +101,22 @@ function sent_ajax(form_data, url) {
 }
 
 
-
-function test_ajax() {
-	var xhttp = new XMLHttpRequest()
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			console.log(xhttp.responseText)
-		}
-	}
-
-	xhttp.open('POST', get_url_ajax(), true)
-	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
-	xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-	xhttp.send('testtt=tester')
-}
-
-// pure js implementation of code that should run 
-// once the dom (not page) is loaded.
+// - pure js implementation of code that should run 
+//   once the dom (not page) is loaded.
+// - you could run it once the user presses the
+//   button, but why wait?
 (function() {
 	form_section = document.getElementById("comment-default")
-	console.log('started')
 
-	// prevent submitting as usual of the form
+	console.log('initialized submit method')
+
 	form_section.addEventListener('submit', function(event) {
 
 		console.log('submitted started')
 
+		// prevent submitting as usual of the form
 		event.preventDefault()
+
 		form_data = standardize_form(this)	
 		sent_ajax(form_data, this.action)
 	})
