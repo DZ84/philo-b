@@ -47,9 +47,23 @@
 
 	{% endif %}
 
-	{% for comment in comments %}
+	<script>
 
-		<!--<span class="comment {{ comment.is_first }} line-connector"></span> -->
+
+
+		function tempor(vari) {
+			
+			var ht = "<div><strong>just typing stuff plusssss " + vari + " Iiiiii wanted to add</strong></div>"
+
+			return ht
+		}
+
+
+
+	</script>
+
+
+	{% for comment in comments %}
 
 			<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
 				<div class="post-info">

@@ -108,7 +108,11 @@ function handle_response(response) {
 	} else {
 		console.log(data.success + ' should be false')
 	}
-	debugger
+
+	//if (data.success && parent_id != None) {
+	//	crea
+
+	//}
 }
 
 function sent_ajax(xhttp, data, url) {
@@ -136,5 +140,11 @@ function sent_ajax(xhttp, data, url) {
 		do_ajax(data, this.action)
 	}
 	console.log('but did we go here?')
+
+	var template = document.getElementById('check')
+	
+	el = document.getElementById('comment-180')
+	el.appendChild(template)
+	
 })()
 
