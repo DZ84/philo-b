@@ -78,47 +78,63 @@ function standardize_form(form_section) {
 	text_area = form_section.querySelectorAll('textarea')[0]
 	parent_comment_id = form_section.querySelectorAll("input")[1]
 
-	form_data = new FormData()	
-	form_data.append(text_area.name, text_area, text_area.name)
-	form_data.append(parent_comment_id.name, parent_comment_id, parent_comment_id.name)
+	data = 'text_area=' + text_area.value + 
+		   '&parent_comment_id=' + parent_comment_id.value
 
-	return form_data
+	return data
 }
 
-function sent_ajax(form_data, url) {
-	var xhttp = new XMLHttpRequest()
+function do_ajax(data, url) {
+	var xhttp = new XMLHttpRequest();
+	setup_reception_response(xhttp)
+	sent_ajax(xhttp, data, url)
+}
+
+function setup_reception_response(xhttp) {
 	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
-			console.log(xhttp.responseText)
-			debugger
-		}
+		console.log('onreadystatechange running');
+		if (this.readyState==4 && this.status==200) {
+			console.log(this.responseText);
+			handle_response(this.responseText)
+		};
+	};
+}
+
+function handle_response(response) {
+	data = JSON.parse(response)
+
+	if (data.success) {
+		console.log(data.success + ' should be true')
+	} else {
+		console.log(data.success + ' should be false')
 	}
-	// debugger
+	debugger
+}
+
+function sent_ajax(xhttp, data, url) {
 	xhttp.open('POST', url, true)
 	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
-	xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded')
-	xhttp.send(form_data)
+	xhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8')
+	xhttp.send(data)
 }
-
 
 // - pure js implementation of code that should run 
 //   once the dom (not page) is loaded.
-// - you could run it once the user presses the
-//   button, but why wait?
+// - you could perhaps run it once the user presses
+//   the button, but why wait?
 (function() {
 	form_section = document.getElementById("comment-default")
 
 	console.log('initialized submit method')
+	console.log("we went here")
 
-	form_section.addEventListener('submit', function(event) {
+	form_section.submit = function() {
 
 		console.log('submitted started')
 
-		// prevent submitting as usual of the form
-		event.preventDefault()
-
-		form_data = standardize_form(this)	
-		sent_ajax(form_data, this.action)
-	})
+		data = standardize_form(this)	
+		do_ajax(data, this.action)
+	}
+	console.log('but did we go here?')
 })()
 

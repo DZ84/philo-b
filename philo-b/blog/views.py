@@ -4,12 +4,12 @@ from django.views import View
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404, redirect, render #, render_to_response
 from django.contrib import auth
-from django.http import Http404, HttpResponse 
+from django.http import Http404, JsonResponse, HttpResponse 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
-from django.core.serializers.json import DjangoJSONEncoder
+# from django.core.serializers.json import DjangoJSONEncoder
 	
 from blog.forms import CommentForm 
 from blog.models import Blog, Comment
@@ -80,6 +80,9 @@ def add_comment(request, post_id):
 	form = CommentForm(request.POST)
 	post = get_object_or_404(Blog, id=post_id)
 
+	import pdb
+	#  pdb.set_trace()
+
 	if form.is_valid():
 		comment = Comment()
 		comment.path = []
@@ -116,16 +119,28 @@ def add_comment(request, post_id):
 		# path of the new comment
 		comment.path.append(comment.id)
 		comment.save()
+		import pdb
+		# pdb.set_trace()
 
-		comment_serialized = serializers.serialize('json', [comment, ])
-		text_info =	{'success': True,
-					 'id': parent_id, 
-					 'text_object': comment_serialized,}
-		text_info_json = json.dumps(text_info, cls=DjangoJSONEncoder)
+		comment_data = { 'username': comment.author_id.username,
+						 'text': comment.content,
+						 'date': comment.pub_date,
+					   }
+
+		# comment_serialized = serializers.serialize('json', [comment_data, ])
+		text_info =	{ 'success': True,
+					  'id': parent_id, 
+					  'text_object': comment_data,
+					}
+
+		# text_info_json = json.dumps(text_info, cls=DjangoJSONEncoder)
 
 		# print(text_info_json)
 
-		return HttpResponse(json.dumps(text_info_json), content_type='application/json')
+		# return HttpResponse(json.dumps(text_info_json), content_type='application/json')
+		print(text_info)
+		return JsonResponse(text_info)
+		# return JsonResponse({'message': 'the message'})
 
 
 	# - it's gonna be passed, used, and possibly executed, it
@@ -136,23 +151,23 @@ def add_comment(request, post_id):
 	except KeyError:
 		return HttpResponse(status=500)	
 
-	errors = []
 	messages = []
 
 	for key, value in form.errors.items():
 		messages.extend(value)
 
-	errors.append({'success': False,
-				   'id': parent_id, 
-				   'messages': messages,
-				 })
+	errors = {'success': False,
+			  'id': parent_id, 
+			  'messages': messages,
+			 }
 
-	errors_json = json.dumps(errors, cls=DjangoJSONEncoder)
+	# errors_json = json.dumps(errors, cls=DjangoJSONEncoder)
 
 	import pdb
-	#  pdb.set_trace()
+	# pdb.set_trace()
 
-	return HttpResponse(json.dumps(errors_json), content_type='application/json')
+	# return HttpResponse(json.dumps(errors_json), content_type='application/json')
+	return JsonResponse(errors)
 
 
 @login_required
