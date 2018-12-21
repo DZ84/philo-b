@@ -47,42 +47,6 @@
 
 	{% endif %}
 
-	<script>
-
-		function tempor(vari) {
-			var ht = "<div><strong>just typing stuff plusssss " + vari + " Iiiiii wanted to add</strong></div>"
-			return ht
-		}
-
-		function place_comment(data) {
-			console.log('started executing')
-
-			var comments_container = document.getElementById('comments_container') 
-			html_text = template_comments(data)
-			comments_container.insertAdjacentHTML('beforeend', html_text)
-
-			console.log('finished executing')
-		}
-		
-		function template_comments(data) {
-		
-			var html_text =
-				"<div class=\"reply-layout " + data.is_first + "\" id=\"comment-" + data.id + "\">" +
-					"<div class=\"post-info\">" +
-						"<div class=\"user-info\">" +
-							"<strong>" + data.author_id + "</strong></div>" +
-							"<div style=\"text-align:center;\"><strong>" + data.path +
-									"/" + data.is_first + "/" + data.is_last + "</strong></div>" +
-						"<div class=\"date\">" + data.pub_date + "</div>" +
-					"</div>" +
-					"<hr class=\"separator-info\">" +
-					"<p>" + data.content + "</p>"
-
-			return html_text
-		}
-
-	</script>
-
 	<script id='comment_template' type='text/template'>
 
 		<div class="reply-layout" {:is_first:} id="comment-"{:id:}>
@@ -100,41 +64,43 @@
 
 	{% for comment in comments %}
 
-			<script type='text/javascript'>
-			// 	// Very much superfluous, can just pass this on to the template
-			// 	// it can then pick out what it needs. IF... I can somehow
-			// 	// pass it on so that the script wont need the tags. (maybe
-			// 	// parse it as json?
-			// 	// and what todo about those linebreaks then?
-			// 	var data = { 'is_first': '{{ comment.is_first }}',
-			// 				 'id': '{{ comment.id }}',
-			// 				 'author_id': '{{ comment.author_id }}',
-			// 				 'path': '{{ comment.path }}',
-			// 				 'is_last': '{{ comment.is_last }}',
-			// 				 'pub_date': '{{ comment.pub_date }}',
-			// 				 'content': '{{ comment.content|linebreaks }}',
-			// 				}
-			// 	place_comment(data)
-			</script>
+		<script type='text/javascript'>
 
-			<script type='text/javascript'>
+			function set_data() {
+				var comment_data = { 'is_first': '{{ comment.is_first }}',
+								 'id': '{{ comment.id }}',
+								 'author_id': '{{ comment.author_id }}',
+								 'path': '{{ comment.path }}',
+								 'is_last': '{{ comment.is_last }}',
+								 'pub_date': '{{ comment.pub_date }}',
+								 'content': '{{ comment.content|linebreaks }}',
+								}
+				return comment_data
+			}
 
-				console.log('started executing')
-
+			function fill_comment_template(data) {
 				var template = document.getElementById('comment_template').innerHTML
-				template = template.replace(/{:is_first:}/g, '{{ comment.is_first }}')
-								   .replace(/{:id:}/g, '{{ comment.id }}')
-								   .replace(/{:author_id:}/g, '{{ comment.author_id }}')
-								   .replace(/{:path:}/g, '{{ comment.path }}') 
-								   .replace(/{:is_last:}/g, '{{ comment.is_last }}')
-								   .replace(/{:pub_date:}/g, '{{ comment.pub_date }}')
-								   .replace(/{:content:}/g, '{{ comment.content|linebreaks }}')
+				template = template.replace(/{:is_first:}/g, data.is_first)
+								   .replace(/{:id:}/g, data.id)
+								   .replace(/{:author_id:}/g, data.author_id)
+								   .replace(/{:path:}/g, data.path) 
+								   .replace(/{:is_last:}/g, data.is_last)
+								   .replace(/{:pub_date:}/g, data.pub_date)
+								   .replace(/{:content:}/g, data.content)
 								   ;
+				return template
+			}
+
+			function auto_place_comment_template(text_html) {
 				var comments_container = document.getElementById('comments_container') 
-				comments_container.insertAdjacentHTML('beforeend', template)
+				comments_container.insertAdjacentHTML('beforeend', text_html)
+			}
 
-			</script>
-
+			var data = set_data()
+			var text_html = fill_comment_template(data)
+			auto_place_comment_template(text_html)
+			
+		</script>
 
 		{% if comment_form and comment.is_last %}
 
