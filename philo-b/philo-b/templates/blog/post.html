@@ -85,16 +85,16 @@
 
 	<script id='comment_template' type='text/template'>
 
-		<div class="reply-layout" <%is_first%> id="comment-"{{id}}>
+		<div class="reply-layout" {:is_first:} id="comment-"{:id:}>
 			<div class="post-info"> 
 				<div class="user-info">
-					<strong>{{author_id}}</strong></div>
-					<div style="text-align:center;"><strong>{{path}}
-							/ {{is_first}} / {{is_last}}</strong></div>
-				<div class="date">{{pub_date}}</div>
+					<strong>{:author_id:}</strong></div>
+					<div style="text-align:center;"><strong>{:path:}
+							/ {:is_first:} / {:is_last:}</strong></div>
+				<div class="date">{:pub_date:}</div>
 			</div> 
 			<hr class="separator-info">
-			<p>{{content}}</p>
+			<p>{:content:}</p>
 
 	</script>
 
@@ -122,20 +122,17 @@
 				console.log('started executing')
 
 				var template = document.getElementById('comment_template').innerHTML
-				console.log(template)
-				debugger
+				template = template.replace(/{:is_first:}/g, '{{ comment.is_first }}')
+								   .replace(/{:id:}/g, '{{ comment.id }}')
+								   .replace(/{:author_id:}/g, '{{ comment.author_id }}')
+								   .replace(/{:path:}/g, '{{ comment.path }}') 
+								   .replace(/{:is_last:}/g, '{{ comment.is_last }}')
+								   .replace(/{:pub_date:}/g, '{{ comment.pub_date }}')
+								   .replace(/{:content:}/g, '{{ comment.content|linebreaks }}')
+								   ;
+				var comments_container = document.getElementById('comments_container') 
+				comments_container.insertAdjacentHTML('beforeend', template)
 
-				template.replace(/<%is_first%>/g, 'thissssssss')
-				console.log(template)
-				debugger
-
-
-				// var comments_container = document.getElementById('comments_container') 
-				// html_text = template_comments(data)
-				// comments_container.insertAdjacentHTML('beforeend', html_text)
-
-				console.log('finished executing')
-			
 			</script>
 
 

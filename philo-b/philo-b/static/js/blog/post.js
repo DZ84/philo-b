@@ -141,10 +141,10 @@ function sent_ajax(xhttp, data, url) {
 	}
 	console.log('but did we go here?')
 
-	var template = document.getElementById('check')
+	// var template = document.getElementById('check')
 	
-	el = document.getElementById('comment-180')
-	el.appendChild(template)
+	// el = document.getElementById('comment-180')
+	// el.appendChild(template)
 	
 })()
 
