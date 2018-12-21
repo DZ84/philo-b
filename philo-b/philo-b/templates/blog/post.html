@@ -49,51 +49,97 @@
 
 	<script>
 
-
-
 		function tempor(vari) {
-			
 			var ht = "<div><strong>just typing stuff plusssss " + vari + " Iiiiii wanted to add</strong></div>"
-
 			return ht
 		}
 
+		function place_comment(data) {
+			console.log('started executing')
 
+			var comments_container = document.getElementById('comments_container') 
+			html_text = template_comments(data)
+			comments_container.insertAdjacentHTML('beforeend', html_text)
+
+			console.log('finished executing')
+		}
+		
+		function template_comments(data) {
+		
+			var html_text =
+				"<div class=\"reply-layout " + data.is_first + "\" id=\"comment-" + data.id + "\">" +
+					"<div class=\"post-info\">" +
+						"<div class=\"user-info\">" +
+							"<strong>" + data.author_id + "</strong></div>" +
+							"<div style=\"text-align:center;\"><strong>" + data.path +
+									"/" + data.is_first + "/" + data.is_last + "</strong></div>" +
+						"<div class=\"date\">" + data.pub_date + "</div>" +
+					"</div>" +
+					"<hr class=\"separator-info\">" +
+					"<p>" + data.content + "</p>"
+
+			return html_text
+		}
 
 	</script>
 
+	<script id='comment_template' type='text/template'>
+
+		<div class="reply-layout" <%is_first%> id="comment-"{{id}}>
+			<div class="post-info"> 
+				<div class="user-info">
+					<strong>{{author_id}}</strong></div>
+					<div style="text-align:center;"><strong>{{path}}
+							/ {{is_first}} / {{is_last}}</strong></div>
+				<div class="date">{{pub_date}}</div>
+			</div> 
+			<hr class="separator-info">
+			<p>{{content}}</p>
+
+	</script>
 
 	{% for comment in comments %}
 
-			<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
-				<div class="post-info">
-					<div class="user-info">
-						<strong>{{ comment.author_id }}</strong></div>
-						<div style="text-align:center;"><strong>{{ comment.path }}
-								/ {{ comment.is_first }} / {{ comment.is_last }}</strong></div>
-					<div class="date">{{ comment.pub_date }}</div>
-				</div>
-				<hr class="separator-info">
-				<p>{{ comment.content|linebreaks }}</p>
+			<script type='text/javascript'>
+			// 	// Very much superfluous, can just pass this on to the template
+			// 	// it can then pick out what it needs. IF... I can somehow
+			// 	// pass it on so that the script wont need the tags. (maybe
+			// 	// parse it as json?
+			// 	// and what todo about those linebreaks then?
+			// 	var data = { 'is_first': '{{ comment.is_first }}',
+			// 				 'id': '{{ comment.id }}',
+			// 				 'author_id': '{{ comment.author_id }}',
+			// 				 'path': '{{ comment.path }}',
+			// 				 'is_last': '{{ comment.is_last }}',
+			// 				 'pub_date': '{{ comment.pub_date }}',
+			// 				 'content': '{{ comment.content|linebreaks }}',
+			// 				}
+			// 	place_comment(data)
+			</script>
+
+			<script type='text/javascript'>
+
+				console.log('started executing')
+
+				var template = document.getElementById('comment_template').innerHTML
+				console.log(template)
+				debugger
+
+				template.replace(/<%is_first%>/g, 'thissssssss')
+				console.log(template)
+				debugger
+
+
+				// var comments_container = document.getElementById('comments_container') 
+				// html_text = template_comments(data)
+				// comments_container.insertAdjacentHTML('beforeend', html_text)
+
+				console.log('finished executing')
+			
+			</script>
+
 
 		{% if comment_form and comment.is_last %}
-
-			<!--
-			{% if errors %}
-				{% for error in errors %} 
-					{% if error.id == comment.id %}
-
-						<ul>
-							<li>{{ error.message }}</li>
-						</ul>
-
-						span class="submit-attempt"></span>
-							create_subcomment_form({{ comment.id }}, false)
-
-					{% endif %}
-				{% endfor %}
-			{% endif %}
-			-->
 
 			<div class="button-container">
 				<a class="comment" 
@@ -117,6 +163,7 @@
 		<p>No comments have been posted here</p>
 
 	{% endfor %}
+
 	{% if comment_form %}
 
 		<div class="comment-layout" id="comment-new">
@@ -149,6 +196,7 @@
 			</div>
 
 		</div>
+
 
 	{% else %}
 
