@@ -53,12 +53,22 @@
 			<div class="post-info"> 
 				<div class="user-info">
 					<strong>{:author_id:}</strong></div>
-					<div style="text-align:center;"><strong>{:path:}
+					<div style="text-align:center;"><strong>{:path:} 
 							/ {:is_first:} / {:is_last:}</strong></div>
 				<div class="date">{:pub_date:}</div>
 			</div> 
 			<hr class="separator-info">
 			<p>{:content:}</p>
+
+	</script>
+
+	<script id='button_template' type='text/template'>
+
+			<div class="button-container">
+				<a class="comment" 
+				onclick="return create_subcomment_form({:id:})">
+					<button class="reply">reply</button></a>
+			</div>
 
 	</script>
 
@@ -68,13 +78,13 @@
 
 			function set_data() {
 				var comment_data = { 'is_first': '{{ comment.is_first }}',
-								 'id': '{{ comment.id }}',
-								 'author_id': '{{ comment.author_id }}',
-								 'path': '{{ comment.path }}',
-								 'is_last': '{{ comment.is_last }}',
-								 'pub_date': '{{ comment.pub_date }}',
-								 'content': '{{ comment.content|linebreaks }}',
-								}
+									 'id': '{{ comment.id }}',
+									 'author_id': '{{ comment.author_id }}',
+									 'path': '{{ comment.path }}',
+									 'is_last': '{{ comment.is_last }}',
+									 'pub_date': '{{ comment.pub_date }}',
+									 'content': '{{ comment.content|linebreaks }}',
+									}
 				return comment_data
 			}
 
@@ -91,24 +101,32 @@
 				return template
 			}
 
-			function auto_place_comment_template(text_html) {
+			function auto_place_template(text_html) {
 				var comments_container = document.getElementById('comments_container') 
 				comments_container.insertAdjacentHTML('beforeend', text_html)
 			}
 
 			var data = set_data()
 			var text_html = fill_comment_template(data)
-			auto_place_comment_template(text_html)
-			
+			auto_place_template(text_html)
+
 		</script>
 
 		{% if comment_form and comment.is_last %}
 
-			<div class="button-container">
-				<a class="comment" 
-				onclick="return create_subcomment_form({{ comment.id }})">
-					<button class="reply">reply</button></a>
-			</div>
+			<script type='text/javascript'>
+
+				function fill_button_template(id) {
+					var template = document.getElementById('button_template').innerHTML
+					template = template.replace(/{:id:}/g, id)
+					return template
+				}
+
+				// may need to be a string as argument
+				var text_html = fill_button_template('{{ comment.id }}')
+				auto_place_template(text_html)
+
+			</script>
 
 		{% endif %}
 
