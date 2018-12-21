@@ -46,10 +46,9 @@
 		<a class="login-links" href="{% url 'account_login' %}?next={{ request.path }}">Sign in</a> to reply or comment.<br><br>
 
 	{% endif %}
-
 	<script id='comment_template' type='text/template'>
 
-		<div class="reply-layout" {:is_first:} id="comment-"{:id:}>
+		<div class="reply-layout {:is_first:}" id="comment-{:id:}">
 			<div class="post-info"> 
 				<div class="user-info">
 					<strong>{:author_id:}</strong></div>
@@ -59,9 +58,9 @@
 			</div> 
 			<hr class="separator-info">
 			<p>{:content:}</p>
+		</div>
 
 	</script>
-
 	<script id='button_template' type='text/template'>
 
 			<div class="button-container">
@@ -71,7 +70,6 @@
 			</div>
 
 	</script>
-
 	{% for comment in comments %}
 
 		<script type='text/javascript'>
@@ -101,14 +99,16 @@
 				return template
 			}
 
-			function auto_place_template(text_html) {
+			function auto_place_comment_template(text_html) {
 				var comments_container = document.getElementById('comments_container') 
 				comments_container.insertAdjacentHTML('beforeend', text_html)
 			}
 
 			var data = set_data()
 			var text_html = fill_comment_template(data)
-			auto_place_template(text_html)
+			console.log(text_html)
+			debugger
+			auto_place_comment_template(text_html)
 
 		</script>
 
@@ -122,15 +122,19 @@
 					return template
 				}
 
-				// may need to be a string as argument
-				var text_html = fill_button_template('{{ comment.id }}')
-				auto_place_template(text_html)
+				function auto_place_button_template(text_html, id) {
+					var comment_container = document.getElementById('comment-' + id) 
+					comment_container.insertAdjacentHTML('beforeend', text_html)
+				}
+
+				var comment_id = '{{ comment.id }}'
+				var text_html = fill_button_template(comment_id)
+				auto_place_button_template(text_html, comment_id)
 
 			</script>
 
 		{% endif %}
 
-		</div>
 		<div style="clear:both;"></div>
 
 		{% if not comment_form and comment.is_last %}
@@ -177,7 +181,6 @@
 			</div>
 
 		</div>
-
 
 	{% else %}
 
