@@ -2,12 +2,16 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block javascript %}
+{% block javascript_head %}
 
-	<script src="{% static 'js/blog/post.js' %}"></script>
+	<script src="{% static 'js/blog/post_head.js' %}"></script>
 
-{% endblock javascript %}
+{% endblock javascript_head %}
+{% block javascript_tail %}
 
+	<script src="{% static 'js/blog/post_tail.js' %}"></script>
+
+{% endblock javascript_tail %}
 {% block css %}
 
 	<link rel="stylesheet" href="{% static 'css/blog/post.css' %}" type="text/css" media="screen">
@@ -75,6 +79,9 @@
 
 		<script type='text/javascript'>
 
+			// - this can be JSON parsed if the comment object is 
+			// manipulated correctly
+			// - but perhaps you would want to do that serverside
 			function get_comment_data() {
 				var comment_data = { 'is_first': '{{ comment.is_first }}',
 									 'id': '{{ comment.id }}',
@@ -112,16 +119,22 @@
 
 			<script type='text/javascript'>
 
-				function auto_place_button_template(text_html, button_data) {
-					var comment_container = document.getElementById('comment-' + button_data.id) 
-					comment_container.insertAdjacentHTML('beforeend', text_html)
-				}
+				// function auto_place_button_template(text_html, button_data) {
+				// 	var comment_container = document.getElementById('comment-' + button_data.id) 
+				// 	comment_container.insertAdjacentHTML('beforeend', text_html)
+				// }
 
-				var template = document.getElementById('button_template').innerHTML
+				// var template = document.getElementById('button_template').innerHTML
+				// var button_data = { 'id': '{{ comment.id }}' }
+				// var text_html = fill_template(template, button_data)
+				// auto_place_button_template(text_html, button_data)
+
+
+
 				var button_data = { 'id': '{{ comment.id }}' }
-
-				var text_html = fill_template(template, button_data)
-				auto_place_button_template(text_html, button_data)
+				//var comment = document.getElementById('comment-' + button_data.id) 
+				debugger
+				process_new_button(button_data)
 
 			</script>
 

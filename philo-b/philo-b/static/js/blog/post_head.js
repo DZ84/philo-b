@@ -109,10 +109,10 @@ function handle_response(response) {
 		var text_html = fill_template(template, data.comment_object)
 		var new_comment_coll = convert_text_html_collection(text_html)
 		
-		// HTMLCollection pops when inserting, so 
+		// - HTMLCollection pops when inserting,
 		// need to select here in order to use
 		// later.
-		var new_comment = new_comment_coll[0]
+		// var new_comment = new_comment_coll[0]
 
 		var comments_container = document.getElementById('comments_container')
 		var default_comment = document.getElementById('comment-new')
@@ -122,14 +122,31 @@ function handle_response(response) {
 			default_comment
 		)
 
-		var template = document.getElementById('button_template').innerHTML
+		// var template = document.getElementById('button_template').innerHTML
+		// var button_data = { 'id': data.comment_object.id }
+		// var text_html = fill_template(template, button_data)
+		// var new_button_coll = convert_text_html_collection(text_html)
+
+		// new_comment.appendChild(new_button_coll[0])
+
 		var button_data = { 'id': data.comment_object.id }
+		process_new_button(button_data)
+
+		default_comment.querySelector('textarea').value = ''
+	} else if (data.success) {
+		
+	}
+}
+
+
+function process_new_button(button_data) {
+
+		var template = document.getElementById('button_template').innerHTML
+		var comment = document.getElementById('comment-' + button_data.id) 
 		var text_html = fill_template(template, button_data)
 		var new_button_coll = convert_text_html_collection(text_html)
 
-		new_comment.appendChild(new_button_coll[0])
-		default_comment.querySelector('textarea').value = ''
-	}
+		comment.appendChild(new_button_coll[0])
 }
 
 Element.prototype.insertHTMLCollectionBefore = function(node_list, child_node) {
@@ -160,20 +177,20 @@ function sent_ajax(xhttp, data, url) {
 //   once the dom (not page) is loaded.
 // - you could perhaps run it once the user presses
 //   the button, but why wait?
-(function() {
-	form_section = document.getElementById("comment-default")
-
-	console.log('initialized submit method')
-	console.log("we went here")
-
-	form_section.submit = function() {
-
-		console.log('submitted started')
-
-		data = standardize_form(this)	
-		do_ajax(data, this.action)
-	}
-	console.log('but did we go here?')
-	
-})()
+// (function() {
+// 	form_section = document.getElementById("comment-default")
+// 
+// 	console.log('initialized submit method')
+// 	console.log("we went here")
+// 
+// 	form_section.submit = function() {
+// 
+// 		console.log('submitted started')
+// 
+// 		data = standardize_form(this)	
+// 		do_ajax(data, this.action)
+// 	}
+// 	console.log('but did we go here?')
+// 	
+// })()
 
