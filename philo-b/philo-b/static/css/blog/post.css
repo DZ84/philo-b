@@ -132,22 +132,28 @@ is were SASS would become very handy */
 	justify-content: center;
 }
 
+/*
 .comment-layout > .button-container > a > .reply,
 .comment-layout > .button-container > a > .submit {
 }
 
 /* for savebuttons that are not relevant */
-.disabled {
+/*.disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
 }
+*/
 
-#form-area-wrapper {
+
+/* seems form-area-wrapper manipulations aren't
+   doing much
+*/
+.form-area-wrapper {
 	padding-top: 1em;
 }
 
 /* layout is a little different for new comments: */
-#comment-new #form-area-wrapper {
+#comment-new .form-area-wrapper {
 	padding: 0;
 	margin-top: -10px;
 }

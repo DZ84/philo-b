@@ -153,8 +153,7 @@
 
 			<form id="comment-default" action="{% url 'add_comment' post.id %}" method="POST">
 				{% csrf_token %}
-				<!!!!!!!!-- this has an id, seems dodgy -->
-				<div id="form-area-wrapper"> 
+				<div class="form-area-wrapper"> 
 					<hr class="separator-form">
 					<div class="form-userinfo">Write response with username 
 						<span class="form-username">{{ user.username }}</span>:

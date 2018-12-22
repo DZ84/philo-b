@@ -119,19 +119,24 @@ def add_comment(request, post_id):
 		# path of the new comment
 		comment.path.append(comment.id)
 		comment.save()
+
 		import pdb
 		# pdb.set_trace()
 
-		comment_data = { 'username': comment.author_id.username,
-						 'text': comment.content,
-						 'date': comment.pub_date,
-					   }
+		comment_data = { 'id': comment.id,
+						 'author_id': comment.author_id.username,
+						 'content': comment.content,
+						 'pub_date': comment.pub_date,
+						 'is_first': comment.is_first,
+						 'is_last': comment.is_last,
+						 'path': comment.path,
+					    }
 
 		# comment_serialized = serializers.serialize('json', [comment_data, ])
 		text_info =	{ 'success': True,
-					  'id': parent_id, 
-					  'text_object': comment_data,
-					}
+					  'parent_id': parent_id, 
+					  'comment_object': comment_data,
+					 }
 
 		# text_info_json = json.dumps(text_info, cls=DjangoJSONEncoder)
 

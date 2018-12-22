@@ -92,27 +92,49 @@ function do_ajax(data, url) {
 
 function setup_reception_response(xhttp) {
 	xhttp.onreadystatechange = function() {
-		console.log('onreadystatechange running');
+		console.log('onreadystatechange running')
 		if (this.readyState==4 && this.status==200) {
-			console.log(this.responseText);
+			console.log('accepted state')
+			console.log(this.responseText)
 			handle_response(this.responseText)
-		};
-	};
+		}
+	}
 }
 
 function handle_response(response) {
 	data = JSON.parse(response)
 
-	if (data.success) {
-		console.log(data.success + ' should be true')
-	} else {
-		console.log(data.success + ' should be false')
+	debugger
+
+	if (data.success && data.parent_id == null) {
+
+		var comment_data = { 'id':			data.comment_object.id,
+							 'author_id':	data.comment_object.author_id,
+							 'path':		data.comment_object.path,
+							 'is_first':	data.comment_object.is_first,
+							 'is_last':		data.comment_object.is_last,
+							 'pub_date':	data.comment_object.pub_date,
+
+							 //TODO: linebreak stuff not handled here:
+							 'content':		data.comment_object.content,
+							}
+
+		var text_html = fill_comment_template(comment_data)
+
+		//convert
+		var mock_div = document.createElement('div')
+		mock_div.innerHTML = text_html
+		var new_comment = mock_div.querySelectorAll('div').firstChild
+
+		var default_comment_area = document.getElementById('comment-new')
+		var comments_container = document.getElementById('comments_container')
+
+		comments_container.insertBefore(
+			new_comment,
+			default_comment_area
+		)
+
 	}
-
-	//if (data.success && parent_id != None) {
-	//	crea
-
-	//}
 }
 
 function sent_ajax(xhttp, data, url) {
@@ -140,11 +162,6 @@ function sent_ajax(xhttp, data, url) {
 		do_ajax(data, this.action)
 	}
 	console.log('but did we go here?')
-
-	// var template = document.getElementById('check')
-	
-	// el = document.getElementById('comment-180')
-	// el.appendChild(template)
 	
 })()
 
