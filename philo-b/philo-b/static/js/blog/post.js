@@ -104,37 +104,49 @@ function setup_reception_response(xhttp) {
 function handle_response(response) {
 	data = JSON.parse(response)
 
-	debugger
-
 	if (data.success && data.parent_id == null) {
+		var template = document.getElementById('comment_template').innerHTML
+		var text_html = fill_template(template, data.comment_object)
+		var new_comment_coll = convert_text_html_collection(text_html)
+		
+		// HTMLCollection pops when inserting, so 
+		// need to select here in order to use
+		// later.
+		var new_comment = new_comment_coll[0]
 
-		var comment_data = { 'id':			data.comment_object.id,
-							 'author_id':	data.comment_object.author_id,
-							 'path':		data.comment_object.path,
-							 'is_first':	data.comment_object.is_first,
-							 'is_last':		data.comment_object.is_last,
-							 'pub_date':	data.comment_object.pub_date,
-
-							 //TODO: linebreak stuff not handled here:
-							 'content':		data.comment_object.content,
-							}
-
-		var text_html = fill_comment_template(comment_data)
-
-		//convert
-		var mock_div = document.createElement('div')
-		mock_div.innerHTML = text_html
-		var new_comment = mock_div.querySelectorAll('div').firstChild
-
-		var default_comment_area = document.getElementById('comment-new')
 		var comments_container = document.getElementById('comments_container')
+		var default_comment = document.getElementById('comment-new')
 
-		comments_container.insertBefore(
-			new_comment,
-			default_comment_area
+		comments_container.insertHTMLCollectionBefore(
+			new_comment_coll,
+			default_comment
 		)
 
+		var template = document.getElementById('button_template').innerHTML
+		var button_data = { 'id': data.comment_object.id }
+		var text_html = fill_template(template, button_data)
+		var new_button_coll = convert_text_html_collection(text_html)
+
+		new_comment.appendChild(new_button_coll[0])
+		default_comment.querySelector('textarea').value = ''
 	}
+}
+
+Element.prototype.insertHTMLCollectionBefore = function(node_list, child_node) {
+	while(node_list.length>0) {
+		this.insertBefore(
+			node_list[0],
+			child_node
+		)}
+}
+
+function convert_text_html_collection(text_html) {
+	var mock_div = document.createElement('div')
+	mock_div.innerHTML = text_html
+	var node_list = mock_div.children
+	//var html_node = mock_div.querySelector('div')
+
+	return node_list
 }
 
 function sent_ajax(xhttp, data, url) {

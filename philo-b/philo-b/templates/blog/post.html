@@ -59,6 +59,7 @@
 			<hr class="separator-info">
 			<p>{:content:}</p>
 		</div>
+		<div class='clearing' style="clear:both;"></div>
 
 	</script>
 	<script id='button_template' type='text/template'>
@@ -74,28 +75,24 @@
 
 		<script type='text/javascript'>
 
-			function set_data() {
+			function get_comment_data() {
 				var comment_data = { 'is_first': '{{ comment.is_first }}',
 									 'id': '{{ comment.id }}',
 									 'author_id': '{{ comment.author_id }}',
 									 'path': '{{ comment.path }}',
 									 'is_last': '{{ comment.is_last }}',
 									 'pub_date': '{{ comment.pub_date }}',
-									 'content': '{{ comment.content|linebreaks }}',
+									 'content': '{{ comment.content }}',
 									}
 				return comment_data
 			}
 
-			function fill_comment_template(data) {
-				var template = document.getElementById('comment_template').innerHTML
-				template = template.replace(/{:is_first:}/g, data.is_first)
-								   .replace(/{:id:}/g, data.id)
-								   .replace(/{:author_id:}/g, data.author_id)
-								   .replace(/{:path:}/g, data.path) 
-								   .replace(/{:is_last:}/g, data.is_last)
-								   .replace(/{:pub_date:}/g, data.pub_date)
-								   .replace(/{:content:}/g, data.content)
-								   ;
+			function fill_template(template, data) {
+				for (key in data) {
+					var pattern = '{:' + key + ':}'
+					var regex = new RegExp(pattern, 'g')
+					template = template.replace(regex, data[key])
+				}
 				return template
 			}
 
@@ -104,8 +101,9 @@
 				comments_container.insertAdjacentHTML('beforeend', text_html)
 			}
 
-			var data = set_data()
-			var text_html = fill_comment_template(data)
+			var template = document.getElementById('comment_template').innerHTML
+			var comment_data = get_comment_data()
+			var text_html = fill_template(template, comment_data)
 			auto_place_comment_template(text_html)
 
 		</script>
@@ -114,26 +112,20 @@
 
 			<script type='text/javascript'>
 
-				function fill_button_template(id) {
-					var template = document.getElementById('button_template').innerHTML
-					template = template.replace(/{:id:}/g, id)
-					return template
-				}
-
-				function auto_place_button_template(text_html, id) {
-					var comment_container = document.getElementById('comment-' + id) 
+				function auto_place_button_template(text_html, button_data) {
+					var comment_container = document.getElementById('comment-' + button_data.id) 
 					comment_container.insertAdjacentHTML('beforeend', text_html)
 				}
 
-				var comment_id = '{{ comment.id }}'
-				var text_html = fill_button_template(comment_id)
-				auto_place_button_template(text_html, comment_id)
+				var template = document.getElementById('button_template').innerHTML
+				var button_data = { 'id': '{{ comment.id }}' }
+
+				var text_html = fill_template(template, button_data)
+				auto_place_button_template(text_html, button_data)
 
 			</script>
 
 		{% endif %}
-
-		<div style="clear:both;"></div>
 
 		{% if not comment_form and comment.is_last %}
 
