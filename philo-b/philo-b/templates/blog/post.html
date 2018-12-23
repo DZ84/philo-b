@@ -63,7 +63,7 @@
 			<hr class="separator-info">
 			<p>{:content:}</p>
 		</div>
-		<div class='clearing' style="clear:both;"></div>
+		<div class='clearing' id='clearing_{:id:}' style="clear:both;"></div>
 
 	</script>
 	<script id='button_template' type='text/template'>
@@ -80,11 +80,11 @@
 		<script type='text/javascript'>
 
 			function get_comment_data() {
-				var comment_data = { 'is_first': '{{ comment.is_first }}',
+				var comment_data = { 'is_first': '{{ comment.is_first|lower }}',
 									 'id': '{{ comment.id }}',
 									 'author_id': '{{ comment.author_id }}',
 									 'path': '{{ comment.path }}',
-									 'is_last': '{{ comment.is_last }}',
+									 'is_last': '{{ comment.is_last|lower }}',
 									 'pub_date': '{{ comment.pub_date }}',
 									 'content': '{{ comment.content }}',
 									}
@@ -92,8 +92,8 @@
 			}
 
 			var comment_data = get_comment_data()
-			var placing_reference = null
-			placing_comment(comment_data, placing_reference)
+			var placing_parent = document.getElementById('comments_container')
+			placing_comment(comment_data, placing_parent, null)
 
 		</script>
 

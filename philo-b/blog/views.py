@@ -109,7 +109,7 @@ def add_comment(request, post_id):
 			# you could try and except this, but it is already
 			# covered by checking for None.
 			comment_prev = Comment.objects.get(id=parent_id)
-			comment_prev.is_last = False	
+			comment_prev.is_last = False
 			comment_prev.save()
 			comment.path.extend(comment_prev.path)
 		else:
@@ -129,7 +129,7 @@ def add_comment(request, post_id):
 						 'pub_date': comment.pub_date,
 						 'is_first': comment.is_first,
 						 'is_last': comment.is_last,
-						 'path': comment.path,
+						 'path': [comment.path],
 					    }
 
 		# comment_serialized = serializers.serialize('json', [comment_data, ])

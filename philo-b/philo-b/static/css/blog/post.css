@@ -29,11 +29,11 @@ is were SASS would become very handy */
 	background: #b8b8b8;		
 }
 
-.reply-layout.False {
+.reply-layout.false {
 	/* play around with width and
 	   margin left and right
 	   to adjust the comment box
-	   look
+	   look. 'false' means 'not first'
 	   width: 80%;
 	*/
 	width: 70%;
