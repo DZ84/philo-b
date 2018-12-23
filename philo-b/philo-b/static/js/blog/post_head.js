@@ -105,48 +105,41 @@ function handle_response(response) {
 	data = JSON.parse(response)
 
 	if (data.success && data.parent_id == null) {
-		var template = document.getElementById('comment_template').innerHTML
-		var text_html = fill_template(template, data.comment_object)
-		var new_comment_coll = convert_text_html_collection(text_html)
-		
-		// - HTMLCollection pops when inserting,
-		// need to select here in order to use
-		// later.
-		// var new_comment = new_comment_coll[0]
 
-		var comments_container = document.getElementById('comments_container')
-		var default_comment = document.getElementById('comment-new')
-
-		comments_container.insertHTMLCollectionBefore(
-			new_comment_coll,
-			default_comment
-		)
-
-		// var template = document.getElementById('button_template').innerHTML
-		// var button_data = { 'id': data.comment_object.id }
-		// var text_html = fill_template(template, button_data)
-		// var new_button_coll = convert_text_html_collection(text_html)
-
-		// new_comment.appendChild(new_button_coll[0])
+		var placing_reference = document.getElementById('comment-new')
+		placing_comment(data.comment_object, placing_reference)
 
 		var button_data = { 'id': data.comment_object.id }
-		process_new_button(button_data)
+		placing_button(button_data)
 
-		default_comment.querySelector('textarea').value = ''
+		placing_reference.querySelector('textarea').value = ''
 	} else if (data.success) {
 		
 	}
 }
 
+function placing_comment(comment_data, placing_reference) {
 
-function process_new_button(button_data) {
+	var template = document.getElementById('comment_template').innerHTML
+	var text_html = fill_template(template, comment_data)
+	var new_comment_coll = convert_text_html_collection(text_html)
 
-		var template = document.getElementById('button_template').innerHTML
-		var comment = document.getElementById('comment-' + button_data.id) 
-		var text_html = fill_template(template, button_data)
-		var new_button_coll = convert_text_html_collection(text_html)
+	var comments_container = document.getElementById('comments_container')
 
-		comment.appendChild(new_button_coll[0])
+	comments_container.insertHTMLCollectionBefore(
+		new_comment_coll,
+		placing_reference
+	)
+
+}
+
+function fill_template(template, data) {
+	for (key in data) {
+		var pattern = '{:' + key + ':}'
+			var regex = new RegExp(pattern, 'g')
+			template = template.replace(regex, data[key])
+	}
+	return template
 }
 
 Element.prototype.insertHTMLCollectionBefore = function(node_list, child_node) {
@@ -166,31 +159,19 @@ function convert_text_html_collection(text_html) {
 	return node_list
 }
 
+function placing_button(button_data) {
+		var template = document.getElementById('button_template').innerHTML
+		var comment = document.getElementById('comment-' + button_data.id) 
+		var text_html = fill_template(template, button_data)
+		var new_button_coll = convert_text_html_collection(text_html)
+
+		comment.appendChild(new_button_coll[0])
+}
+
 function sent_ajax(xhttp, data, url) {
 	xhttp.open('POST', url, true)
 	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
 	xhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8')
 	xhttp.send(data)
 }
-
-// - pure js implementation of code that should run 
-//   once the dom (not page) is loaded.
-// - you could perhaps run it once the user presses
-//   the button, but why wait?
-// (function() {
-// 	form_section = document.getElementById("comment-default")
-// 
-// 	console.log('initialized submit method')
-// 	console.log("we went here")
-// 
-// 	form_section.submit = function() {
-// 
-// 		console.log('submitted started')
-// 
-// 		data = standardize_form(this)	
-// 		do_ajax(data, this.action)
-// 	}
-// 	console.log('but did we go here?')
-// 	
-// })()
 

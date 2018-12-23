@@ -79,9 +79,6 @@
 
 		<script type='text/javascript'>
 
-			// - this can be JSON parsed if the comment object is 
-			// manipulated correctly
-			// - but perhaps you would want to do that serverside
 			function get_comment_data() {
 				var comment_data = { 'is_first': '{{ comment.is_first }}',
 									 'id': '{{ comment.id }}',
@@ -94,24 +91,9 @@
 				return comment_data
 			}
 
-			function fill_template(template, data) {
-				for (key in data) {
-					var pattern = '{:' + key + ':}'
-					var regex = new RegExp(pattern, 'g')
-					template = template.replace(regex, data[key])
-				}
-				return template
-			}
-
-			function auto_place_comment_template(text_html) {
-				var comments_container = document.getElementById('comments_container') 
-				comments_container.insertAdjacentHTML('beforeend', text_html)
-			}
-
-			var template = document.getElementById('comment_template').innerHTML
 			var comment_data = get_comment_data()
-			var text_html = fill_template(template, comment_data)
-			auto_place_comment_template(text_html)
+			var placing_reference = null
+			placing_comment(comment_data, placing_reference)
 
 		</script>
 
@@ -119,22 +101,8 @@
 
 			<script type='text/javascript'>
 
-				// function auto_place_button_template(text_html, button_data) {
-				// 	var comment_container = document.getElementById('comment-' + button_data.id) 
-				// 	comment_container.insertAdjacentHTML('beforeend', text_html)
-				// }
-
-				// var template = document.getElementById('button_template').innerHTML
-				// var button_data = { 'id': '{{ comment.id }}' }
-				// var text_html = fill_template(template, button_data)
-				// auto_place_button_template(text_html, button_data)
-
-
-
 				var button_data = { 'id': '{{ comment.id }}' }
-				//var comment = document.getElementById('comment-' + button_data.id) 
-				debugger
-				process_new_button(button_data)
+				placing_button(button_data)
 
 			</script>
 
