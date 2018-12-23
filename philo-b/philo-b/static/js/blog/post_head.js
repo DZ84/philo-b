@@ -110,13 +110,12 @@ function handle_response(response) {
 
 		var placing_parent = document.getElementById('comments_container')
 		var placing_spot = document.getElementById('comment-new')
-
 		placing_comment(data.comment_object, placing_parent, placing_spot)
 
 		var button_data = { 'id': data.comment_object.id }
 		placing_button(button_data)
 
-		placing_reference.querySelector('textarea').value = ''
+		placing_spot.querySelector('textarea').value = ''
 
 	} else if (data.success) {
 

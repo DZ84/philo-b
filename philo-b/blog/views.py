@@ -129,7 +129,7 @@ def add_comment(request, post_id):
 						 'pub_date': comment.pub_date,
 						 'is_first': comment.is_first,
 						 'is_last': comment.is_last,
-						 'path': [comment.path],
+						 'path': comment.path,
 					    }
 
 		# comment_serialized = serializers.serialize('json', [comment_data, ])
