@@ -85,7 +85,8 @@
 									 'author_id': '{{ comment.author_id }}',
 									 'path': '{{ comment.path }}',
 									 'is_last': '{{ comment.is_last|lower }}',
-									 'pub_date': '{{ comment.pub_date }}',
+									 // this is the same as the default variable used:
+									 'pub_date': '{{ comment.pub_date|date:"DATETIME_FORMAT" }}',
 									 'content': '{{ comment.content }}',
 									}
 				return comment_data

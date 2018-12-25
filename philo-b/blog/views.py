@@ -1,9 +1,8 @@
-import json
-
 from django.views import View
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404, redirect, render #, render_to_response
 from django.contrib import auth
+from django.conf import settings
 from django.http import Http404, JsonResponse, HttpResponse 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
@@ -110,8 +109,8 @@ def add_comment(request, post_id):
 			# covered by checking for None.
 			comment_prev = Comment.objects.get(id=parent_id)
 			comment_prev.is_last = False
-			comment_prev.save()
-			comment.path.extend(comment_prev.path)
+			comment_prev.save() 
+			comment.path.extend(comment_prev.path) 
 		else:
 			comment.is_first = True	
 
@@ -120,32 +119,21 @@ def add_comment(request, post_id):
 		comment.path.append(comment.id)
 		comment.save()
 
-		import pdb
-		# pdb.set_trace()
-
 		comment_data = { 'id': comment.id,
 						 'author_id': comment.author_id.username,
 						 'content': comment.content,
-						 'pub_date': comment.pub_date,
+						 'pub_date': comment.pub_date.strftime(settings.DATETIME_FORMAT_LP),
 						 'is_first': comment.is_first,
 						 'is_last': comment.is_last,
 						 'path': comment.path,
 					    }
 
-		# comment_serialized = serializers.serialize('json', [comment_data, ])
 		text_info =	{ 'success': True,
 					  'parent_id': parent_id, 
 					  'comment_object': comment_data,
 					 }
 
-		# text_info_json = json.dumps(text_info, cls=DjangoJSONEncoder)
-
-		# print(text_info_json)
-
-		# return HttpResponse(json.dumps(text_info_json), content_type='application/json')
-		print(text_info)
 		return JsonResponse(text_info)
-		# return JsonResponse({'message': 'the message'})
 
 
 	# - it's gonna be passed, used, and possibly executed, it

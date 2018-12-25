@@ -46,14 +46,8 @@ CACHES = {
 # https://docs.djangoproject.com/en/dev/ref/settings/#secure-proxy-ssl-header
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
-# # SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
-# SECURE_SSL_REDIRECT = True
-# XXX 
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
 SESSION_COOKIE_SECURE = True
-
 # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
 SESSION_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
@@ -75,33 +69,6 @@ SECURE_BROWSER_XSS_FILTER = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = 'DENY'
 
-
-
-#############################
-### !!! DEBUG, REMOVE !!! ###
-# 
-# # https://docs.djangoproject.com/en/dev/ref/settings/#secure-ssl-redirect
-# SECURE_SSL_REDIRECT = False
-# # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-secure
-# SESSION_COOKIE_SECURE = False
-# # https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
-# SESSION_COOKIE_HTTPONLY = False
-# # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-secure
-# CSRF_COOKIE_SECURE = True
-# # https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
-# CSRF_COOKIE_HTTPONLY = True
-# # https://docs.djangoproject.com/en/dev/topics/security/#ssl-https
-# # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-seconds
-# # TODO: set this to 60 seconds first and then to 518400 once you prove the former works
-# SECURE_HSTS_SECONDS = 60
-# # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-include-subdomains
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool('DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
-# # https://docs.djangoproject.com/en/dev/ref/settings/#secure-hsts-preload
-# SECURE_HSTS_PRELOAD = env.bool('DJANGO_SECURE_HSTS_PRELOAD', default=True)
-# # https://docs.djangoproject.com/en/dev/ref/middleware/#x-content-type-options-nosniff
-# SECURE_CONTENT_TYPE_NOSNIFF = env.bool('DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
-# # https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
-
 # set is (default is 60), so the error won't show up in the server feed. 
 #       - TODO: don't know what a good setting would be in production though.
 #       - also it says an http request took too long to complete, I believe for
@@ -109,6 +76,7 @@ X_FRAME_OPTIONS = 'DENY'
 #       without errors? also has a verbose option. But that doesn't give much
 #       extra information.
 #		- not sure this ever did anything.
+#			- it didn't, it was part of the tty/stdin_open bug from docker
 COMPOSE_HTTP_TIMEOUT = 50000
 
 
