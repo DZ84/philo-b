@@ -30,18 +30,21 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
 USE_I18N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
+# - Disabling this enables custom datetime_formats
 USE_L10N = False 
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
-# these date formattings are set to match eachother
-DATETIME_FORMAT_TAGS = "M d, Y - H:i:s O" # templates 
-DATETIME_FORMAT_LP = "%b %d, %Y - %H:%M:%S %z" # django backend
+# These date formattings are set to match eachother
+# http://docs.djangoproject.com/en/2.0/ref/templates/builtins/#date 
+DATETIME_FORMAT_TAGS = "M d, Y - H:i:s O" 
+# http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior 
+DATETIME_FORMAT_LP = "%b %d, %Y - %H:%M:%S %z"
 
 # Used by default by the templating system
 # - it feels a bit hacky, but the date template
 #	filter only accepts a few variables, and this
-#	default one fits the description best. To
+#	default one fits the description best. Too
 #	small of an issue to make a custom filter.
 DATETIME_FORMAT = DATETIME_FORMAT_TAGS
 

@@ -3,7 +3,7 @@
 // - you could perhaps run it once the user presses
 //   the button, but why wait?
 (function() {
-	form_element = document.getElementById("comment-default")
+	form_element = document.getElementById("form_default")
 	set_submit_actions(form_element)
 })()
 

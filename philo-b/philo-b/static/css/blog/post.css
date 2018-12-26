@@ -153,12 +153,12 @@ is were SASS would become very handy */
 }
 
 /* layout is a little different for new comments: */
-#comment-new .form-area-wrapper {
+#comment_new .form-area-wrapper {
 	padding: 0;
 	margin-top: -10px;
 }
 
-#comment-new .separator-form {
+#comment_new .separator-form {
 	border: none;
 	background-color: none;
 	height: 0;
@@ -195,6 +195,10 @@ is were SASS would become very handy */
 	border: 0;
 }
 
+.clearing {
+	clear: both;
+}
+
 .form-instructions {
 	width: 100%;
 	text-align: left;
@@ -216,5 +220,5 @@ is were SASS would become very handy */
 .sign-in-reminder {
 	color: black;
 	text-decoration: underline; 
-}
+
 */

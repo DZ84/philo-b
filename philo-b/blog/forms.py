@@ -23,7 +23,7 @@ class CommentForm(forms.Form):
 		widget=forms.Textarea(
 			attrs={
 				'class': 'text_area',
-				'id': 'text-area-0',
+				'id': 'text_area_0',
 				# 'placeholder': 'write your message here'
 			},
 		)

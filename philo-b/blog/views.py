@@ -21,9 +21,6 @@ class Overview(ListView):
 	def render_to_response(self, context, **response_kwargs):
 		user = auth.get_user(self.request)
 
-		# import pdb
-		# pdb.set_trace()
-
 		if user.is_authenticated:
 			context['user'] = user
 
@@ -54,21 +51,9 @@ class Post(View):
 
 			try:
 				context['errors_json'] = request.session['errors_json']
-
-				# import pdb
-				# pdb.set_trace()
-
 			except KeyError:
-				# import pdb
-				# pdb.set_trace()
 				pass
 
-			# print('it is not there')
-
-			# import pdb
-			# pdb.set_trace()
-	
-		# return render_to_response(template_name=self.template_name, context=context)
 		return render(request, self.template_name, context)
 
 
@@ -78,9 +63,6 @@ def add_comment(request, post_id):
 
 	form = CommentForm(request.POST)
 	post = get_object_or_404(Blog, id=post_id)
-
-	import pdb
-	#  pdb.set_trace()
 
 	if form.is_valid():
 		comment = Comment()
@@ -129,15 +111,15 @@ def add_comment(request, post_id):
 					    }
 
 		text_info =	{ 'success': True,
-					  'parent_id': parent_id, 
+					  'parent_id': convert_p_id(parent_id),
 					  'comment_object': comment_data,
 					 }
 
 		return JsonResponse(text_info)
 
 
-	# - it's gonna be passed, used, and possibly executed, it
-	# better be cleaned.
+	# - it's gonna be passed, processed, and possibly executed, it
+	# should be cleaned.
 	# - and if it can't pass this check, better shut it down
 	try:
 		parent_id = form.cleaned_data['parent_comment_id']
@@ -145,22 +127,26 @@ def add_comment(request, post_id):
 		return HttpResponse(status=500)	
 
 	messages = []
-
 	for key, value in form.errors.items():
 		messages.extend(value)
 
-	errors = {'success': False,
-			  'id': parent_id, 
-			  'messages': messages,
-			 }
-
-	# errors_json = json.dumps(errors, cls=DjangoJSONEncoder)
+	errors = { 'success': False,
+			   'parent_id': convert_p_id(parent_id), 
+			   'messages': messages,
+			  }
 
 	import pdb
 	# pdb.set_trace()
 
-	# return HttpResponse(json.dumps(errors_json), content_type='application/json')
 	return JsonResponse(errors)
+
+
+def convert_p_id(parent_id):
+
+	if (parent_id == None):
+		return 'default'
+
+	return parent_id
 
 
 @login_required

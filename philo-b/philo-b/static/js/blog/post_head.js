@@ -2,7 +2,7 @@ function create_subcomment_form(parent_nr) {
 
 	var new_subcomment = create_new_subcomment(parent_nr)
 
-	var parent_element = document.getElementById("comment-" + parent_nr)
+	var parent_element = document.getElementById("comment_" + parent_nr)
 	var comment_button_area = parent_element
 		.getElementsByClassName("button-container")[0]
 
@@ -24,11 +24,11 @@ function create_new_subcomment(parent_nr) {
 	// -csrf token value is not copied with the cloning
 	// -adjust parent_info value as it will be used upon submission
 
-	var new_subcomment = document.getElementById("comment-default").cloneNode(true)
-	new_subcomment.id = "reply-to-" + parent_nr
+	var new_subcomment = document.getElementById("form_default").cloneNode(true)
+	new_subcomment.id = "reply_to_" + parent_nr
 
-	var new_textarea = new_subcomment.querySelectorAll("textarea")[0]
-	new_textarea.id = "text-area-" + parent_nr
+	var new_textarea = new_subcomment.querySelector("textarea")
+	new_textarea.id = "text_area_" + parent_nr
 	new_textarea.value = "" 
 
 	var new_input_all = new_subcomment.querySelectorAll("input")
@@ -37,11 +37,12 @@ function create_new_subcomment(parent_nr) {
 	new_input_csrf.value = document.getElementsByName('csrfmiddlewaretoken')[0].value
 
 	var new_input_info = new_input_all[1]
-	new_input_info.id = "parent-comment-" + parent_nr
+	new_input_info.id = "parent_comment_" + parent_nr
 	new_input_info.value = parent_nr
 
 	var new_error_info = new_subcomment.querySelectorAll("ul")[0]
-	new_error_info.id = "submit-errors-" + parent_nr
+	new_error_info.id = "submit_errors_" + parent_nr
+	clear_previous_errors(new_error_info)
 
 	return new_subcomment
 }
@@ -72,11 +73,11 @@ function set_submit_actions(form_element) {
 }
 
 function submit_subcomment_form(parent_nr) {
-	document.getElementById("reply-to-" + parent_nr).submit()
+	document.getElementById("reply_to_" + parent_nr).submit()
 }
 
 function submit_comment_form() {
-	document.getElementById("comment-default").submit()
+	document.getElementById("form_default").submit()
 }
 
 function standardize_form(form_section) {
@@ -106,15 +107,17 @@ function setup_reception_response(xhttp) {
 function handle_response(response) {
 	data = JSON.parse(response)
 
-	if (data.success && data.parent_id == null) {
+	if (data.success && data.parent_id == 'default') {
 
 		var placing_parent = document.getElementById('comments_container')
-		var placing_spot = document.getElementById('comment-new')
+		var placing_spot = document.getElementById('comment_' + data.parent_id)
 		placing_comment(data.comment_object, placing_parent, placing_spot)
 
 		var button_data = { 'id': data.comment_object.id }
 		placing_button(button_data)
 
+		var error_fields = document.getElementById('submit_errors_' + data.parent_id)
+		clear_previous_errors(error_fields)
 		placing_spot.querySelector('textarea').value = ''
 
 	} else if (data.success) {
@@ -123,12 +126,41 @@ function handle_response(response) {
 		var placing_spot = document.getElementById('clearing_' + data.parent_id)
 		placing_comment(data.comment_object, placing_parent, placing_spot)
 
-		var old_comment = document.getElementById('comment-' + data.parent_id)
+		var button_data = { 'id': data.comment_object.id }
+		placing_button(button_data)
+
+		var old_comment = document.getElementById('comment_' + data.parent_id)
 		old_comment.getElementsByClassName('submit')[0].remove()
 		old_comment.querySelector('form').remove()
 
-		var button_data = { 'id': data.comment_object.id }
-		placing_button(button_data)
+	} else if (data.messages.length>0) {
+
+		var error_fields = document.getElementById('submit_errors_' + data.parent_id)
+		clear_previous_errors(error_fields)
+		display_errors(data.messages, data.parent_id)
+
+	} else {
+
+		// bad things..
+
+	}
+}
+
+function clear_previous_errors(error_fields) {
+	// var error_field = document.getElementById('submit_errors_' + error_id)
+
+	while(error_fields.lastChild) {
+		error_fields.removeChild(error_fields.lastChild)
+	}
+}
+
+function display_errors(messages, error_id) {
+	var error_field = document.getElementById('submit_errors_' + error_id)
+
+	for(var i=0; i<messages.length; i++) {
+		var error_item = document.createElement('li')
+			error_item.innerHTML = messages[i]
+			error_field.appendChild(error_item)
 	}
 }
 
@@ -164,18 +196,17 @@ function convert_text_html_collection(text_html) {
 	var mock_div = document.createElement('div')
 	mock_div.innerHTML = text_html
 	var node_list = mock_div.children
-	//var html_node = mock_div.querySelector('div')
 
 	return node_list
 }
 
 function placing_button(button_data) {
-		var template = document.getElementById('button_template').innerHTML
-		var comment = document.getElementById('comment-' + button_data.id) 
-		var text_html = fill_template(template, button_data)
-		var new_button_coll = convert_text_html_collection(text_html)
+	var template = document.getElementById('button_template').innerHTML
+	var comment = document.getElementById('comment_' + button_data.id) 
+	var text_html = fill_template(template, button_data)
+	var new_button_coll = convert_text_html_collection(text_html)
 
-		comment.appendChild(new_button_coll[0])
+	comment.appendChild(new_button_coll[0])
 }
 
 function sent_ajax(xhttp, data, url) {

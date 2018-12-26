@@ -52,7 +52,7 @@
 	{% endif %}
 	<script id='comment_template' type='text/template'>
 
-		<div class="reply-layout {:is_first:}" id="comment-{:id:}">
+		<div class="reply-layout {:is_first:}" id="comment_{:id:}">
 			<div class="post-info"> 
 				<div class="user-info">
 					<strong>{:author_id:}</strong></div>
@@ -63,7 +63,7 @@
 			<hr class="separator-info">
 			<p>{:content:}</p>
 		</div>
-		<div class='clearing' id='clearing_{:id:}' style="clear:both;"></div>
+		<div class='clearing' id='clearing_{:id:}'></div>
 
 	</script>
 	<script id='button_template' type='text/template'>
@@ -123,16 +123,16 @@
 
 	{% if comment_form %}
 
-		<div class="comment-layout" id="comment-new">
+		<div class="comment-layout" id="comment_default">
 
-			<form id="comment-default" action="{% url 'add_comment' post.id %}" method="POST">
+			<form id="form_default" action="{% url 'add_comment' post.id %}" method="POST">
 				{% csrf_token %}
 				<div class="form-area-wrapper"> 
 					<hr class="separator-form">
 					<div class="form-userinfo">Write response with username 
 						<span class="form-username">{{ user.username }}</span>:
 					</div>
-					<ul class="submit-errors" id="submit-errors-default"></ul>
+					<ul class="submit-errors" id="submit_errors_default"></ul>
 					{{ comment_form.as_p }}
 				</div>
 				<div class="form-instructions">
