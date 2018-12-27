@@ -9,48 +9,27 @@
 	width: 100%;
 }
 
-.separator-commentsection {
-}
-
 #comments_container {
 	width: 80%;
 	margin: 0 auto;
 	text-align: center;
 }
 
-/* these margins are related. I suspect this
-is were SASS would become very handy */
+/* these margins are related. This is
+were SASS would've become very handy */
 .reply-layout {
 	width: 85%;
 	margin: 1px auto 0;
 	padding-top: 7px; /* this should be arranged ing the user/post info section maybe */
 	padding-bottom: 3px;
-	/* margin: 1px 10.5% 0 4.5%; */
 	background: #b8b8b8;		
 }
 
+/* 'false' means 'not first'*/
 .reply-layout.false {
-	/* play around with width and
-	   margin left and right
-	   to adjust the comment box
-	   look. 'false' means 'not first'
-	   width: 80%;
-	*/
 	width: 70%;
 	margin-right: 7.5%; /* related to the width difference comment/subcomment(reply) */
-	/* margin: 1px 10.5% 0 19.5%; */
-	/* background: #b8aaaa;		 */
 }
-
-/*
-.comment.False.line-connector {
-	width: 5%;
-	height: 50%;
-	margin: 0 0 auto auto;
-	border: 2 2 5 5 green;
-	background; orange;
-}
-*/
 
 .reply-layout > .post-info,
 .reply-layout > .user-info,	
@@ -58,16 +37,11 @@ is were SASS would become very handy */
 	text-align: left;	
 }
 
-.reply-layout > .post-info {
-}
-
 .reply-layout > .separator-info {
 	margin: 0 0 10px;
 	width: auto;
 	border: none;
 	background-color: #686868;
-	/* color: #E8E8E8; was also in the example, 
-	   but seems you can leave it out */
 	height: 1px;
 }
 
@@ -83,10 +57,8 @@ is were SASS would become very handy */
 	height: auto;
 	width: auto;
 	padding: 0;
-	margin-top: 3px; /* this is dependent on the padding of the comment area */
-	/* margin-right: -3px; */
+	margin-top: 3px; /* dependent on the padding of the comment area */
 	margin-bottom: 15px;
-	/* border-top: 50px solid #686868; */
 }
 
 .button-container .reply, 
@@ -96,7 +68,6 @@ is were SASS would become very handy */
 	border-style: solid;
 	border-color: #e8e8e8;
 	padding: 13px 25px;
-	/* margin: -42px 0 0 7px; */
 
 	text-decoration: none;
 	display: inline-block;
@@ -108,18 +79,9 @@ is were SASS would become very handy */
 	font-size: 16px;
 }
 
-.button-container .submit {
-	/* margin-right: 7px; */
-	/* border-right: 1px solid #e8e8e8; */
-}
-
 .comment-layout {
 	width: 100%;
 	background: #b8b8b8;
-
-	/* this border seems to hold some stuff
-	   together on the top
-	*/
 
 	margin: 50px 0;
 	padding: 0px 3px;
@@ -132,33 +94,18 @@ is were SASS would become very handy */
 	justify-content: center;
 }
 
-/*
-.comment-layout > .button-container > a > .reply,
-.comment-layout > .button-container > a > .submit {
-}
-
-/* for savebuttons that are not relevant */
-/*.disabled {
-	opacity: 0.5;
-	cursor: not-allowed;
-}
-*/
-
-
 /* seems form-area-wrapper manipulations aren't
-   doing much
-*/
+   doing much */
 .form-area-wrapper {
 	padding-top: 1em;
 }
 
-/* layout is a little different for new comments: */
-#comment_new .form-area-wrapper {
+#comment_default .form-area-wrapper {
 	padding: 0;
 	margin-top: -10px;
 }
 
-#comment_new .separator-form {
+#comment_default .separator-form {
 	border: none;
 	background-color: none;
 	height: 0;
@@ -216,9 +163,3 @@ is were SASS would become very handy */
 	text-align: left;
 }
 
-/*
-.sign-in-reminder {
-	color: black;
-	text-decoration: underline; 
-
-*/

@@ -2,6 +2,11 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block css %}
+
+	<link rel="stylesheet" href="{% static 'css/blog/post.css' %}" type="text/css" media="screen">
+
+{% endblock css %}
 {% block javascript_head %}
 
 	<script src="{% static 'js/blog/post_head.js' %}"></script>
@@ -12,11 +17,35 @@
 	<script src="{% static 'js/blog/post_tail.js' %}"></script>
 
 {% endblock javascript_tail %}
-{% block css %}
+{% block templates %}
 
-	<link rel="stylesheet" href="{% static 'css/blog/post.css' %}" type="text/css" media="screen">
+	<script id='comment_template' type='text/template'>
 
-{% endblock css %}
+		<div class="reply-layout {:is_first:}" id="comment_{:id:}">
+			<div class="post-info"> 
+				<div class="user-info">
+					<strong>{:author_id:}</strong></div>
+					<!--div style="text-align:center;"><strong>{:path:} 
+							/ {:is_first:} / {:is_last:}</strong></div-->
+				<div class="date">{:pub_date:}</div>
+			</div> 
+			<hr class="separator-info">
+			<p>{:content:}</p>
+		</div>
+		<div class='clearing' id='clearing_{:id:}'></div>
+
+	</script>
+	<script id='button_template' type='text/template'>
+
+			<div class="button-container">
+				<a class="comment" 
+				onclick="return create_subcomment_form({:id:})">
+					<button class="reply">reply</button></a>
+			</div>
+
+	</script>
+
+{% endblock templates %}
 {% block toptag %}	
 
 	<div class="top-tag">Philo-b</div>
@@ -42,39 +71,17 @@
 
 {% endblock content %}
 {% block comments %}
-
 	<hr class="separator-commentsection">
 
 	{% if not comment_form %}
 
-		<a class="login-links" href="{% url 'account_login' %}?next={{ request.path }}">Sign in</a> to reply or comment.<br><br>
+		<a class="login-links" 
+		   href="{% url 'account_login' %}
+		   ?next={{ request.path }}">Sign in
+		</a> to reply or comment.
+		<br><br>
 
 	{% endif %}
-	<script id='comment_template' type='text/template'>
-
-		<div class="reply-layout {:is_first:}" id="comment_{:id:}">
-			<div class="post-info"> 
-				<div class="user-info">
-					<strong>{:author_id:}</strong></div>
-					<div style="text-align:center;"><strong>{:path:} 
-							/ {:is_first:} / {:is_last:}</strong></div>
-				<div class="date">{:pub_date:}</div>
-			</div> 
-			<hr class="separator-info">
-			<p>{:content:}</p>
-		</div>
-		<div class='clearing' id='clearing_{:id:}'></div>
-
-	</script>
-	<script id='button_template' type='text/template'>
-
-			<div class="button-container">
-				<a class="comment" 
-				onclick="return create_subcomment_form({:id:})">
-					<button class="reply">reply</button></a>
-			</div>
-
-	</script>
 	{% for comment in comments %}
 
 		<script type='text/javascript'>
@@ -162,8 +169,12 @@
 				<h3 class="no-login-title"></h3>
 			</div>
 			<div class="no-login-body">
-				<a class="login-links" href="{% url 'account_login' %}?next={{ request.path }}">Sign in</a> to reply or comment.</div>
-				<br><br>
+				<a class="login-links" 
+				   href="{% url 'account_login' %}
+				   ?next={{ request.path }}">Sign in
+				</a> to reply or comment.
+			</div>
+			<br><br>
 		</div>
 
 	{% endif %}

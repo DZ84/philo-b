@@ -1,29 +1,21 @@
 function create_subcomment_form(parent_nr) {
+	var parent_element = document.getElementById("comment_" + parent_nr)
+	var button_area = parent_element.getElementsByClassName("button-container")[0]
 
 	var new_subcomment = create_new_subcomment(parent_nr)
 
-	var parent_element = document.getElementById("comment_" + parent_nr)
-	var comment_button_area = parent_element
-		.getElementsByClassName("button-container")[0]
-
 	parent_element.insertBefore(
 		new_subcomment,
-		comment_button_area
+		button_area
 	)
 
-	delete_create_buttons(comment_button_area, parent_nr)
+	delete_create_buttons(button_area, parent_nr)
 	set_submit_actions(new_subcomment)
 
 	return new_subcomment
 }
 
 function create_new_subcomment(parent_nr) {
-	// -create form by cloning
-	// -give correct id_parent_comment to prevent duplicate id's
-	// -clear textarea from cloned form
-	// -csrf token value is not copied with the cloning
-	// -adjust parent_info value as it will be used upon submission
-
 	var new_subcomment = document.getElementById("form_default").cloneNode(true)
 	new_subcomment.id = "reply_to_" + parent_nr
 
@@ -48,10 +40,6 @@ function create_new_subcomment(parent_nr) {
 }
 
 function delete_create_buttons(button_area, parent_nr) {
-	// -remove reply button components
-	// -configure submit button
-	// -insert submit button
-
 	button_area.querySelector('a').remove()
 
 	var new_submit_button = document.createElement('BUTTON')
@@ -59,6 +47,7 @@ function delete_create_buttons(button_area, parent_nr) {
 	new_submit_button.addEventListener('click', function() {
 		submit_subcomment_form(parent_nr)
 	})
+
 	new_submit_button.className = "submit"
 	new_submit_button.innerHTML = "submit"
 
@@ -143,8 +132,6 @@ function handle_response(response) {
 }
 
 function clear_previous_errors(error_fields) {
-	// var error_field = document.getElementById('submit_errors_' + error_id)
-
 	while(error_fields.lastChild) {
 		error_fields.removeChild(error_fields.lastChild)
 	}
@@ -199,9 +186,9 @@ function convert_text_html_collection(text_html) {
 function placing_button(button_data) {
 	var template = document.getElementById('button_template').innerHTML
 	var comment = document.getElementById('comment_' + button_data.id) 
+
 	var text_html = fill_template(template, button_data)
 	var new_button_coll = convert_text_html_collection(text_html)
-
 	comment.appendChild(new_button_coll[0])
 }
 

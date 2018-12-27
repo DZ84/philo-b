@@ -4,6 +4,8 @@
 //   the button, but why wait?
 (function() {
 	form_element = document.getElementById("form_default")
-	set_submit_actions(form_element)
+	if (form_element) {
+		set_submit_actions(form_element)
+	}
 })()
 
