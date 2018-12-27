@@ -107,34 +107,30 @@ function setup_reception_response(xhttp) {
 function handle_response(response) {
 	data = JSON.parse(response)
 
-	if (data.success && data.parent_id == 'default') {
-
+	if (data.success) {
 		var placing_parent = document.getElementById('comments_container')
-		var placing_spot = document.getElementById('comment_' + data.parent_id)
-		placing_comment(data.comment_object, placing_parent, placing_spot)
+
+		if (data.parent_id == 'default') {
+			var placing_spot = document.getElementById('comment_' + data.parent_id)
+			placing_comment(data.comment_object, placing_parent, placing_spot)
+
+			var error_fields = document.getElementById('submit_errors_' + data.parent_id)
+			clear_previous_errors(error_fields)
+			placing_spot.querySelector('textarea').value = ''
+
+		} else {
+			var placing_spot = document.getElementById('clearing_' + data.parent_id)
+			placing_comment(data.comment_object, placing_parent, placing_spot)
+
+			var old_comment = document.getElementById('comment_' + data.parent_id)
+			old_comment.getElementsByClassName('submit')[0].remove()
+			old_comment.querySelector('form').remove()
+		}
 
 		var button_data = { 'id': data.comment_object.id }
 		placing_button(button_data)
-
-		var error_fields = document.getElementById('submit_errors_' + data.parent_id)
-		clear_previous_errors(error_fields)
-		placing_spot.querySelector('textarea').value = ''
-
-	} else if (data.success) {
-
-		var placing_parent = document.getElementById('comments_container')
-		var placing_spot = document.getElementById('clearing_' + data.parent_id)
-		placing_comment(data.comment_object, placing_parent, placing_spot)
-
-		var button_data = { 'id': data.comment_object.id }
-		placing_button(button_data)
-
-		var old_comment = document.getElementById('comment_' + data.parent_id)
-		old_comment.getElementsByClassName('submit')[0].remove()
-		old_comment.querySelector('form').remove()
 
 	} else if (data.messages.length>0) {
-
 		var error_fields = document.getElementById('submit_errors_' + data.parent_id)
 		clear_previous_errors(error_fields)
 		display_errors(data.messages, data.parent_id)
