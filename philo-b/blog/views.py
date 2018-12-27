@@ -8,10 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
-# from django.core.serializers.json import DjangoJSONEncoder
 	
 from blog.forms import CommentForm 
 from blog.models import Blog, Comment
+
 
 class Overview(ListView):
 
@@ -30,10 +30,6 @@ class Overview(ListView):
 class Post(View):
 
 	template_name = 'blog/post.html'
-
-	# TODO: remove this weird in between step of renaming forms?
-	# or does it create an easier adjustment if/when those are due?
-	# - same for add comment
 	comment_form = CommentForm 
 
 	def get(self, request, *args, **kwargs):
@@ -47,12 +43,7 @@ class Post(View):
 
 		if user.is_authenticated:
 			context['comment_form'] = self.comment_form
-			context['user'] = user # is this a safe move? think so, if django allows it so easily
-
-			try:
-				context['errors_json'] = request.session['errors_json']
-			except KeyError:
-				pass
+			context['user'] = user 
 
 		return render(request, self.template_name, context)
 
@@ -71,7 +62,7 @@ def add_comment(request, post_id):
 		comment.author_id = auth.get_user(request)
 		comment.content = form.cleaned_data['text_area']
 
-		# from the site:
+		# from relevant site:
 		# Django does not allow to see the comments on the ID, we do not save it,
 		# Although PostgreSQL has the tools in its arsenal, but it is not going to
 		# work with raw SQL queries, so form the path after the first save
@@ -79,7 +70,7 @@ def add_comment(request, post_id):
 		comment.save()
 
 		# get id of comment to which is replied. If comment is
-		# not a reply then parent_id=None
+		# not a subcomment (reply) then parent_id=None
 		parent_id = form.cleaned_data['parent_comment_id']
 
 		# if parent comment is present its path is needed and
@@ -101,44 +92,47 @@ def add_comment(request, post_id):
 		comment.path.append(comment.id)
 		comment.save()
 
-		comment_data = { 'id': comment.id,
-						 'author_id': comment.author_id.username,
-						 'content': comment.content,
-						 'pub_date': comment.pub_date.strftime(settings.DATETIME_FORMAT_LP),
-						 'is_first': comment.is_first,
-						 'is_last': comment.is_last,
-						 'path': comment.path,
-					    }
+		return JsonResponse(prepare_process_info(comment, parent_id))
 
-		text_info =	{ 'success': True,
-					  'parent_id': convert_p_id(parent_id),
-					  'comment_object': comment_data,
-					 }
-
-		return JsonResponse(text_info)
-
-
-	# - it's gonna be passed, processed, and possibly executed, it
-	# should be cleaned.
-	# - and if it can't pass this check, better shut it down
 	try:
 		parent_id = form.cleaned_data['parent_comment_id']
 	except KeyError:
 		return HttpResponse(status=500)	
 
+	return JsonResponse(prepare_errors_info(form, parent_id))
+
+
+def prepare_process_info(comment, parent_id):
+
+	comment_data = { 'id': comment.id,
+					 'author_id': comment.author_id.username,
+					 'content': comment.content,
+					 'pub_date': comment.pub_date.strftime(settings.DATETIME_FORMAT_LP),
+					 'is_first': comment.is_first,
+					 'is_last': comment.is_last,
+					 # 'path': comment.path,
+					}
+
+	process_info =	{ 'success': True,
+					  'parent_id': convert_p_id(parent_id),
+				      'comment_object': comment_data,
+					 }
+
+	return process_info
+
+
+def prepare_errors_info(form, parent_id):
+
 	messages = []
 	for key, value in form.errors.items():
 		messages.extend(value)
 
-	errors = { 'success': False,
-			   'parent_id': convert_p_id(parent_id), 
-			   'messages': messages,
-			  }
+	error_info = { 'success': False,
+				   'parent_id': convert_p_id(parent_id), 
+				   'messages': messages,
+				  }
 
-	import pdb
-	# pdb.set_trace()
-
-	return JsonResponse(errors)
+	return error_info
 
 
 def convert_p_id(parent_id):
@@ -147,25 +141,4 @@ def convert_p_id(parent_id):
 		return 'default'
 
 	return parent_id
-
-
-@login_required
-@require_http_methods(["POST"])
-def okok(request):
-
-	print("okok fired")
-	infom = request.POST.get('text_area', -1)
-
-	form = CommentForm(request.POST)
-	print(form)
-
-	import pdb
-	pdb.set_trace()
-
-	if infom=="tester":	
-		data = {'reward': 'okokok'}
-	else:
-		data = {'reward': 'not ok'}
-
-	return HttpResponse(json.dumps(data), content_type='application/json')
 

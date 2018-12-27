@@ -25,11 +25,6 @@ urlpatterns = [
         views.add_comment, 
         name='add_comment'
     ),
-    path(
-        'okok/', 
-        views.okok, 
-        name='okok'
-    ),
     url(
         r"^about/$",
         TemplateView.as_view(template_name="pages/about.html"),
