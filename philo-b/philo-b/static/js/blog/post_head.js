@@ -61,14 +61,6 @@ function set_submit_actions(form_element) {
 	}
 }
 
-function submit_subcomment_form(parent_nr) {
-	document.getElementById("reply_to_" + parent_nr).submit()
-}
-
-function submit_comment_form() {
-	document.getElementById("form_default").submit()
-}
-
 function standardize_form(form_section) {
 	text_area = form_section.querySelectorAll('textarea')[0]
 	parent_comment_id = form_section.querySelectorAll("input")[1]
@@ -131,10 +123,24 @@ function handle_response(response) {
 	}
 }
 
-function clear_previous_errors(error_fields) {
-	while(error_fields.lastChild) {
-		error_fields.removeChild(error_fields.lastChild)
-	}
+function placing_comment(comment_data, placing_parent, placing_spot) {
+	var template = document.getElementById('comment_template').innerHTML
+	var text_html = fill_template(template, comment_data)
+	var new_comment_coll = convert_text_html_collection(text_html)
+
+	placing_parent.insertHTMLCollectionBefore(
+		new_comment_coll,
+		placing_spot
+	)
+}
+
+function placing_button(button_data) {
+	var template = document.getElementById('button_template').innerHTML
+	var comment = document.getElementById('comment_' + button_data.id) 
+
+	var text_html = fill_template(template, button_data)
+	var new_button_coll = convert_text_html_collection(text_html)
+	comment.appendChild(new_button_coll[0])
 }
 
 function display_errors(messages, error_id) {
@@ -147,15 +153,33 @@ function display_errors(messages, error_id) {
 	}
 }
 
-function placing_comment(comment_data, placing_parent, placing_spot) {
-	var template = document.getElementById('comment_template').innerHTML
-	var text_html = fill_template(template, comment_data)
-	var new_comment_coll = convert_text_html_collection(text_html)
+function sent_ajax(xhttp, data, url) {
+	xhttp.open('POST', url, true)
+	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
+	xhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8')
+	xhttp.send(data)
+}
 
-	placing_parent.insertHTMLCollectionBefore(
-		new_comment_coll,
-		placing_spot
-	)
+function submit_comment_form() {
+	document.getElementById("form_default").submit()
+}
+
+function submit_subcomment_form(parent_nr) {
+	document.getElementById("reply_to_" + parent_nr).submit()
+}
+
+function clear_previous_errors(error_fields) {
+	while(error_fields.lastChild) {
+		error_fields.removeChild(error_fields.lastChild)
+	}
+}
+
+Element.prototype.insertHTMLCollectionBefore = function(node_list, child_node) {
+	while(node_list.length>0) {
+		this.insertBefore(
+			node_list[0],
+			child_node
+		)}
 }
 
 function fill_template(template, data) {
@@ -167,35 +191,11 @@ function fill_template(template, data) {
 	return template
 }
 
-Element.prototype.insertHTMLCollectionBefore = function(node_list, child_node) {
-	while(node_list.length>0) {
-		this.insertBefore(
-			node_list[0],
-			child_node
-		)}
-}
-
 function convert_text_html_collection(text_html) {
 	var mock_div = document.createElement('div')
 	mock_div.innerHTML = text_html
 	var node_list = mock_div.children
 
 	return node_list
-}
-
-function placing_button(button_data) {
-	var template = document.getElementById('button_template').innerHTML
-	var comment = document.getElementById('comment_' + button_data.id) 
-
-	var text_html = fill_template(template, button_data)
-	var new_button_coll = convert_text_html_collection(text_html)
-	comment.appendChild(new_button_coll[0])
-}
-
-function sent_ajax(xhttp, data, url) {
-	xhttp.open('POST', url, true)
-	xhttp.setRequestHeader('X-CSRFToken', document.getElementsByName('csrfmiddlewaretoken')[0].value)
-	xhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8')
-	xhttp.send(data)
 }
 

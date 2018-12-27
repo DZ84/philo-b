@@ -15,8 +15,6 @@
 	text-align: center;
 }
 
-/* these margins are related. This is
-were SASS would've become very handy */
 .reply-layout {
 	width: 85%;
 	margin: 1px auto 0;
@@ -68,21 +66,15 @@ were SASS would've become very handy */
 	border-style: solid;
 	border-color: #e8e8e8;
 	padding: 13px 25px;
-
 	text-decoration: none;
 	display: inline-block;
 	float: left;
-	
-	/*	for text 
-		color: white; 
-	 */
 	font-size: 16px;
 }
 
 .comment-layout {
 	width: 100%;
 	background: #b8b8b8;
-
 	margin: 50px 0;
 	padding: 0px 3px;
 }

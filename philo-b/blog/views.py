@@ -113,10 +113,10 @@ def prepare_process_info(comment, parent_id):
 					 # 'path': comment.path,
 					}
 
-	process_info =	{ 'success': True,
-					  'parent_id': convert_p_id(parent_id),
-				      'comment_object': comment_data,
-					 }
+	process_info = { 'success': True,
+					 'parent_id': convert_p_id(parent_id),
+				     'comment_object': comment_data,
+					}
 
 	return process_info
 
