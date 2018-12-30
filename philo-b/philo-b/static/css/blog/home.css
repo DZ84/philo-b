@@ -23,18 +23,10 @@ li {
 
 	/* this is for surity when the inner block
 	 * actually overlap you don't want it to
-	 * wreck the complete layout 
+	 * mess with the complete layout 
 	 */	
 	white-space: nowrap;
 
-	/* I could just delete the borders
-	 * and add a small space after every bar
-	 * Nicer way to do this: margins!!!!!!
-	 */
-	/* border-width: 2px 2px 0 2px;
-	/* border-style: solid; 
-	/* border-color: powderblue;
-	*/
 	border: 3px solid transparent;
 }
 
@@ -63,4 +55,3 @@ li {
 	width: 30%;
 	background: #b8b8b8;
 }
-

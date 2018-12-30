@@ -11,20 +11,12 @@ class CommentForm(forms.Form):
 		initial=None
 	)
 
-	# other_texts = forms.CharField(
-	# 	widget=forms.HiddenInput(),
-	# 	required=False,
-	# 	initial=None
-	# )
-
 	text_area = forms.CharField(
-		# min_length = 10,
 		label='',
 		widget=forms.Textarea(
 			attrs={
 				'class': 'text_area',
 				'id': 'text_area_0',
-				# 'placeholder': 'write your message here'
 			},
 		)
 	)

@@ -8,4 +8,3 @@
 		set_submit_actions(form_element)
 	}
 })()
-

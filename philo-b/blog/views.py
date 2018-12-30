@@ -1,13 +1,11 @@
 from django.views import View
 from django.views.generic.list import ListView
-from django.shortcuts import get_object_or_404, redirect, render #, render_to_response
+from django.shortcuts import get_object_or_404, render
 from django.contrib import auth
 from django.conf import settings
-from django.http import Http404, JsonResponse, HttpResponse 
+from django.http import JsonResponse, HttpResponse 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-from django.core.exceptions import ObjectDoesNotExist
-from django.core import serializers
 	
 from blog.forms import CommentForm 
 from blog.models import Blog, Comment
@@ -33,11 +31,10 @@ class Post(View):
 	comment_form = CommentForm 
 
 	def get(self, request, *args, **kwargs):
-		context = {}
-
 		post = get_object_or_404(Blog, id=self.kwargs['post_id'])
 		user =  auth.get_user(request)
 
+		context = {}
 		context['post'] = post
 		context['comments'] = post.comment_set.all().order_by('path') 
 
@@ -51,7 +48,6 @@ class Post(View):
 @login_required
 @require_http_methods(["POST"])
 def add_comment(request, post_id):
-
 	form = CommentForm(request.POST)
 	post = get_object_or_404(Blog, id=post_id)
 
@@ -103,7 +99,6 @@ def add_comment(request, post_id):
 
 
 def prepare_process_info(comment, parent_id):
-
 	comment_data = { 'id': comment.id,
 					 'author_id': comment.author_id.username,
 					 'content': comment.content,
@@ -122,7 +117,6 @@ def prepare_process_info(comment, parent_id):
 
 
 def prepare_errors_info(form, parent_id):
-
 	messages = []
 	for key, value in form.errors.items():
 		messages.extend(value)

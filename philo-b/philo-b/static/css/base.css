@@ -1,11 +1,4 @@
-
-/* one method suggested to centre the site:
-   body {
-		text-align: center;
-	}
-*/
-
-/* another method suggested to centre the site: */
+/* one possible method to centre the site: */
 html, body {
 	width: 90%; 
 	max-width: 1000px;
@@ -16,13 +9,11 @@ html {
 	display: table;
 	margin: auto;
 	background:	#686868; 
-	/*	#16796d;*/
 }
 
 body {
 	display: table-cell;
 	min-width: 500px;
-	/* vertical-align: middle; */
 }
 /* end centering section */
 
@@ -50,16 +41,11 @@ hr {
 	width: 80%;
 }
 
-.separator-header {
-}
-
-					
 .login-status {
 	text-align: right;
 	margin: 0 15% 0 0;
 }
 
-/*.login-status > a { */
 .login-links {
 	text-decoration: underline;
 	color: black;

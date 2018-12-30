@@ -8,6 +8,7 @@ from django.views import defaults as default_views
 
 from blog import views
 
+
 urlpatterns = [
 
     url(
@@ -42,8 +43,6 @@ urlpatterns = [
         r"^accounts/", 
         include("allauth.urls"), 
     ),
-
-    # Your stuff: custom urls includes go here
 
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

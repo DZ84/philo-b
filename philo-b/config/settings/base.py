@@ -4,6 +4,9 @@ Base settings to build other settings files upon.
 
 import environ
 
+from django.urls import reverse_lazy
+
+
 ROOT_DIR = environ.Path(__file__) - 3  # (philo-b/config/settings/base.py - 3 = philo-b/)
 APPS_DIR = ROOT_DIR.path('philo-b')
 
@@ -66,12 +69,14 @@ DATABASES = {
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
+
 # URLS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = 'config.urls'
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = 'config.wsgi.application'
+
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -93,26 +98,13 @@ THIRD_PARTY_APPS = [
     'rest_framework',
 ]
 LOCAL_APPS = [
-
-	# - interesting that both of these lines seem to work
-	# - or..... both of them don't seem to work.
-	# - I do think it should be the first one because it
-	# seems you need to specify from root.
-	# - in any case it doesn't seem to be the last one.
-
     'philo-b.users.apps.UsersConfig',
-    # 'philo-b.philo-b.users.apps.UsersConfig',
-    # 'users.apps.UsersConfig',
-	# 'Users',
-    # 'philo-b.users.models.User',
-
-
-    # Your stuff: custom apps go here
-
     'blog'
 ]
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -120,6 +112,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIGRATION_MODULES = {
 #    'sites': 'philo-b.contrib.sites.migrations'
 }
+
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -134,6 +127,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 LOGIN_REDIRECT_URL = 'users:redirect'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = 'account_login'
+
 
 # ------------------------------------------------------------------------------
 # PASSWORDS
@@ -163,6 +157,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # MIDDLEWARE
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
@@ -176,11 +171,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 # STATIC_ROOT = str(ROOT_DIR('staticfiles'))
-
 # STATIC_ROOT = str(ROOT_DIR('philo-b/static'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
@@ -196,12 +191,14 @@ STATIC_URL = '/static/'
 #     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 # ]
 
+
 # MEDIA
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
 MEDIA_ROOT = str(ROOT_DIR('mediafiles'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
+
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
@@ -239,9 +236,8 @@ TEMPLATES = [
 ]
 
 # http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
-# don't think I need this now
-# I think I do, because it seems allauth uses it.
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 # FIXTURES
 # ------------------------------------------------------------------------------
@@ -250,16 +246,18 @@ FIXTURE_DIRS = (
     str(APPS_DIR.path('fixtures')),
 )
 
+
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 # EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
+
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-# set in production file, adjust when want to go back to dev.
+# set in production file, adjust when want to go to dev.
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
@@ -282,23 +280,13 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_ADAPTER = 'philo-b.users.adapters.AccountAdapter'
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = 'philo-b.users.adapters.SocialAccountAdapter'
-
-# https://github.com/pennersr/django-allauth/issues/731
-
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
-
-from django.urls import reverse_lazy
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('users:update')
-
 # email host setup
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = 'dzverifydz@gmail.com'
 EMAIL_HOST_PASSWORD = env('ACCOUNT_GMAIL_PASS')
-
-
-# Your stuff...
-# ------------------------------------------------------------------------------
 

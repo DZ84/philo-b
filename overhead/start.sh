@@ -7,53 +7,34 @@ function manage_app () {
 
 function start_development() {
 	# use django runserver as development server here.
-	# manage_app
 	python3 /philo-b-docker/manage.py runserver 0.0.0.0:8004
-	# python /philo-b-docker/manage.py runserver 127.0.0.1:8004
-	# python /philo-b-docker/manage.py runserver 
 }
 
 function start_production() {
-	# use gunicorn for production server here
-	# manage_app
-	# gunicorn bookme.wsgi -w 4 -b 0.0.0.0:8000 --chdir=/app --log-file -
-	
-	# gunicorn /philo-b-docker/philo-b.wsgi -w 4 -b 0.0.0.0:8004 --log-file -
-
-	
-	# what was preload for again?
-
 	# move to the right folder for the command:
 	cd /philo-b-docker
-	# the exec is quite nice, it prevents an extra, or the wrong, gunicorn to
-	# be executed. This changes the shutting down process, enabling it to be
-	# gracefully stopped. Before, it took longer, which was the default max time
-	# before it was forcefully stopped.
-	
-	#exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
 
-	
-	# DEBUG, for explanations read below
+	# PRODUCTION, mode
+	# exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
+
+	# the exec prevents an extra, or the wrong, gunicorn to
+	# be executed. You notice this when shutting down the container; it won't
+	# shut down gracefully.
+
+
+	# DEBUG mode, for explanations read below
 	exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- -t 90000 --max-requests 1 
-
 
 	# for pdb: when workers are silent for a certain period, they restart. -t specifies
 	# the length of this period. Enabling you to use pdb in the meantime. 90000 seconds
 	# should be enough.
 	# -t 90000
-	
-	# not ment for production, reload is suppose to reload workers when code changes
+
+	# not meant for production, reload is suppose to reload workers when code changes
 	# --reload --preload 
-	# but I prefer the next option, it gives (much?) more insurance that the new load
-	# runs on the new code
+	# but I prefer the max-requests option, it gives (much?) more insurance that the new load
+	# runs on the new code, although with adjustments in settings, 2 reloads might be necessary.
 	# --max-requests 1
-
-
-	# gunicorn config.wsgi -w 4 -b 'unix:///tmp/gunicorn1.sock' --log-file=- 
-	# gunicorn config.wsgi -w 4 -b 'unix:///overhead/gunicorn/gunicorn.sock' --log-file=- 
-	# --reload --preload 
-
-	# python manage.py runserver 0.0.0.0:8004
 }
 
 if [ ${PRODUCTION} == "false" ]; then

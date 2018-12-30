@@ -25,10 +25,6 @@ app_path = os.path.abspath(os.path.join(
 sys.path.append(os.path.join(app_path, 'philo-b'))
 
 
-## !!! THIS NEEDS TO GO TO THE .ENV FILE IF USED ANY FURTHER !!! ##
-# DJANGO_SETTINGS_MODULE = 'config.settings.production'
-
-
 if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
     from raven.contrib.django.raven_compat.middleware.wsgi import Sentry
 
@@ -53,5 +49,4 @@ if os.environ.get('DJANGO_SETTINGS_MODULE') == 'config.settings.production':
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
-
 

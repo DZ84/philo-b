@@ -1,8 +1,6 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
-# from django.contrib.auth.models import User
-# from config import settings
 from django.urls import reverse
 
 from django.contrib.postgres.fields import ArrayField
@@ -28,7 +26,7 @@ class Comment(models.Model):
     path = ArrayField(models.IntegerField())
     post_id = models.ForeignKey(Blog, on_delete=models.CASCADE)
     author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    content = models.TextField('Comment', default='"This is my default message."') # I want to have quotes here.
+    content = models.TextField('Comment', default='"This is my default message."')
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)
     is_first = models.BooleanField(default=False)
     is_last = models.BooleanField(default=True)

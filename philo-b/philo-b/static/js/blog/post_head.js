@@ -198,4 +198,3 @@ function convert_text_html_collection(text_html) {
 
 	return node_list
 }
-
