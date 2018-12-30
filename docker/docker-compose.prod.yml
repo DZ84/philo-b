@@ -1,10 +1,8 @@
 # docker-compose.prod.yml
-# made to look like docker-compose.yml
 
 version: '2'
 
 services:
-
     pweb:
         restart: always
 
@@ -18,32 +16,20 @@ services:
 
         depends_on:
             - db
-
-        # - not needed icw with networks?
-        # - not needed icw sockets?
         ports:
             - "8004"
-
         volumes:
             - ../philo-b:/philo-b-docker
             - ../overhead:/overhead
-
         env_file:
             - ../administration/.env
-
         environment:
             PRODUCTION: 'true'
 
-        # labels:
-        #     com.example.service: "web"
-        #     com.example.description: "Use for the main web process"
-
-        # networks:
-        #     - nginx_network 
-
-        # - this is to get pdb going
-        # - but turned of because tty causes the 
-        # "consider setting COMPOSE_HTTP_TIMEOUT" bug
+		# Is meant for debugging in
+		# the terminal via pdb. tty Can
+		# introduce a bug 
+		# "consider setting COMPOSE_HTTP_TIMEOUT" 
         stdin_open: true
         tty: true
 
@@ -55,16 +41,10 @@ services:
         build:
             context: ../nginx
             dockerfile: Dockerfile
-
         image: nginx_2
-
         ports:
             - "80:81"
             - "443:444"
-
-        # - would be nice to put end with a slash in case of directories
-        # - is it possible to just select a file, and refer it to a directory?
-        # - use the :ro, as suggested in docker blog for nginx deployment 
         volumes:
             - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf
             - ../philo-b/philo-b/static:/var/www/philo-b/static

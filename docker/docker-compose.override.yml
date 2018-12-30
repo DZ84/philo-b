@@ -1,58 +1,35 @@
-# docker-compose.yml
-
+# docker-compose.override.yml
 
 version: '2'
 
 services: 
     web:
-        
-        # it was set on "always" by realpython site
         restart: always
             
-        # it's above, seems you shouldn't set it next to you "dockerfile" as rehalcon suggests
         build: 
             context: ../philo-b
             dockerfile: dockerfiles/Dockerfile
-
-
-
-
 
         depends_on:
             - db 
         links:
             - db 
-
-        # TODO: there may have to be a path for images and possible
-        # other stuff that isn't stored in the database but is
-        # stored somewhere on the disk.
-        #
-        # wonder if this is needed?
         volumes:
-            # - /usr/src/app
-            # - /usr/src/app/static
             - ../philo-b:/philo-b-docker
             - ../overhead:/overhead
-        # TODO: app key?
         env_file: 
             - ../administration/.env
         environment:
             PRODUCTION: 'false'
-
-               # realpython uses this, which seems to have to do with unicorn.
-        # so I'll probably have to switch here
-        # command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000
-        
-        # that's the port, makes sense I suppose
         ports:
             - "8004:8004"
 
-        # this is for trying to get pdb going
+		# Is meant for debugging in
+		# the terminal via pdb. tty Can
+		# introduce a bug 
+		# "consider setting COMPOSE_HTTP_TIMEOUT" 
         stdin_open: true
         tty: true
 
-        # command: "python /philo-b-docker/manage.py runserver 0.0.0.0:8000"
-        
-        # command: "../start.sh"
         command: "/overhead/start.sh"
 
