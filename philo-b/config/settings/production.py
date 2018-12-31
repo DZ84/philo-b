@@ -7,14 +7,15 @@ from .base import env
 # ------------------------------------------------------------------------------
 ## !!! REMOVE THE DEFAULT KEY HERE, BEFORE YOU KNOW IT IT'S ACTUALLY IN THE AIR WITH IT !!! ##
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env('DJANGO_SECRET_KEY', default='ogrbE1ApJFfJEFQyDIXwrlE6lf84k4ATQHbmtlt4Jl92RxdUHdfxUP6ZiMMxcIpV')
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 import pdb
 pdb.set_trace()
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['dunno'])
-
+print("ALLOWED HOSTS --------------------------------------------------------------------------------------")
+print(*ALLOWED_HOSTS, sep = ", ")
 
 ###########################################################
 ## !!! REMOVE THE FOLLOWING LINE WHEN DONE DEBUGGING !!! ##
@@ -138,7 +139,7 @@ COMPOSE_HTTP_TIMEOUT = 50000
 
 # STATIC
 # ------------------------
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # MEDIA
 # ------------------------------------------------------------------------------

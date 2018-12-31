@@ -62,8 +62,8 @@ services:
         image: nginx_2
 
         ports:
-            - "81:81"
-        #    - "444:444"
+            - "80:81"
+            - "443:444"
 
         # - would be nice to put end with a slash in case of directories
         # - is it possible to just select a file, and refer it to a directory?
@@ -72,6 +72,19 @@ services:
             # - ../nginx/html:/usr/share/nginx/html
 
             - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf
+
+            # are added in an attempt to get certbot to run.
+            - ../philo-b/.well-known:/var/www/philo-b/letsencrypt/wellknown
+
+            - /etc/letsencrypt/live/philo-b.xyz/fullchain.pem:/ssl/cert.pem
+            - /etc/letsencrypt/live/philo-b.xyz/privkey.pem:/ssl/key.pem
+
+
+            # TODO: not sure if I'll need this one:
+            - ../philo-b:/var/www/philo-b/static
+
+
+
             # - ../overhead/gunicorn/gunicorn.sock:/overhead/gunicorn/gunicorn.sock
             # - ../overhead/certs/nginx/letsencrypt/certs:/etc/letsencrypt
             # - ../overhead/certs/nginx/letsencrypt/certs-data:/data/letsencrypt

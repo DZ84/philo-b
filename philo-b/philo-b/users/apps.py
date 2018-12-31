@@ -3,7 +3,7 @@ from django.apps import AppConfig
 
 class UsersConfig(AppConfig):
     name = "philo-b.users"
-    verbose_name = "Users"
+    verbose_name = "CustomUsersApp"
 
     def ready(self):
         """Override this to put in:

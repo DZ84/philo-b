@@ -22,10 +22,14 @@
 			text-align: center;
 		}
 
+		/* these margins are related. I suspect this
+		is were SASS would become very handy */
 		.reply-layout {
-			width: 100%;
-			margin: 20px auto 0;
-			padding: 3px;
+			width: 85%;
+			margin: 1px auto 0;
+			padding-top: 7px; /* this should be arranged ing the user/post info section maybe */
+			padding-bottom: 3px;
+			/* margin: 1px 10.5% 0 4.5%; */
 			background: #b8b8b8;		
 		}
 
@@ -36,9 +40,23 @@
 			   look
 			   width: 80%;
 			*/
-			margin: 1px auto 0;
-			background: #b8b8b8;		
+			width: 70%;
+			margin-right: 7.5%; /* related to the width difference comment/reply */
+			/* margin: 1px 10.5% 0 19.5%; */
+			/* background: #b8aaaa;		 */
 		}
+
+
+		/*
+		.comment.False.line-connector {
+			width: 5%;
+			height: 50%;
+			margin: 0 0 auto auto;
+			border: 2 2 5 5 green;
+			background; orange;
+		}
+		*/
+
 
 		.reply-layout > .post-info,
 		.reply-layout > .user-info,	
@@ -72,7 +90,8 @@
 			width: auto;
 			padding: 0;
 			margin-top: 3px; /* this is dependent on the padding of the comment area */
-			margin-right: -3px;
+			/* margin-right: -3px; */
+			margin-bottom: 15px;
 			/* border-top: 50px solid #686868; */
 		}
 
@@ -217,20 +236,23 @@
 {% endblock content %}
 {% block comments %}
 	<hr class="separator-commentsection">
+
 	{% for comment in comments %}
-	
-		<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
-			<div class="post-info">
-				<div class="user-info">
-					<strong>{{ comment.author_id }}</strong></div>
-					<div style="text-align:center;"><strong>{{ comment.path }}</strong></div>
-				<div class="date">{{ comment.pub_date }}</div>
-			</div>
-			<hr class="separator-info">
-			<p>{{ comment.content|linebreaks }}</p>
-		
+
+		<!--<span class="comment {{ comment.is_first }} line-connector"></span> -->
+
+			<div class="reply-layout {{ comment.is_first }}" id="comment-{{ comment.id }}">
+				<div class="post-info">
+					<div class="user-info">
+						<strong>{{ comment.author_id }}</strong></div>
+						<!--div style="text-align:center;"><strong>{{ comment.path }}</strong></div-->
+					<div class="date">{{ comment.pub_date }}</div>
+				</div>
+				<hr class="separator-info">
+				<p>{{ comment.content|linebreaks }}</p>
+
 		{% if form and comment.is_last %}
-			
+	
 			<div class="button-container">
 				<a class="comment" 
 				onclick="return show_comments_form({{ comment.id }})">
@@ -238,7 +260,7 @@
 				<!--button class="save disabled" onclick="submit_form();">Save</button-->
 				<button class="save disabled">Save</button>
 			</div>
-		
+	
 		{% endif %}
 
 		</div>
@@ -264,7 +286,7 @@
 				</div>
 				<div class="form-instructions">
 					<ul>
-						Instructions:<br/>
+						Practical information:<br/>
 						<li>layout is not fully maintained, for example: 
 						consecutive spaces are shown as one single space, 
 						as are new lines/enters/breaks.
@@ -278,7 +300,7 @@
 				onclick="return show_comments_form('comment-new')">
 					<button class="reply">Write new comment</button></a>
 				<!--button class="save disabled" onclick="submit_form();">Save</button-->
-				<button class="save" id="save-enabled">Save</button>
+				<button class="save disabled" id="save-enabled">Save</button>
 			</div>
 
 		</div>
@@ -303,6 +325,7 @@
 
 		function show_comments_form(comment_id) {
 			if (comment_id == 'comment-new') {
+				// where am I using this?
 				document.getElementById("id_parent_comment").value = ''
 			} else {
 				document.getElementById("id_parent_comment").value = comment_id
