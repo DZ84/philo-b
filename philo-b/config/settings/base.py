@@ -100,8 +100,11 @@ THIRD_PARTY_APPS = [
     'rest_framework',
 ]
 LOCAL_APPS = [
+    # 'philo-b.users.apps.UsersConfig',
     'philo-b.users.apps.UsersConfig',
+
     # Your stuff: custom apps go here
+
     # 'philo-b.users.models.User',
     'blog'
 ]
@@ -123,6 +126,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
+# AUTH_USER_MODEL = 'users.User'
 AUTH_USER_MODEL = 'users.User'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = 'users:redirect'

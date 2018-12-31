@@ -29,7 +29,8 @@ function start_production() {
 	# be executed. This changes the shutting down process, enabling it to be
 	# gracefully stopped. Before, it took longer, which was the default max time
 	# before it was forcefully stopped.
-	exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
+
+	# exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
 	# --reload --preload 
 
 
@@ -37,7 +38,7 @@ function start_production() {
 	# gunicorn config.wsgi -w 4 -b 'unix:///overhead/gunicorn/gunicorn.sock' --log-file=- 
 	# --reload --preload 
 
-	# python manage.py runserver 0.0.0.0:8004
+	python manage.py runserver 0.0.0.0:8004
 }
 
 if [ ${PRODUCTION} == "false" ]; then
