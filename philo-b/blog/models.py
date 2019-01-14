@@ -7,6 +7,7 @@ from django.contrib.postgres.fields import ArrayField
 
 
 class Blog(models.Model):
+
     title = models.CharField(max_length=200, unique=True)
     short_title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
