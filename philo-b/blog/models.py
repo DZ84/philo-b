@@ -25,8 +25,8 @@ class Comment(models.Model):
         db_table = "comments"
 
     path = ArrayField(models.IntegerField())
-    post_id = models.ForeignKey(Blog, on_delete=models.CASCADE)
-    author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Blog, on_delete=models.PROTECT)
+    author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     content = models.TextField('Comment', default='"This is my default message."')
     pub_date = models.DateTimeField('Date of comment', default=timezone.now)
     is_first = models.BooleanField(default=False)
@@ -34,4 +34,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content[0:200]
+
  
+class Image(models.Model):
+
+	image = models.ImageField(upload_to='images/%m')
+	post_id = models.ForeignKey(Blog, on_delete=models.CASCADE)
+

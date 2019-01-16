@@ -109,9 +109,9 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {
+# MIGRATION_MODULES = {
 #    'sites': 'philo-b.contrib.sites.migrations'
-}
+# }
 
 
 # AUTHENTICATION
@@ -169,34 +169,35 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-	'middleware.securemiddleware.set_secure_headers',
+    'middleware.securemiddleware.set_secure_headers',
 ]
 
 
 # STATIC
 # ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-# STATIC_ROOT = str(ROOT_DIR('staticfiles'))
-# STATIC_ROOT = str(ROOT_DIR('philo-b/static'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
+
+# https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+# STATIC_ROOT = str(ROOT_DIR('staticfiles'))
+
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-# STATICFILES_DIRS = [
-#     #str(ROOT_DIR.path('philo-b/static/')),
-#     str(APPS_DIR.path('static')),
-# ]
+STATICFILES_DIRS = [
+	str(APPS_DIR.path('static')),
+]
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 # STATICFILES_FINDERS = [
-#     'django.contrib.staticfiles.finders.FileSystemFinder',
-#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#   'django.contrib.staticfiles.finders.FileSystemFinder',
+#	'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 # ]
 
 
 # MEDIA
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(ROOT_DIR('mediafiles'))
+MEDIA_ROOT = str(APPS_DIR.path('media/'))
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
 
@@ -285,6 +286,7 @@ SOCIALACCOUNT_ADAPTER = 'philo-b.users.adapters.SocialAccountAdapter'
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('users:update')
+
 # email host setup
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'

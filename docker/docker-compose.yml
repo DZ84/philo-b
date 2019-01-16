@@ -15,5 +15,4 @@ services:
 volumes:
     pg_philob: 
         external: true
-        # - array, ...... string, : mapping
 

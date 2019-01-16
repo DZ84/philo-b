@@ -24,12 +24,12 @@ services:
         ports:
             - "8004:8004"
 
-		# Is meant for debugging in
-		# the terminal via pdb. tty Can
-		# introduce a bug 
-		# "consider setting COMPOSE_HTTP_TIMEOUT" 
-        stdin_open: true
-        tty: true
+        # Is meant for debugging in
+        # the terminal via pdb. tty Can
+        # introduce a bug 
+        # "consider setting COMPOSE_HTTP_TIMEOUT" 
+        # stdin_open: true
+        # tty: true
 
         command: "/overhead/start.sh"
 
