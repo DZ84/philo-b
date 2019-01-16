@@ -47,8 +47,9 @@ services:
             - "443:444"
         volumes:
             - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf
-            - ../philo-b/philo-b/static:/var/www/philo-b/static
-            - ../philo-b/philo-b/media:/var/www/philo-b/media
+            # - ../philo-b/philo-b/static:/var/www/philo-b/static
+            - ../philo-b/staticfiles:/var/www/philo-b/static
+            - ../philo-b/philo-b/mediafiles:/var/www/philo-b/media
 
             - ../philo-b/.well-known:/var/www/philo-b/letsencrypt/wellknown
             - /etc/letsencrypt/live/philo-b.xyz/fullchain.pem:/ssl/cert.pem
