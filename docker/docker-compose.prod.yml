@@ -43,8 +43,8 @@ services:
             dockerfile: Dockerfile
         image: nginx_2
         ports:
-            - "80:81"
-            - "443:444"
+            - "80:8100"
+            - "443:4440"
         volumes:
             - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf
             - ../philo-b/staticfiles:/var/www/philo-b/static
