@@ -1,19 +1,14 @@
-# docker-compose.prod.yml
-
 version: '2'
 
 services:
     pweb:
         restart: always
-
+        # image needs to be specified, or it goes for default naming.
+        image: prod_web_2
+        container_name: pweb
         build:
             context: ../philo-b
             dockerfile: dockerfiles/Dockerfile.production
-
-        # image needs to be specified, or it seems to go for default naming.
-        image: prod_web_2
-        container_name: pweb
-
         depends_on:
             - db
         ports:
@@ -28,8 +23,8 @@ services:
 
         # Is meant for debugging in
         # the terminal via pdb. tty Can
-        # introduce a bug 
-        # "consider setting COMPOSE_HTTP_TIMEOUT" 
+        # introduce the bug:
+        # "..consider setting COMPOSE_HTTP_TIMEOUT.." 
         stdin_open: true
         tty: true
 
@@ -37,20 +32,22 @@ services:
 
     nginx:
         restart: always
+        image: nginx_2
         container_name: nginx_server
         build:
             context: ../nginx
             dockerfile: Dockerfile
-        image: nginx_2
+        depends_on:
+            - pweb
         ports:
             - "80:8100"
             - "443:4440"
         volumes:
-            - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf
-            - ../philo-b/staticfiles:/var/www/philo-b/static
-            - ../philo-b/mediafiles:/var/www/philo-b/media
+            - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf:ro
+            - ../philo-b/staticfiles:/var/www/philo-b/static:ro
+            - ../philo-b/mediafiles:/var/www/philo-b/media:ro
 
-            - ../philo-b/.well-known:/var/www/philo-b/letsencrypt/wellknown
-            - /etc/letsencrypt/live/philo-b.xyz/fullchain.pem:/ssl/cert.pem
-            - /etc/letsencrypt/live/philo-b.xyz/privkey.pem:/ssl/key.pem
+            - ../philo-b/.well-known:/var/www/philo-b/letsencrypt/wellknown:ro
+            - /etc/letsencrypt/live/philo-b.xyz/fullchain.pem:/ssl/cert.pem:ro
+            - /etc/letsencrypt/live/philo-b.xyz/privkey.pem:/ssl/key.pem:ro
 

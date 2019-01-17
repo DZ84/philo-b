@@ -15,16 +15,15 @@ WORKDIR /philo-b-docker
 # such in the production requirements.
 RUN apt-get update && apt-get install -y gcc libpq-dev 
 
-# this is for debugging
+# this is handy for debugging:
 RUN apt-get install -y vim net-tools 
 
-RUN pip install --upgrade pip==10.0.1
+RUN pip install --upgrade pip==18.1
 RUN pip install -r /philo-b-docker/requirements/base.txt
 RUN pip install -r /philo-b-docker/requirements/production.txt
 
 ADD . /philo-b-docker/
 
-RUN useradd -d /home/ubuntu -ms /bin/bash -g root -G sudo -p ubuntu ubuntu
-USER ubuntu
-WORKDIR /home/ubuntu
+RUN useradd pweb
+USER pweb
 
