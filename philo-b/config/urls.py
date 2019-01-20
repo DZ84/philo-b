@@ -6,6 +6,8 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
+import ckeditor_uploader
+
 from blog import views
 
 
@@ -42,6 +44,10 @@ urlpatterns = [
     url(
         r"^accounts/", 
         include("allauth.urls"), 
+    ),
+    url(
+        r'^ckeditor/', 
+        include('ckeditor_uploader.urls')
     ),
 
 ] + static(

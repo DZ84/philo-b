@@ -66,7 +66,7 @@
 	 dunno why you would use the linebreaks option for the
 	 comments, safe seems a better option to me -->
 	<div class="main-text-container">
-		{{ post.body }}
+		{{ post.content|safe }}
 	</div>
 
 {% endblock content %}

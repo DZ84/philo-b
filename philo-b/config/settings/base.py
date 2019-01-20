@@ -96,6 +96,8 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+	'ckeditor',
+	'ckeditor_uploader',
 ]
 LOCAL_APPS = [
     'philo-b.users.apps.UsersConfig',
@@ -105,6 +107,8 @@ LOCAL_APPS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
+# import pdb
+# pdb.set_trace()
 
 # MIGRATIONS
 # ------------------------------------------------------------------------------
@@ -201,6 +205,13 @@ MEDIA_ROOT = str(ROOT_DIR.path('mediafiles/'))
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = '/media/'
 
+
+# CKEDITOR
+# -----------------------------------------------------------------------------
+# http://github.com/django-ckeditor/django-ckeditor 
+CKEDITOR_UPLOAD_PATH = 'ckuploads'
+CKEDITOR_BASEPATH = STATIC_URL + '/ckeditor/ckeditor/'
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
 # TEMPLATES
 # ------------------------------------------------------------------------------

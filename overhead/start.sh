@@ -7,7 +7,7 @@ function manage_app () {
 
 function start_development() {
 	# use django runserver as development server here.
-	python3 /philo-b-docker/manage.py runserver 0.0.0.0:8004
+	python /philo-b-docker/manage.py runserver 0.0.0.0:8004
 }
 
 function start_production() {

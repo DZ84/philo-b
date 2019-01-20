@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.urls import reverse
 
 from django.contrib.postgres.fields import ArrayField
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Blog(models.Model):
@@ -12,7 +14,9 @@ class Blog(models.Model):
     short_title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     introduction = models.TextField(default='no introduction')
-    body = models.TextField()
+    body = models.TextField(null=True)
+    cont = RichTextField(null=True)
+    content = RichTextUploadingField(null=True)
     posted = models.DateTimeField(db_index=True, auto_now_add=True)
 
     def get_absolute_url(self):

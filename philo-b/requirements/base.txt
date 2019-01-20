@@ -22,4 +22,4 @@ coreapi==2.3.3  # https://github.com/core-api/python-client
 # ------------------------------------------------------------------------------
 			# installed first with v0.2.1 - jan 14th '16
 secure==0.2.1  # https://github.com/TypeError/secure.py
-
+django-ckeditor==5.6.1 # https://github.com/django-ckeditor/django-ckeditor 
