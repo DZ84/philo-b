@@ -10,12 +10,10 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 class Blog(models.Model):
 
-    title = models.CharField(max_length=200, unique=True)
     short_title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
-    introduction = models.TextField(default='no introduction')
-    body = models.TextField(null=True)
-    cont = RichTextField(null=True)
+    title = models.CharField(max_length=200, unique=True)
+    summary = models.TextField(blank=True, null=True)
     content = RichTextUploadingField(null=True)
     posted = models.DateTimeField(db_index=True, auto_now_add=True)
 
@@ -38,10 +36,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content[0:200]
-
- 
-class Image(models.Model):
-
-	image = models.ImageField(upload_to='images/%m')
-	post_id = models.ForeignKey(Blog, on_delete=models.CASCADE)
 

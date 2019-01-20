@@ -58,13 +58,11 @@
 {% endblock header %}
 {% block subheader %}
 
-	{{ object.introduction }}
+	<!-- maybe this can go -->
 
 {% endblock subheader %}
 {% block content %}
-<!-- maybe add some safe filters on the post and comments. 
-	 dunno why you would use the linebreaks option for the
-	 comments, safe seems a better option to me -->
+
 	<div class="main-text-container">
 		{{ post.content|safe }}
 	</div>
