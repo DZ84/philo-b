@@ -10,6 +10,10 @@
 	width: 60%;
 }
 
+.main-text-container > p {
+	word-break: break-word;
+}
+
 #comments_container {
 	width: 80%;
 	margin: 0 auto;
@@ -21,7 +25,7 @@
 	margin: 1px auto 0;
 	padding-top: 7px; /* this should be arranged ing the user/post info section maybe */
 	padding-bottom: 3px;
-	background: #b8b8b8;		
+	background: #b8b8b8;
 }
 
 /* 'false' means 'not first'*/
@@ -48,7 +52,7 @@
 	text-align: left;
 	margin: 0;
 	padding: 7px 0 7px;
-	overflow: hidden;
+	word-break: break-word;
 }
 
 .button-container {
@@ -155,4 +159,3 @@
 	color: red;
 	text-align: left;
 }
-

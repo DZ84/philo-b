@@ -6,7 +6,7 @@ from django.conf import settings
 from django.http import JsonResponse, HttpResponse 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-	
+
 from blog.forms import CommentForm 
 from blog.models import Blog, Comment
 
@@ -37,6 +37,9 @@ class Post(View):
 		context = {}
 		context['post'] = post
 		context['comments'] = post.comment_set.all().order_by('path') 
+
+		#for cont in context['comments']:
+		#	print(cont)
 
 		if user.is_authenticated:
 			context['comment_form'] = self.comment_form
