@@ -70,7 +70,7 @@
 {% endblock content %}
 {% block comments %}
 	<hr class="separator-commentsection">
-
+	<h2 class="comments-title">Comments</h2>
 	{% if not comment_form %}
 
 		<a class="login-links" 
@@ -92,14 +92,12 @@
 									 'is_last': '{{ comment.is_last|lower }}',
 									 // this is the same as the default variable used:
 									 'pub_date': '{{ comment.pub_date|date:"DATETIME_FORMAT" }}',
-									 'content': '{{ comment.content }}',
+									 'content': '{{ comment.content|linebreaksbr }}',
 									}
 				return comment_data
 			}
 
 			var comment_data = get_comment_data()
-			// console.log(comment_data.content)
-			// console.log('{{ comment.content }}')
 			var placing_parent = document.getElementById('comments_container')
 			placing_comment(comment_data, placing_parent, null)
 
@@ -179,4 +177,3 @@
 	{% endif %}
 
 {% endblock comments %}
-

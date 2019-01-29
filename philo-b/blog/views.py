@@ -38,9 +38,6 @@ class Post(View):
 		context['post'] = post
 		context['comments'] = post.comment_set.all().order_by('path') 
 
-		#for cont in context['comments']:
-		#	print(cont)
-
 		if user.is_authenticated:
 			context['comment_form'] = self.comment_form
 			context['user'] = user 

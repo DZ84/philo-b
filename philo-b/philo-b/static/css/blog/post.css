@@ -11,7 +11,12 @@
 }
 
 .main-text-container > p {
-	word-break: break-word;
+	overflow-wrap: break-word;
+}
+
+.separator-commentsection {
+	border-top: thin solid #686868;
+	border-bottom: 0;
 }
 
 #comments_container {
@@ -22,10 +27,24 @@
 
 .reply-layout {
 	width: 85%;
-	margin: 1px auto 0;
+	margin: 0 auto 0;
 	padding-top: 7px; /* this should be arranged ing the user/post info section maybe */
 	padding-bottom: 3px;
 	background: #b8b8b8;
+	border-top: thin solid #E8E8E8;
+	border-bottom: 0;
+}
+
+.img-centered {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	height: auto;
+}
+
+.hr-text {
+	border-top: thin solid #686868;
+	border-bottom: 0;
 }
 
 /* 'false' means 'not first'*/
@@ -44,15 +63,15 @@
 	margin: 0 0 10px;
 	width: auto;
 	border: none;
-	background-color: #686868;
-	height: 1px;
+	border-top: thin solid #686868;
+	border-bottom: 0;
 }
 
 .reply-layout > p {
 	text-align: left;
 	margin: 0;
 	padding: 7px 0 7px;
-	word-break: break-word;
+	overflow-wrap: break-word;
 }
 
 .button-container {
@@ -67,7 +86,7 @@
 .button-container .reply, 
 .button-container .submit {
 	background-color: #b8b8b8;
-	border-width: 1px 0 1px 1px;
+	border-width: thin 0 1px 1px;
 	border-style: solid;
 	border-color: #e8e8e8;
 	padding: 13px 25px;
@@ -75,6 +94,11 @@
 	display: inline-block;
 	float: left;
 	font-size: 16px;
+}
+
+.comments-title {
+	text-align: left; 
+	margin-left: 7.5%;
 }
 
 .comment-layout {
