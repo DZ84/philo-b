@@ -73,11 +73,15 @@
 	<h2 class="comments-title">Comments</h2>
 	{% if not comment_form %}
 
-		<a class="login-links" 
-			href="{% url 'account_login' %}
-			?next={{ request.path }}">Sign in
-		</a> to reply or comment.
-		<br><br>
+		{% if comments.0 %}
+
+			<a class="login-links" 
+				href="{% url 'account_login' %}
+				?next={{ request.path }}">Sign in
+			</a> to reply or comment.
+			<br><br>
+
+		{% endif %}
 
 	{% endif %}
 	{% for comment in comments %}
