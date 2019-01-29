@@ -97,8 +97,10 @@
 }
 
 .comments-title {
+	display: table;
 	text-align: left; 
 	margin-left: 7.5%;
+	border-bottom: thin solid;
 }
 
 .comment-layout {
