@@ -27,6 +27,7 @@ class Comment(models.Model):
         db_table = "comments"
 
     path = ArrayField(models.IntegerField())
+    cluster = models.IntegerField(null=True)
     post_id = models.ForeignKey(Blog, on_delete=models.PROTECT)
     author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
     content = models.TextField('Comment', default='"This is my default message."')

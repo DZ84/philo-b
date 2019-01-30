@@ -84,6 +84,9 @@
 		{% endif %}
 
 	{% endif %}
+
+	<input type="hidden" id="comments_amount" value={{ comments|length }}>
+	
 	{% for comment in comments %}
 
 		<script type='text/javascript'>
@@ -126,7 +129,7 @@
 
 	{% empty %}
 
-		<p>No comments have been posted here</p>
+		<p>No comments have been posted yet</p>
 
 	{% endfor %}
 

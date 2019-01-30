@@ -63,10 +63,15 @@ function set_submit_actions(form_element) {
 
 function standardize_form(form_section) {
 	text_area = form_section.querySelectorAll('textarea')[0]
-	parent_comment_id = form_section.querySelectorAll("input")[1]
+	parent_comment_id = form_section.querySelectorAll('input')[1]
+	comments_amount = document.getElementById('comments_amount')
 
-	data = 'text_area=' + text_area.value + 
-		   '&parent_comment_id=' + parent_comment_id.value
+//////////
+	console.log(comments_amount.value)
+
+	data = 'text_area=' + text_area.value +
+		   '&parent_comment_id=' + parent_comment_id.value +
+		   '&comments_amount_prev=' + comments_amount.value
 
 	return data
 }
@@ -88,7 +93,12 @@ function setup_reception_response(xhttp) {
 function handle_response(response) {
 	data = JSON.parse(response)
 
-	if (data.success) {
+	console.log('receiving')
+
+	if (data.success && data.reload) {
+		location.reload(true)
+
+	} else if (data.success) {
 		var placing_parent = document.getElementById('comments_container')
 
 		if (data.parent_id == 'default') {
@@ -107,6 +117,11 @@ function handle_response(response) {
 			old_comment.getElementsByClassName('submit')[0].remove()
 			old_comment.querySelector('form').remove()
 		}
+		
+		comments_amount = document.getElementById('comments_amount')
+		console.log(comments_amount.value)
+		comments_amount.value = parseInt(comments_amount.value) + 1
+		console.log(comments_amount.value)
 
 		var button_data = { 'id': data.comment_object.id }
 		placing_button(button_data)

@@ -1,6 +1,6 @@
 from django.views import View
 from django.views.generic.list import ListView
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib import auth
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse 
@@ -42,7 +42,7 @@ class Post(View):
 
 		if user.is_authenticated:
 			context['comment_form'] = self.comment_form
-			context['user'] = user 
+			context['user'] = user
 
 		return render(request, self.template_name, context)
 
@@ -56,8 +56,9 @@ def add_comment(request, post_id):
 	if form.is_valid():
 		comment = Comment()
 		comment.path = []
-		comment.post_id = post 
+		comment.post_id = post
 		comment.author_id = auth.get_user(request)
+		# comment.conten = form.cleaned_data['text_area'] # how did this never created a problem?
 		comment.content = form.cleaned_data['text_area']
 
 		# from relevant site:
@@ -70,32 +71,57 @@ def add_comment(request, post_id):
 		# get id of comment to which is replied. If comment is
 		# not a subcomment (reply) then parent_id=None
 		parent_id = form.cleaned_data['parent_comment_id']
+		comment_prev = Comment.objects.get(id=parent_id)
 
-		# if parent comment is present its path is needed and
-		# its status as last comment in the thread needs to be
-		# set to false.
+		import pdb
+		pdb.set_trace()
+
+		# get previous comment, but in the mean time there
+		# may have been replies from other clients.
+		cluster = comment_prev.cluster
+		comment_last = Comment.objects.filter(cluster=cluster).order_by('path').last()
+
 		if (parent_id != None):
+			comment.path.extend(comment_last.path)
 
-			# you could try and except this, but it is already
-			# covered by checking for None.
-			comment_prev = Comment.objects.get(id=parent_id)
-			comment_prev.is_last = False
-			comment_prev.save() 
-			comment.path.extend(comment_prev.path) 
+			comment_last.last = False
+			comment_last.save()
 		else:
-			comment.is_first = True	
+			comment.is_first = True
 
 		# attach the own id to finish the
 		# path of the new comment
 		comment.path.append(comment.id)
+		comment.cluster = cluster
 		comment.save()
+
+		# check length If length != length before+1 renew completely
+			# unless you do some session stuff, this might make you
+			# lose things you've typed in other boxes, which is fine
+			# ofcourse.
+				# so it's not perfect, but it prevends you from not
+				# being up to date.
+
+		comments_db_count = Comment.objects.filter(post_id=post_id).count()
+		comments_client_count = int(request.POST['comments_amount_prev']) + 1
+
+		print(comments_db_count)
+		print(comments_client_count)
+
+		print('adjusted code1')
+
+		if (comments_db_count != comments_client_count):
+			print('got here')
+			return JsonResponse({ 'success': True, 'reload': True })
+
+		print('did get here')
 
 		return JsonResponse(prepare_process_info(comment, parent_id))
 
 	try:
 		parent_id = form.cleaned_data['parent_comment_id']
 	except KeyError:
-		return HttpResponse(status=500)	
+		return HttpResponse(status=500)
 
 	return JsonResponse(prepare_errors_info(form, parent_id))
 
@@ -111,6 +137,7 @@ def prepare_process_info(comment, parent_id):
 					}
 
 	process_info = { 'success': True,
+					 'reload': False,
 					 'parent_id': convert_p_id(parent_id),
 				     'comment_object': comment_data,
 					}

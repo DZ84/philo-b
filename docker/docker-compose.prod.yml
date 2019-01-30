@@ -22,7 +22,7 @@ services:
             PRODUCTION: 'true'
 
         # Is meant for debugging in
-        # the terminal via pdb. tty Can
+        # the terminal via pdb. Can
         # introduce the bug:
         # "..consider setting COMPOSE_HTTP_TIMEOUT.." 
         stdin_open: true
