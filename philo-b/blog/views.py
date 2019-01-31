@@ -68,26 +68,31 @@ def add_comment(request, post_id):
 		# And resave a comment
 		comment.save()
 
-		# get id of comment to which is replied. If comment is
-		# not a subcomment (reply) then parent_id=None
-		parent_id = form.cleaned_data['parent_comment_id']
-		comment_prev = Comment.objects.get(id=parent_id)
-
-		import pdb
-		pdb.set_trace()
 
 		# get previous comment, but in the mean time there
 		# may have been replies from other clients.
-		cluster = comment_prev.cluster
-		comment_last = Comment.objects.filter(cluster=cluster).order_by('path').last()
+
+
+
+		# get id of comment to which is replied. If comment is
+		# not a subcomment (reply) then parent_id=None
+		parent_id = form.cleaned_data['parent_comment_id']
 
 		if (parent_id != None):
-			comment.path.extend(comment_last.path)
-
+			comment_prev = Comment.objects.get(id=parent_id)
+			cluster = comment_prev.cluster
+			comment_last = Comment.objects.filter(cluster=cluster).order_by('path').last()
 			comment_last.last = False
 			comment_last.save()
+
+			comment.path.extend(comment_last.path)
 		else:
 			comment.is_first = True
+
+			import pdb
+			pdb.set_trace()
+
+			cluster = Comment.objects.all().order_by('path').last().cluster + 1
 
 		# attach the own id to finish the
 		# path of the new comment
