@@ -30,7 +30,7 @@ class Overview(ListView):
 class Post(View):
 
 	template_name = 'blog/post.html'
-	comment_form = CommentForm 
+	comment_form = CommentForm
 
 	def get(self, request, *args, **kwargs):
 		post = get_object_or_404(Blog, id=self.kwargs['post_id'])
@@ -38,7 +38,7 @@ class Post(View):
 
 		context = {}
 		context['post'] = post
-		context['comments'] = post.comment_set.all().order_by('path') 
+		context['comments'] = post.comment_set.all().order_by('path')
 
 		if user.is_authenticated:
 			context['comment_form'] = self.comment_form
@@ -53,7 +53,6 @@ def add_comment(request, post_id):
 	form = CommentForm(request.POST)
 	post = get_object_or_404(Blog, id=post_id)
 
-
 	if form.is_valid():
 		comment = Comment()
 		comment.path = []
@@ -61,28 +60,28 @@ def add_comment(request, post_id):
 		comment.author_id = auth.get_user(request)
 		comment.content = form.cleaned_data['text_area']
 
-		# - accounts for when other clients have replied
-		#	in the mean time
-		# - if comment is not a subcomment (reply) 
+		# - you need to save to generate the id
+		comment.save()
+
+		# - if comment is not a subcomment (reply)
 		#	then parent_id=None
 		parent_id = form.cleaned_data['parent_comment_id']
 
+		# - accounts for when other clients have replied
+		#	in the mean time
 		if (parent_id != None):
 			comment_prev = Comment.objects.get(id=parent_id)
 			cluster = comment_prev.cluster
+
+			# - cluster of the new comment isn't set yet, so
+			#	this creates the correct result
 			comment_last = Comment.objects.filter(cluster=cluster).order_by('path').last()
 			comment_last.is_last = False
-
-			print(comment_last.pub_date)
-
 			comment_last.save()
-
-			print(comment_last.pub_date)
-
 			comment.path.extend(comment_last.path)
 		else:
-			comment.is_first = True
 			cluster = Comment.objects.all().order_by('cluster').last().cluster + 1
+			comment.is_first = True
 
 		comment.path.append(comment.id)
 		comment.cluster = cluster
@@ -111,7 +110,7 @@ def prepare_process_info(comment, parent_id):
 					 'pub_date': comment.pub_date.strftime(settings.DATETIME_FORMAT_LP),
 					 'is_first': comment.is_first,
 					 'is_last': comment.is_last,
-					 'path': comment.path, #########
+					 # 'path': comment.path,
 					}
 
 	process_info = { 'success': True,

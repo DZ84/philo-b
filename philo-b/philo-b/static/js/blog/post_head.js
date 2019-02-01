@@ -66,9 +66,6 @@ function standardize_form(form_section) {
 	parent_comment_id = form_section.querySelectorAll('input')[1]
 	comments_amount = document.getElementById('comments_amount')
 
-//////////
-	console.log(comments_amount.value)
-
 	data = 'text_area=' + text_area.value +
 		   '&parent_comment_id=' + parent_comment_id.value +
 		   '&comments_amount_prev=' + comments_amount.value
@@ -92,8 +89,6 @@ function setup_reception_response(xhttp) {
 
 function handle_response(response) {
 	data = JSON.parse(response)
-
-	console.log('receiving')
 
 	if (data.success && data.reload) {
 		location.reload(true)
@@ -119,9 +114,7 @@ function handle_response(response) {
 		}
 		
 		comments_amount = document.getElementById('comments_amount')
-		console.log(comments_amount.value)
 		comments_amount.value = parseInt(comments_amount.value) + 1
-		console.log(comments_amount.value)
 
 		var button_data = { 'id': data.comment_object.id }
 		placing_button(button_data)

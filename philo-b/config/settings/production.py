@@ -110,8 +110,8 @@ INSTALLED_APPS += ['gunicorn']  # noqa F405
 # raven
 # ------------------------------------------------------------------------------
 # https://docs.sentry.io/clients/python/integrations/django/
-# INSTALLED_APPS += ['raven.contrib.django.raven_compat']  # noqa F405
-# MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'] + MIDDLEWARE
+INSTALLED_APPS += ['raven.contrib.django.raven_compat']  # noqa F405
+MIDDLEWARE = ['raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'] + MIDDLEWARE
 
 
 # Sentry

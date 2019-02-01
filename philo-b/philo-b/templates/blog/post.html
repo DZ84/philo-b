@@ -25,8 +25,8 @@
 			<div class="post-info"> 
 				<div class="user-info">
 					<strong>{:author_id:}</strong></div>
-					<div style="text-align:center;"><strong>{:path:} 
-							/ {:is_first:} / {:is_last:}</strong></div>
+					<!--div style="text-align:center;"><strong>{:path:} 
+							/ {:is_first:} / {:is_last:}</strong></div-->
 				<div class="date">{:pub_date:}</div>
 			</div> 
 			<hr class="separator-info">
@@ -95,7 +95,7 @@
 				var comment_data = { 'is_first': '{{ comment.is_first|lower }}',
 									 'id': '{{ comment.id }}',
 									 'author_id': '{{ comment.author_id }}',
-									 'path': '{{ comment.path }}',
+									 // 'path': '{{ comment.path }}',
 									 'is_last': '{{ comment.is_last|lower }}',
 									 // this is the same as the default variable used:
 									 'pub_date': '{{ comment.pub_date|date:"DATETIME_FORMAT" }}',
