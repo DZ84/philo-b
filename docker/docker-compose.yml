@@ -1,6 +1,6 @@
 version: '2'
 
-services: 
+services:
 
     db:
         restart: always
@@ -12,6 +12,6 @@ services:
             - pg_philob:/var/lib/postgresql/data
 
 volumes:
-    pg_philob: 
+    pg_philob:
         external: true
 

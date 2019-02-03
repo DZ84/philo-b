@@ -16,24 +16,11 @@ urlpatterns = [
     #     regex=r"^(?P<username>[\w.@+-]+)/$",
     #     view=views.UserUpdateView.as_view(),
     #     name="update",
-    # ),    
+    # ),
     path(
         'email_confirmed',
-        # - 'bladibla/',  # NOTE: how is a forward slah here giving an error..?
-        # - how does it suddenly decide to match with the regex?
-        # - would it still give an error if the detail url pattern wouldn't be there?
-
-        # 'email_confirmed/redirect/update', 
-        views.UserUpdateView.as_view(), 
+        views.UserUpdateView.as_view(),
         name="update"
     ),
 ]
 
-# trailing slash in path gives the following error:
-
-# Page not found (404)
-# Request Method: GET
-# Request URL:    http://0.0.0.0:8004/users/email_confirmed/
-# Raised by:  *app-name*.users.views.UserDetailView
-# 
-# No user found matching the query
