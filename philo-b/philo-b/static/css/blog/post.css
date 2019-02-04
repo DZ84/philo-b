@@ -35,18 +35,6 @@
 	border-bottom: 0;
 }
 
-.img-centered {
-	display: block;
-	margin: 0 auto;
-	max-width: 100%;
-	height: auto;
-}
-
-.hr-text {
-	border-top: thin solid #686868;
-	border-bottom: 0;
-}
-
 /* 'false' means 'not first'*/
 .reply-layout.false {
 	width: 70%;
@@ -185,3 +173,25 @@
 	color: red;
 	text-align: left;
 }
+
+/*#################################*/
+/*	Following are custom classes that
+	can be used in th ckeditor. */
+
+.img-centered {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	height: auto;
+}
+
+.img-text {
+	text-align: right;
+}
+
+.hr-text {
+	border-top: thin solid #686868;
+	border-bottom: 0;
+}
+
+/*#################################*/
