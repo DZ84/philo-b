@@ -1,28 +1,29 @@
 /* one possible method to centre the site: */
 html, body {
-	width: 90%; 
-	max-width: 1000px;
 	height: 100%;
 }
 
 html {
-	display: table;
-	margin: auto;
-	background:	#686868; 
+	background:	#686868;
 }
 
 body {
-	display: table-cell;
-	min-width: 500px;
+	width: 90%;
+	max-width: 1000px;
+	height: 100%;
+
+	display: block;
+	margin: 0 auto;
 }
 /* end centering section */
 
 .main-container {
-	height: 100%;
+	height: auto;
+	min-height: 100%;
 	background:	#E8E8E8;
 	text-align: center;
 	margin: 10px 0 10px 0;
-	padding: 10px 0 0 0;
+	padding: 10px 0 30px 0;
 }
 
 .content-container {
