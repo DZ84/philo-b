@@ -1,7 +1,9 @@
 .top-tag {
-	text-align: left;
-	margin-left: 5%;
 	font-weight: bold;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
 }
 
 .main-text-container {
