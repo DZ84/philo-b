@@ -14,9 +14,8 @@
 {% endblock header %}
 {% block subheader %}
 
-    I would like to have some introductory text over here. 
-	And this text could be quite long, relatively speaking
-	ofcourse. 
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ut porta dolor.
+	Praesent porta est pretium venenatis venenatis. Quisque blandit mollis nulla vitae gravida. 
 
 {% endblock subheader %}
 {% block content %}
@@ -46,7 +45,7 @@
 								<li>{{ blog.short_title }}</li>
 						</div><div
 							class="date">
-								{{ blog.posted|date:'M d, Y' }}
+								{{ blog.updated|date:'M d, Y' }}
 						</div>
 					</a>
 				</div>

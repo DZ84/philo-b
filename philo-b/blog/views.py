@@ -22,7 +22,7 @@ class Overview(ListView):
 		if user.is_authenticated:
 			context['user'] = user
 		
-		context['object_list'] = context['object_list'].order_by('-posted')
+		context['object_list'] = context['object_list'].order_by('-updated')
 		
 		return super().render_to_response(context, **response_kwargs)
 
