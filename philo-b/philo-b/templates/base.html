@@ -38,15 +38,13 @@
 					Logged in as <b>{{ user.username }}</b> - 
 					<a class="login-links" 
 						href="{% url 'account_logout' %}
-						?next={{ request.path }}">Logout
-					</a><br>
+						?next={{ request.path }}">Logout</a><br>
 
 				{% else %}
 
 					<a class="login-links" 
 						href="{% url 'account_login' %}
-						?next={{ request.path }}">Sign in
-					</a><br>
+						?next={{ request.path }}">Sign in</a><br>
 
 				{% endif %}
 			</div>

@@ -1,9 +1,28 @@
-.top-tag {
-	font-weight: bold;
+a, a:visited, a:hover, a:active {
+	color: inherit;
 }
 
-a, a:visited, a:hover, a:active {
-  color: inherit;
+.back-button {
+	display: table; 
+	float: left; 
+	padding: 2% 2.5% 2% 5%; 
+	border: thin solid #686868; 
+	border-left: 0;
+	text-decoration: none;
+}
+
+.back-button > span {
+	display: table-cell;
+}
+
+.back-button span:first-child {
+	font-weight: 1000;
+	font-size: 1.9em;
+}
+
+.back-button span:last-child {
+	font-weight: 800;
+	font-size: 1.3em;
 }
 
 .main-text-container {

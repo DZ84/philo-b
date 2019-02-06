@@ -104,6 +104,9 @@ function handle_response(response) {
 			clear_previous_errors(error_fields)
 			placing_spot.querySelector('textarea').value = ''
 
+			var no_comments_posted = document.getElementById('no_comments_posted')
+			no_comments_posted.innerHTML = ''
+
 		} else {
 			var placing_spot = document.getElementById('clearing_' + data.parent_id)
 			placing_comment(data.comment_object, placing_parent, placing_spot)

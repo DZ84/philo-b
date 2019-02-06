@@ -46,17 +46,8 @@
 	</script>
 
 {% endblock templates %}
-{% block toptag %}	
-	<!--style="display: inline; text-align: left; height: 100%;"-->
-	<a class="back-button" href="{% url 'home' %}" style="text-decoration: none;">
-		<span class="top-tag" style="display: inline-block; float: left; padding: 2% 2% 2% 11%; border: thin solid #686868; border-left: 0; font-size: 1.3em; vertical-align: bottom;">
-
-			<span style="font-weight: 8000; font-size: 2em; line-height: 3em;">&lsaquo;</span>
-			<span style="line-height: 3em;">&nbsp;&nbsp;&nbsp;Philo-b</span>
-		</span>
-	</a>
-
-	<div class='clearing'></div>
+{% block toptag %}
+	<a class="back-button" href="{% url 'home' %}"><span>&lsaquo;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Philo-b</u></span></a><div class='clearing'></div>
 
 {% endblock toptag %}
 {% block header %}
@@ -85,8 +76,7 @@
 
 			<a class="login-links" 
 				href="{% url 'account_login' %}
-				?next={{ request.path }}">Sign in
-			</a> to reply or comment.
+				?next={{ request.path }}">Sign in</a> to reply or comment.
 			<br><br>
 
 		{% endif %}
@@ -137,7 +127,7 @@
 
 	{% empty %}
 
-		<p>No comments have been posted yet</p>
+		<p id="no_comments_posted">No comments have been posted yet</p>
 
 	{% endfor %}
 
@@ -183,8 +173,7 @@
 			<div class="no-login-body">
 				<a class="login-links" 
 					href="{% url 'account_login' %}
-					?next={{ request.path }}">Sign in
-				</a> to reply or comment.
+					?next={{ request.path }}">Sign in</a> to reply or comment.
 			</div>
 			<br><br>
 		</div>
