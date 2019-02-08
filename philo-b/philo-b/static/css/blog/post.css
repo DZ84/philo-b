@@ -25,18 +25,28 @@ a, a:visited, a:hover, a:active {
 	font-size: 1.3em;
 }
 
+.content-container {
+	text-align: left;
+}
+
 .main-text-container {
-	text-align: justify;
 	margin: 0 auto;
 	width: 60%;
 }
 
 .main-text-container > p {
+	text-align: justify;
 	overflow-wrap: break-word;
 }
 
 .main-text-container > .main-title {
+	text-align: left;
 	margin-bottom: 0;
+}
+
+.main-text-container > .dates {
+	text-align: left;
+	white-space: nowrap;
 }
 
 .separator-commentsection {

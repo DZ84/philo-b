@@ -63,7 +63,9 @@
 
 	<div class="main-text-container">
 		{{ post.title|safe }}
-		&nbsp;{{ post.updated|date:'M d, Y' }}
+		<span class="dates">posted: {{ post.posted|date:'M d, Y' }},</span>
+		<span class="dates">updated: {{ post.updated|date:'M d, Y' }}</span>
+		
 		{{ post.content|safe }}
 	</div>
 
