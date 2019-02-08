@@ -35,6 +35,10 @@ a, a:visited, a:hover, a:active {
 	overflow-wrap: break-word;
 }
 
+.main-text-container > .main-title {
+	margin-bottom: 0;
+}
+
 .separator-commentsection {
 	border-top: thin solid #686868;
 	border-bottom: 0;
