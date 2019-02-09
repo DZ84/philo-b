@@ -9,6 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
 	// config.extraAllowedContent = 'div(*)';
 	config.allowedContent = true;
+	config.enterMode = CKEDITOR.ENTER_BR;
 
 	// created a new one......!
 };

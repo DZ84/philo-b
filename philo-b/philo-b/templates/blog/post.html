@@ -47,7 +47,11 @@
 
 {% endblock templates %}
 {% block toptag %}
-	<a class="back-button" href="{% url 'home' %}"><span>&lsaquo;</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Philo-b</u></span></a><div class='clearing'></div>
+	<a class="back-button" href="{% url 'home' %}">
+		<span>&lsaquo;</span>
+		<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<u>Philo-b</u></span>
+	</a>
+	<div class='clearing'></div>
 
 {% endblock toptag %}
 {% block header %}
@@ -65,7 +69,7 @@
 		{{ post.title|safe }}
 		<span class="dates">posted: {{ post.posted|date:'M d, Y' }},</span>
 		<span class="dates">updated: {{ post.updated|date:'M d, Y' }}</span>
-		
+
 		{{ post.content|safe }}
 	</div>
 
@@ -87,7 +91,7 @@
 	{% endif %}
 
 	<input type="hidden" id="comments_amount" value={{ comments|length }}>
-	
+
 	{% for comment in comments %}
 
 		<script type='text/javascript'>
