@@ -105,7 +105,10 @@ function handle_response(response) {
 			placing_spot.querySelector('textarea').value = ''
 
 			var no_comments_posted = document.getElementById('no_comments_posted')
-			no_comments_posted.innerHTML = ''
+
+			if (no_comments_posted) {
+				no_comments_posted.innerHTML = ''
+			}
 
 		} else {
 			var placing_spot = document.getElementById('clearing_' + data.parent_id)

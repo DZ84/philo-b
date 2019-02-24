@@ -4,7 +4,8 @@ services:
 
     db:
         restart: always
-        image: postgres
+        # image: postgres:9.6
+        image: postgres:10
         user: postgres:postgres
         ports:
             - "5432"

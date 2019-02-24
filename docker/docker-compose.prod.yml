@@ -51,3 +51,5 @@ services:
             - /etc/letsencrypt/live/philo-b.xyz/fullchain.pem:/ssl/cert.pem:ro
             - /etc/letsencrypt/live/philo-b.xyz/privkey.pem:/ssl/key.pem:ro
 
+            - ../../pelican_ceilings/output:/var/www/pelican_ceilings/output:ro
+
