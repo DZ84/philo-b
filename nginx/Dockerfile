@@ -1,7 +1,7 @@
 FROM nginx:stable
 
-# These are handy for debugging: 
-RUN apt-get update && apt-get install -y vim net-tools 
+# These are handy for debugging:
+RUN apt-get update && apt-get install -y vim net-tools
 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 RUN rm /etc/nginx/conf.d/default.conf

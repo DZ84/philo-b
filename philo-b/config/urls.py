@@ -12,43 +12,49 @@ from blog import views
 
 
 urlpatterns = [
-
-    url(
-        r"^$", 
-        views.Overview.as_view(), 
-        name="home"
-    ),
-    path(
-        '<slug:slug>,<int:post_id>/', 
-        views.Post.as_view(), 
-        name="post"
-    ),
-    url(
-        r'^comment/(?P<post_id>[0-9]+)/$', 
-        views.add_comment, 
-        name='add_comment'
-    ),
-    # url(
-    #     r"^about/$",
-    #     TemplateView.as_view(template_name="pages/about.html"),
-    #     name="about",
-    # ),
-    # Django Admin, use {% url 'admin:index' %}
-    url(settings.ADMIN_URL, admin.site.urls),
-
-    # User management
 	url(
-		r"^users/",
-		include("philo-b.users.urls", namespace="users"),
-    ),
-    url(
-        r"^accounts/", 
-        include("allauth.urls"), 
-    ),
-    url(
-        r'^ckeditor/', 
-        include('ckeditor_uploader.urls')
-    ),
+		r"^{}".format(settings.GENERAL_PREFIX),
+		include([
+			url(
+				r"^$",
+				views.Overview.as_view(),
+				name="home"
+			),
+			path(
+				'<slug:slug>,<int:post_id>/',
+				views.Post.as_view(),
+				name="post"
+			),
+			url(
+				r'^comment/(?P<post_id>[0-9]+)/$',
+				views.add_comment,
+				name='add_comment'
+			),
+			# url(
+			#     r"^about/$",
+			#     TemplateView.as_view(template_name="pages/about.html"),
+			#     name="about",
+			# ),
+			# Django Admin, use {% url 'admin:index' %}
+			url(
+				settings.ADMIN_URL,
+				admin.site.urls
+			),
+			# User management
+			url(
+				r"^users/",
+				include("philo-b.users.urls", namespace="users"),
+			),
+			url(
+				r"^accounts/",
+				include("allauth.urls"),
+			),
+			url(
+				r'^ckeditor/',
+				include('ckeditor_uploader.urls')
+			),
+		])
+	),
 
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

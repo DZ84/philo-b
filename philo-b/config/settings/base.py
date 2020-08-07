@@ -21,6 +21,9 @@ if READ_DOT_ENV_FILE:
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool('DJANGO_DEBUG', False)
+# GENERAL_PREFIX = "philo-b/"
+GENERAL_PREFIX = env("PHILOB_GENERAL_PREFIX")
+
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
@@ -178,7 +181,7 @@ MIDDLEWARE = [
 # STATIC
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = '/static/'
+STATIC_URL = '/' + GENERAL_PREFIX + 'static/'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = str(ROOT_DIR('staticfiles'))
@@ -201,8 +204,8 @@ STATICFILES_FINDERS = [
 MEDIA_ROOT = str(ROOT_DIR.path('mediafiles/'))
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = '/media/'
-
+# - If the mediafiles are hardcoded in content file, then this is not used.
+MEDIA_URL = '/' + GENERAL_PREFIX + 'media/'
 
 # CKEDITOR
 # -----------------------------------------------------------------------------

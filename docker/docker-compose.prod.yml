@@ -24,9 +24,9 @@ services:
         # Is meant for debugging in
         # the terminal via pdb. Can
         # introduce the bug:
-        # "..consider setting COMPOSE_HTTP_TIMEOUT.." 
-        stdin_open: true
-        tty: true
+        # "..consider setting COMPOSE_HTTP_TIMEOUT.."
+        # stdin_open: true
+        # tty: true
 
         command: "/overhead/start.sh"
 
@@ -43,13 +43,19 @@ services:
             - "80:8100"
             - "443:4440"
         volumes:
-            - ../nginx/conf/philob.conf:/etc/nginx/conf.d/philob.conf:ro
+
+            - ../../pelican_ceilings/output:/var/www/pelican_ceilings/output:ro
+            # - ../../test_pelican_ceilings/output:/var/www/test_pelican_ceilings/output:ro
+
+            # - ../nginx/conf/46.101.245.22.conf:/etc/nginx/conf.d/46.101.245.22.conf:ro
+            - ../nginx/conf/druqtemaker.conf:/etc/nginx/conf.d/druqtemaker.conf:ro
             - ../philo-b/staticfiles:/var/www/philo-b/static:ro
             - ../philo-b/mediafiles:/var/www/philo-b/media:ro
 
             - ../philo-b/.well-known:/var/www/philo-b/letsencrypt/wellknown:ro
-            - /etc/letsencrypt/live/philo-b.xyz/fullchain.pem:/ssl/cert.pem:ro
-            - /etc/letsencrypt/live/philo-b.xyz/privkey.pem:/ssl/key.pem:ro
 
-            - ../../pelican_ceilings/output:/var/www/pelican_ceilings/output:ro
+            # - /etc/letsencrypt/live/philo-b.xyz    /fullchain.pem:/ssl/cert.pem:ro
+            # - /etc/letsencrypt/live/philo-b.xyz    /privkey.pem:/ssl/key.pem:ro
+            - /etc/letsencrypt/live/druqtemaker.com/fullchain.pem:/ssl/cert.pem:ro
+            - /etc/letsencrypt/live/druqtemaker.com/privkey.pem:/ssl/key.pem:ro
 
