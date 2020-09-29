@@ -1,6 +1,6 @@
 # NOTE: start from main django app folder
 
-FROM python:3.5.2-slim
+FROM python:3.8.5-slim
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /philo-b-docker
@@ -9,16 +9,15 @@ COPY ./requirements/base.txt /philo-b-docker/requirements/base.txt
 COPY ./requirements/production.txt /philo-b-docker/requirements/production.txt
 WORKDIR /philo-b-docker
 
-
 # libqp-dev is needed for building psycopg2 from source,
 # which is necessary because psycopg2 is specified as
 # such in the production requirements.
-RUN apt-get update && apt-get install -y gcc libpq-dev 
+RUN apt-get update && apt-get install -y gcc libpq-dev
 
 # this is handy for debugging:
-RUN apt-get install -y vim net-tools 
+RUN apt-get install -y vim net-tools
 
-RUN pip install --upgrade pip==18.1
+RUN pip install --upgrade pip==20.2.1
 RUN pip install -r /philo-b-docker/requirements/base.txt
 RUN pip install -r /philo-b-docker/requirements/production.txt
 

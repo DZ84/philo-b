@@ -1,6 +1,6 @@
 # NOTE: start from main django app folder
 
-FROM python:3.5.2-slim
+FROM python:3.8.5-slim
 ENV PYTHONUNBUFFERED 1
 
 # so here you copy and install the requirementsfile first before adding
@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y gcc
 # this is for debugging. 
 RUN apt-get install -y vim net-tools 
 
-RUN pip install --upgrade pip==10.0.1
+RUN pip install --upgrade pip==20.2.1
 RUN pip install -r /philo-b-docker/requirements/base.txt
 RUN pip install -r /philo-b-docker/requirements/local.txt
 
