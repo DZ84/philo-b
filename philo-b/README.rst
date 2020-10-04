@@ -1,7 +1,7 @@
-philo-b
+druqtemaker.com/philo-b
 =======
 
-Initial setup for a very simple blog site.
+Initial setup for a basic blog site.
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
