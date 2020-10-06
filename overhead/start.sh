@@ -15,7 +15,7 @@ function start_production() {
 	cd /philo-b-docker
 
 	# PRODUCTION, mode
-	# exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- 
+	exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=-
 
 	# the exec prevents an extra, or the wrong, gunicorn to
 	# be executed. You notice this when shutting down the container; it won't
@@ -24,7 +24,7 @@ function start_production() {
 	# python /philo-b-docker/manage.py runserver 0.0.0.0:8004
 
 	# DEBUG mode, for explanations read below
-	exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- -t 90000 --max-requests 1 
+	# exec gunicorn config.wsgi -w 4 -b 0.0.0.0:8004 --log-file=- -t 90000 --max-requests 1
 
 	# for pdb: when workers are silent for a certain period, they restart. -t specifies
 	# the length of this period. Enabling you to use pdb in the meantime. 90000 seconds
