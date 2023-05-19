@@ -5,14 +5,15 @@ services:
     db:
         restart: always
         # image: postgres:9.6
-        image: postgres:10.13
+        # image: postgres:10.13
+        image: postgres:15.3
         user: postgres:postgres
         ports:
             - "5432"
         volumes:
-            - pg_philob:/var/lib/postgresql/data
+            - pg_philob_may_2023:/var/lib/postgresql/data
 
 volumes:
-    pg_philob:
+    pg_philob_may_2023:
         external: true
 
